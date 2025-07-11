@@ -13,6 +13,6 @@ export class NavBar {
 
 
   goToAllProducts() {
-    this.#router.navigate(['/products']);
+    this.#router.navigate(['/']);
   }
 }
