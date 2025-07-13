@@ -1,1 +1,24 @@
-<p>product-list works!</p>
+@if (products.isLoading()) {
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+}
+
+<div class="container mt-5 mb-5">
+  <div class="row">
+    @for (product of products.value(); track product.id)
+    {
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-3 pokemon-card" style="cursor: pointer;">
+        <div class="container d-flex justify-content-center flex-column" style="width:350px">
+          <span class="shadow p-3 h-75">
+            <p class="text-center"> <strong> {{product.name}} </strong> </p>
+            <img class="mx-5" [src]="'http://localhost:8080/' + product.url.split('/')[12] + '/' + product.url.split('/')[13]" [alt]="product.name" width="200px" height="200px">
+            <button class="btn btn-dark mt-3">More</button>
+          </span>
+        </div>
+      </div>
+    }
+  </div>
+</div>
