@@ -8,12 +8,27 @@
 
 @if(product.hasValue()) {
   <div class="container d-flex justify-content-center mt-5">
+    <div class="d-flex flex-column mr-2">
+      @for (img of product.value().images; track img) {
+        <img class="mx-2 shadow rounded p-2 m-1"
+             style="cursor: pointer;"
+             appProductBorder
+             (click)="switchImage(img)"
+             [src]="urlHelper(img)" [alt]="product.value().name" width="60px" height="60px">
+      }
+      <img class="mx-2 shadow rounded p-2 m-1"
+           appProductBorder
+           style="cursor: pointer;"
+           [src]="urlHelper(product.value().url)"
+           (click)="switchImage(product.value().url)"
+           [alt]="product.value().name" width="60px" height="60px">
+    </div>
     <div class="col-lg-4 col-md-6 col-sm-12 mb-3" style="cursor: pointer;">
       <div class="container d-flex justify-content-center flex-column" style="width:350px">
           <span class="shadow p-3 h-75">
             <p class="text-center"> <strong> {{product.value().name}} </strong> </p>
-            <img class="mx-5 mb-3" [src]="urlHelper(product.value().url)" [alt]="product.value().name" width="200px" height="200px">
-
+            <img #imgSwitch class="mx-5 mb-3 mb-4" [src]="urlHelper(product.value().url)" [alt]="product.value().name" width="200px" height="200px">
+            <p>Available in stock : {{product.value().quantity}}</p>
             <div class="d-flex justify-content-evenly">
               <button type="button" class="btn btn-outline-secondary">-</button>
               <input style="max-width: 150px" type="number" [value]="product.value().quantity" class="form-control text-center"/>
