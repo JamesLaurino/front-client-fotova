@@ -3,10 +3,13 @@ import {ProductService} from '../../service/interfaces/product-service';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
 import urlHelper from '../../helper/url-helper';
+import {ProductBorderDirective} from '../../share/directives/product-border-directive';
 
 @Component({
   selector: 'app-product-list',
-  imports: [],
+  imports: [
+    ProductBorderDirective
+  ],
   templateUrl: './product-list.html',
   styles: ''
 })
