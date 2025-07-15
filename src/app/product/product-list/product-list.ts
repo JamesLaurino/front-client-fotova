@@ -1,21 +1,19 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ProductService} from '../../service/interfaces/product-service';
 import {rxResource} from '@angular/core/rxjs-interop';
-import {JsonPipe} from '@angular/common';
 import {map} from 'rxjs';
+import urlHelper from '../../helper/url-helper';
 
 @Component({
   selector: 'app-product-list',
-  imports: [
-    JsonPipe
-  ],
+  imports: [],
   templateUrl: './product-list.html',
   styles: ''
 })
 export class ProductList
 {
-
   readonly #productService = inject(ProductService)
+  protected readonly urlHelper = urlHelper;
 
   products = rxResource({
     stream: () => {
@@ -25,5 +23,4 @@ export class ProductList
         )
     }
   })
-
 }

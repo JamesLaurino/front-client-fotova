@@ -14,7 +14,7 @@
         <div class="container d-flex justify-content-center flex-column" style="width:350px">
           <span class="shadow p-3 h-75">
             <p class="text-center"> <strong> {{product.name}} </strong> </p>
-            <img class="mx-5" [src]="'http://localhost:8080/' + product.url.split('/')[12] + '/' + product.url.split('/')[13]" [alt]="product.name" width="200px" height="200px">
+            <img class="mx-5" [src]="urlHelper(product.url)" [alt]="product.name" width="200px" height="200px">
             <button class="btn btn-dark mt-3">More</button>
           </span>
         </div>
