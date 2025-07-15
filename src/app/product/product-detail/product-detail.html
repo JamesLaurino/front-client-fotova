@@ -8,6 +8,8 @@
 
 @if(product.hasValue()) {
   <div class="container d-flex justify-content-center mt-5">
+
+    <!-- LATERAL CARD  -->
     <div class="d-flex flex-column mr-2">
       @for (img of product.value().images; track img) {
         <img class="mx-2 shadow rounded p-2 m-1"
@@ -23,21 +25,48 @@
            (click)="switchImage(product.value().url)"
            [alt]="product.value().name" width="60px" height="60px">
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-12 mb-3" style="cursor: pointer;">
+
+    <!-- MAIN CARD  -->
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
       <div class="container d-flex justify-content-center flex-column" style="width:350px">
-          <span class="shadow p-3 h-75">
-            <p class="text-center"> <strong> {{product.value().name}} </strong> </p>
-            <img #imgSwitch class="mx-5 mb-3 mb-4" [src]="urlHelper(product.value().url)" [alt]="product.value().name" width="200px" height="200px">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="shadow p-3 h-75" >
+
+          <p class="text-center"> <strong> {{product.value().name}} </strong> </p>
+            <img #imgSwitch class="mx-5 mb-3 mb-4"
+                 [src]="urlHelper(product.value().url)"
+                 [alt]="product.value().name" width="200px" height="200px">
+
             <p>Available in stock : {{product.value().quantity}}</p>
+
             <div class="d-flex justify-content-evenly">
-              <button type="button" class="btn btn-outline-secondary">-</button>
-              <input style="max-width: 150px" type="number" [value]="product.value().quantity" class="form-control text-center"/>
-              <button type="button" class="btn btn-outline-secondary">+</button>
+              <button type="button"
+                class="btn btn-outline-secondary"
+                (click)="decrementCartQuantity()"
+                [disabled]="cartQuantity.value <= 0">-</button>
+              <input style="max-width: 150px" type="number"
+                     formControlName="cartQuantity"
+                     class="form-control text-center"/>
+              <button type="button"
+                      (click)="incrementCartQuantity()"
+                      [disabled]="cartQuantity.value >= product.value().quantity"
+                      class="btn btn-outline-secondary">+</button>
             </div>
 
+            @if(cartQuantity.hasError('required')) {
+                <div class="text-danger">
+                      Veuillez renseigner une quantité
+                </div>
+            }
+
+            @if(cartQuantity.hasError('minlength')) {
+              <div class="text-danger">
+                Une quantité minimale de 1 est requise
+              </div>
+            }
+
             <p class="text-center mt-3"> Price : {{product.value().price | currency: 'EUR'}} </p>
-            <button class="btn btn-success w-100">Add to cart</button>
-          </span>
+            <button [disabled]="form.invalid" class="btn btn-success w-100">Add to cart</button>
+        </form>
       </div>
     </div>
   </div>

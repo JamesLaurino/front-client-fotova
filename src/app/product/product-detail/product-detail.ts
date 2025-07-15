@@ -6,12 +6,15 @@ import {map, tap} from 'rxjs';
 import urlHelper from '../../helper/url-helper';
 import {CurrencyPipe} from '@angular/common';
 import {ProductBorderDirective} from '../../share/directives/product-border-directive';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {CART_RULES} from '../../model/cart/cart-rule';
 
 @Component({
   selector: 'app-product-detail',
   imports: [
     CurrencyPipe,
-    ProductBorderDirective
+    ProductBorderDirective,
+    ReactiveFormsModule
   ],
   templateUrl: './product-detail.html',
   styles: ''
@@ -26,6 +29,19 @@ export class ProductDetail {
 
   @ViewChild('imgSwitch') imgSwitch!: ElementRef;
 
+  readonly form= new FormGroup({
+    cartQuantity: new FormControl(1,
+      [
+        Validators.required,
+        Validators.min(CART_RULES.MIN_QUANTITY)
+      ]
+    )
+  });
+
+  get cartQuantity() : FormControl {
+    return this.form.get('cartQuantity') as FormControl;
+  }
+
   product = rxResource({
     stream: () => {
       return this.#productService.getProductById(this.productId)
@@ -38,5 +54,17 @@ export class ProductDetail {
 
   switchImage(img: string) {
     this.imgSwitch.nativeElement.src = this.urlHelper(img);
+  }
+
+  onSubmit() {
+    console.log(this.cartQuantity.value);
+  }
+
+  decrementCartQuantity() {
+    this.cartQuantity.setValue(this.cartQuantity.value - 1);
+  }
+
+  incrementCartQuantity() {
+    this.cartQuantity.setValue(this.cartQuantity.value + 1);
   }
 }
