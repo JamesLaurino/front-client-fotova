@@ -1,0 +1,30 @@
+@if (product.isLoading()) {
+  <div class="d-flex justify-content-center mt-5">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+}
+
+@if(product.hasValue()) {
+  <div class="container d-flex justify-content-center mt-5">
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-3" style="cursor: pointer;">
+      <div class="container d-flex justify-content-center flex-column" style="width:350px">
+          <span class="shadow p-3 h-75">
+            <p class="text-center"> <strong> {{product.value().name}} </strong> </p>
+            <img class="mx-5 mb-3" [src]="urlHelper(product.value().url)" [alt]="product.value().name" width="200px" height="200px">
+
+            <div class="d-flex justify-content-evenly">
+              <button type="button" class="btn btn-outline-secondary">-</button>
+              <input style="max-width: 150px" type="number" [value]="product.value().quantity" class="form-control text-center"/>
+              <button type="button" class="btn btn-outline-secondary">+</button>
+            </div>
+
+            <p class="text-center mt-3"> Price : {{product.value().price | currency: 'EUR'}} </p>
+            <button class="btn btn-success w-100">Add to cart</button>
+          </span>
+      </div>
+    </div>
+  </div>
+
+}

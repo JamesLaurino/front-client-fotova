@@ -10,12 +10,11 @@
   <div class="row">
     @for (product of products.value(); track product.id)
     {
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-3" style="cursor: pointer;">
+      <div (click)="goToProductDetail(product.id)" class="col-lg-4 col-md-6 col-sm-12 mb-3" style="cursor: pointer;">
         <div class="container d-flex justify-content-center flex-column" style="width:350px">
           <span appProductBorder class="shadow p-3 h-75">
             <p class="text-center"> <strong> {{product.name}} </strong> </p>
-            <img class="mx-5" [src]="urlHelper(product.url)" [alt]="product.name" width="200px" height="200px">
-            <button class="btn btn-dark mt-3">More</button>
+            <img class="mx-5 mb-3" [src]="urlHelper(product.url)" [alt]="product.name" width="200px" height="200px">
           </span>
         </div>
       </div>

@@ -4,6 +4,7 @@ import {rxResource} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
 import urlHelper from '../../helper/url-helper';
 import {ProductBorderDirective} from '../../share/directives/product-border-directive';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -16,6 +17,7 @@ import {ProductBorderDirective} from '../../share/directives/product-border-dire
 export class ProductList
 {
   readonly #productService = inject(ProductService)
+  readonly #router = inject(Router)
   protected readonly urlHelper = urlHelper;
 
   products = rxResource({
@@ -26,4 +28,8 @@ export class ProductList
         )
     }
   })
+
+  goToProductDetail(id:number) {
+    this.#router.navigate(['/product', id]);
+  }
 }
