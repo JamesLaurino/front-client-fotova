@@ -5,6 +5,8 @@ import { routes } from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {ProductService} from './service/interfaces/product-service';
 import ProductFactory from './service/factory/product-factory';
+import {CartService} from './service/interfaces/cart-service';
+import CartFactory from './service/factory/cart-factory';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +17,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide:ProductService,
       useFactory:ProductFactory
+    },
+    {
+      provide:CartService,
+      useFactory:CartFactory
     }
   ]
 };
