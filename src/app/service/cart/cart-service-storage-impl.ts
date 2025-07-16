@@ -37,7 +37,25 @@ export class CartServiceStorageImpl implements CartService
   }
 
   getCartTotalPrice(): Observable<number> {
-    return of();
+
+    let totalPrice:number = 0;
+    for (let i = 0; i < localStorage.length; i++)
+    {
+      const key = localStorage.key(i);
+      if (!key || key === "token") continue;
+
+      const data = localStorage.getItem(key);
+      try {
+        if (data) {
+          const parsed = JSON.parse(data);
+          totalPrice += (parsed.price) * (parsed.quantity);
+        }
+      } catch (e) {
+        continue;
+      }
+    }
+
+    return of(totalPrice);
   }
 
   addToCart(key: string, cartProduct: CartProduct): Observable<CartProduct> {
