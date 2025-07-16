@@ -11,6 +11,10 @@ export class NavBar {
 
   readonly #router = inject(Router)
 
+  goToCart() {
+    console.log('goToCart');
+    this.#router.navigate(['/cart']);
+  }
 
   goToAllProducts() {
     this.#router.navigate(['/']);

@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {ProductService} from '../../service/interfaces/product-service';
 import {rxResource} from '@angular/core/rxjs-interop';
-import {map} from 'rxjs';
+import {map, tap} from 'rxjs';
 import urlHelper from '../../helper/url-helper';
 import {ProductBorderDirective} from '../../share/directives/product-border-directive';
 import {Router} from '@angular/router';

@@ -8,6 +8,8 @@ import {CurrencyPipe} from '@angular/common';
 import {ProductBorderDirective} from '../../share/directives/product-border-directive';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CART_RULES} from '../../model/cart/cart-rule';
+import {CartProduct} from '../../model/cart/cart-product';
+import {CartService} from '../../service/interfaces/cart-service';
 
 @Component({
   selector: 'app-product-detail',
@@ -23,6 +25,7 @@ export class ProductDetail {
 
   readonly #route = inject(ActivatedRoute);
   readonly #productService = inject(ProductService)
+  readonly #cartService = inject(CartService)
 
   private productId = this.#route.snapshot.params['id'];
   protected readonly urlHelper = urlHelper;
@@ -56,8 +59,18 @@ export class ProductDetail {
     this.imgSwitch.nativeElement.src = this.urlHelper(img);
   }
 
-  onSubmit() {
-    console.log(this.cartQuantity.value);
+  onSubmit():void {
+    let cartProduct:CartProduct = {
+      "id": Number(this.product.value()?.id),
+      "name": String(this.product.value()?.name),
+      "price": Number(this.product.value()?.price),
+      "quantity": Number(this.cartQuantity.value),
+      "url": String(this.product.value()?.url)
+    }
+
+    this.#cartService.addToCart(String(this.product.value()?.name),cartProduct).subscribe(() => {
+      return;
+    })
   }
 
   decrementCartQuantity() {

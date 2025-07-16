@@ -1,0 +1,25 @@
+<div class="container py-4">
+  <h2 class="mb-4">🛒 Mon Panier</h2>
+
+  <div class="vstack gap-3">
+    <div
+      class="card p-3 d-flex flex-row align-items-center"
+      *ngFor="let produit of produits"
+    >
+      <img
+        [src]="produit.image"
+        [alt]="produit.nom"
+        class="img-thumbnail"
+        style="width: 100px; height: 100px; object-fit: cover;"
+      />
+      <div class="ms-3">
+        <h5 class="mb-1">{{ produit.nom }}</h5>
+        <div class="text-muted">Prix : {{ produit.prix | number:'1.2-2' }} €</div>
+        <div class="text-muted">Quantité : {{ produit.quantite }}</div>
+        <div class="fw-bold mt-2">
+          Total : {{ produit.prix * produit.quantite | number:'1.2-2' }} €
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

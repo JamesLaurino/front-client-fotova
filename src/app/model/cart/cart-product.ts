@@ -3,4 +3,5 @@ export interface CartProduct {
   quantity:number;
   price:number;
   name:string;
+  url:string;
 }
