@@ -29,6 +29,10 @@ export class Cart
     }
   })
 
+  order() {
+
+  }
+
   increment(key:string, cartProduct: CartProduct) {
     let cartProductUpdate = { ...cartProduct };
     cartProductUpdate.quantity += 1;

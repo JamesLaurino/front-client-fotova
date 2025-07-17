@@ -15,14 +15,14 @@
   <div class="vstack gap-3">
     @for (cart of carts.value(); track cart.id) {
       <div class="card p-3 d-flex flex-row align-items-center">
-        <img
-          [src]="urlHelper(cart.url)"
-          [alt]="cart.name"
-          class="img-thumbnail"
-          style="width: 100px; height: 100px; object-fit: cover;"
-        />
+          <img
+            [src]="urlHelper(cart.url)"
+            [alt]="cart.name"
+            class="img-thumbnail"
+            style="width: 100px; height: 100px; object-fit: cover;"
+          />
         <div class="ms-3">
-          <h5 class="mb-1">{{ cart.name }}</h5>
+          <span class="mb-1 my-1 h4">{{ cart.name }}</span>
           <div class="text-muted">Prix : {{ cart.price | number:'1.2-2' }} €</div>
           <div class="text-muted">Quantité : {{ cart.quantity }}</div>
 
@@ -30,7 +30,7 @@
 
             @if (cart.quantity > 1)
             {
-              <button class="btn btn-outline-secondary btn-sm rounded p-1 fw-bold me-1"
+              <button class="btn btn-outline-secondary btn-sm rounded p-1 fw-bold me-2"
                       (click)="decrement(cart.name,cart)"
                       style="width: 30px; height: 30px;">
                 -
@@ -39,7 +39,7 @@
             @else if (cart.quantity === 1)
             {
               <span (click)="removeItem(cart.name)">
-                  <svg style="width: 20px; height: 20px; cursor: pointer" class="me-1 my-1"
+                  <svg style="width: 20px; height: 20px; cursor: pointer" class="me-2 my-1"
                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
               </span>
             }
@@ -65,6 +65,7 @@
       <p class="fs-5 fw-bold text-dark">
         {{totalPrice.value() | number:'1.2-2'}} €
       </p>
+      <button (click)="order()" class="btn btn-success w-100">Valider la commande</button>
     </div>
   </div>
 </div>
