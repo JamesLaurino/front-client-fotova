@@ -5,6 +5,7 @@ import {map, tap} from 'rxjs';
 import {DecimalPipe} from '@angular/common';
 import urlHelper from '../../helper/url-helper';
 import {CartProduct} from '../../model/cart/cart-product';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -17,7 +18,9 @@ import {CartProduct} from '../../model/cart/cart-product';
 export class Cart
 {
   readonly #cartService = inject(CartService)
+  readonly #router = inject(Router)
   protected readonly urlHelper = urlHelper;
+
 
   carts = rxResource({
     stream: () => {
@@ -63,4 +66,8 @@ export class Cart
         )
     }
   })
+
+  goToAllProducts() {
+    this.#router.navigate(['/products']);
+  }
 }

@@ -72,6 +72,8 @@ export class ProductDetail {
     this.#cartService.addToCart(String(this.product.value()?.name),cartProduct).subscribe(() => {
       return;
     })
+
+    window.location.reload();
   }
 
   decrementCartQuantity() {
