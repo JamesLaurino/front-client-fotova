@@ -28,8 +28,8 @@ export class CartServiceStorageImpl implements CartService
     return of(result);
   }
 
-  clearCart(): Observable<CartProduct> {
-    return of();
+  clearCart(key:string):void{
+    localStorage.removeItem(key);
   }
 
   getCart(key:string): Observable<CartProduct> {
@@ -65,6 +65,11 @@ export class CartServiceStorageImpl implements CartService
 
   removeProductFromCart(key: string, cartProduct: CartProduct): Observable<CartProduct> {
     return of();
+  }
+
+  updateCart(key: string, cartProduct: CartProduct):void {
+    localStorage.setItem(key, JSON.stringify(cartProduct));
+    console.log("Storage updated")
   }
 
 }

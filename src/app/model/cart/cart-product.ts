@@ -4,4 +4,5 @@ export interface CartProduct {
   price:number;
   name:string;
   url:string;
+  quantityMax:number
 }

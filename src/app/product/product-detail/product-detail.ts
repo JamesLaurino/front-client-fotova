@@ -65,7 +65,8 @@ export class ProductDetail {
       "name": String(this.product.value()?.name),
       "price": Number(this.product.value()?.price),
       "quantity": Number(this.cartQuantity.value),
-      "url": String(this.product.value()?.url)
+      "url": String(this.product.value()?.url),
+      "quantityMax":Number(this.product.value()?.quantity),
     }
 
     this.#cartService.addToCart(String(this.product.value()?.name),cartProduct).subscribe(() => {

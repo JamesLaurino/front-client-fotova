@@ -4,6 +4,7 @@ import {rxResource} from '@angular/core/rxjs-interop';
 import {map, tap} from 'rxjs';
 import {DecimalPipe} from '@angular/common';
 import urlHelper from '../../helper/url-helper';
+import {CartProduct} from '../../model/cart/cart-product';
 
 @Component({
   selector: 'app-cart',
@@ -27,6 +28,27 @@ export class Cart
         )
     }
   })
+
+  increment(key:string, cartProduct: CartProduct) {
+    let cartProductUpdate = { ...cartProduct };
+    cartProductUpdate.quantity += 1;
+    console.log(cartProductUpdate)
+    this.#cartService.updateCart(key, cartProductUpdate);
+    window.location.reload();
+  }
+
+  removeItem(key:string) {
+    this.#cartService.clearCart(key);
+    window.location.reload();
+  }
+
+  decrement(key:string, cartProduct: CartProduct) {
+    let cartProductUpdate = { ...cartProduct };
+    cartProductUpdate.quantity -= 1;
+    console.log(cartProductUpdate)
+    this.#cartService.updateCart(key, cartProductUpdate);
+    window.location.reload();
+  }
 
   totalPrice = rxResource({
     stream: () => {
