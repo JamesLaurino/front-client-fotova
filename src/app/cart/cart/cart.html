@@ -11,7 +11,7 @@
   <h2 class="mb-4">🛒 Mon Panier</h2>
 
   @if(carts.value()?.length === 0) {
-    <div class="h4">Votre pannier est vide</div>
+    <div class="h4 mt-2 mb-3">Votre pannier est vide</div>
   }
   <div class="vstack gap-3">
     @for (cart of carts.value(); track cart.id) {
@@ -58,8 +58,8 @@
         </div>
       </div>
     }
-    <button (click)="goToAllProducts()" class="btn btn-outline-secondary w-25" >
-      shopping
+    <button (click)="goToAllProducts()" class="btn btn-secondary w-25" >
+      Go to shopping
     </button>
   </div>
 

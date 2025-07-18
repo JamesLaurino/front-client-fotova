@@ -35,7 +35,6 @@ export class Cart
               this.cartHelper.cartsQuantity.update((n:number) => n += item.quantity)
             }
           }),
-
         )
     }
   })

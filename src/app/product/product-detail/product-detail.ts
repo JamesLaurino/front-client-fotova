@@ -11,6 +11,9 @@ import {CART_RULES} from '../../model/cart/cart-rule';
 import {CartProduct} from '../../model/cart/cart-product';
 import {CartService} from '../../service/interfaces/cart-service';
 import {CartHelper} from '../../helper/cart-helper';
+import cartProductHelper from '../../helper/cart-product-helper';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-product-detail',
@@ -33,6 +36,9 @@ export class ProductDetail {
   protected readonly urlHelper = urlHelper;
 
   @ViewChild('imgSwitch') imgSwitch!: ElementRef;
+
+  @ViewChild('toastElement') toastElement!: ElementRef;
+  private toastInstance: any;
 
   readonly form= new FormGroup({
     cartQuantity: new FormControl(1,
@@ -62,20 +68,16 @@ export class ProductDetail {
   }
 
   onSubmit():void {
-    let cartProduct:CartProduct = {
-      "id": Number(this.product.value()?.id),
-      "name": String(this.product.value()?.name),
-      "price": Number(this.product.value()?.price),
-      "quantity": Number(this.cartQuantity.value),
-      "url": String(this.product.value()?.url),
-      "quantityMax":Number(this.product.value()?.quantity),
-    }
+    let cartProduct = cartProductHelper(this.product, this.cartQuantity);
 
     this.#cartService.addToCart(String(this.product.value()?.name),cartProduct).subscribe(() => {
       return;
     })
 
     this.cartHelper.cartsQuantity.update((n:number) => n + Number(this.cartQuantity.value));
+
+    this.toastInstance = new bootstrap.Toast(this.toastElement.nativeElement);
+    this.toastInstance.show();
   }
 
   decrementCartQuantity() {
