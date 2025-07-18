@@ -5,7 +5,7 @@ import {ProductDetail} from './product/product-detail/product-detail';
 import {Cart} from './cart/cart/cart';
 import {Checkout} from './cart/checkout/checkout';
 import {AuthGuard} from './core/auth-guard';
-import {Login} from './login/login';
+import {Login} from './connection/login/login';
 
 export const routes: Routes = [
   {path:'', component:Landing},
