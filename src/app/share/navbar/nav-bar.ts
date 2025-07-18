@@ -1,8 +1,7 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {CartService} from '../../service/interfaces/cart-service';
-import {rxResource} from '@angular/core/rxjs-interop';
-import {map, tap} from 'rxjs';
+import {CartHelper} from '../../helper/cart-helper';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,20 +13,7 @@ export class NavBar {
 
   readonly #router = inject(Router)
   readonly #cartService = inject(CartService)
-
-  cartsQuantity = computed(() => {
-    return this.carts.value()?.reduce((acc, item) => acc + (item.quantity || 0), 0);
-  })
-
-  carts = rxResource({
-    stream: () => {
-      return this.#cartService.getCarts()
-        .pipe(
-          map(response => response),
-          tap(carts => console.log(carts))
-        )
-    }
-  })
+  cartHelper = inject(CartHelper)
 
   goToCart() {
     console.log('goToCart');

@@ -6,6 +6,7 @@ import {DecimalPipe} from '@angular/common';
 import urlHelper from '../../helper/url-helper';
 import {CartProduct} from '../../model/cart/cart-product';
 import {Router} from '@angular/router';
+import {CartHelper} from '../../helper/cart-helper';
 
 @Component({
   selector: 'app-cart',
@@ -19,6 +20,7 @@ export class Cart
 {
   readonly #cartService = inject(CartService)
   readonly #router = inject(Router)
+  public cartHelper = inject(CartHelper)
   protected readonly urlHelper = urlHelper;
 
 
@@ -27,7 +29,13 @@ export class Cart
       return this.#cartService.getCarts()
         .pipe(
           map(response => response),
-          tap(carts => console.log(carts))
+          tap(carts => {
+            this.cartHelper.cartsQuantity.update((n:number) => n = 0);
+            for (const item of carts) {
+              this.cartHelper.cartsQuantity.update((n:number) => n += item.quantity)
+            }
+          }),
+
         )
     }
   })

@@ -7,11 +7,12 @@
 }
 
 <div class="container py-4">
-  @if(carts.value()?.length === 0) {
-    <div>Pannier vide !!!</div>
-  }
+
   <h2 class="mb-4">🛒 Mon Panier</h2>
 
+  @if(carts.value()?.length === 0) {
+    <div class="h4">Votre pannier est vide</div>
+  }
   <div class="vstack gap-3">
     @for (cart of carts.value(); track cart.id) {
       <div class="card p-3 d-flex flex-row align-items-center">

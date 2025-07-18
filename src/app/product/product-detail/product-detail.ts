@@ -10,6 +10,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {CART_RULES} from '../../model/cart/cart-rule';
 import {CartProduct} from '../../model/cart/cart-product';
 import {CartService} from '../../service/interfaces/cart-service';
+import {CartHelper} from '../../helper/cart-helper';
 
 @Component({
   selector: 'app-product-detail',
@@ -26,6 +27,7 @@ export class ProductDetail {
   readonly #route = inject(ActivatedRoute);
   readonly #productService = inject(ProductService)
   readonly #cartService = inject(CartService)
+  cartHelper = inject(CartHelper)
 
   private productId = this.#route.snapshot.params['id'];
   protected readonly urlHelper = urlHelper;
@@ -73,7 +75,7 @@ export class ProductDetail {
       return;
     })
 
-    window.location.reload();
+    this.cartHelper.cartsQuantity.update((n:number) => n + Number(this.cartQuantity.value));
   }
 
   decrementCartQuantity() {
