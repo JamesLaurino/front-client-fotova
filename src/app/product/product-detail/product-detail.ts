@@ -8,7 +8,6 @@ import {CurrencyPipe} from '@angular/common';
 import {ProductBorderDirective} from '../../share/directives/product-border-directive';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CART_RULES} from '../../model/cart/cart-rule';
-import {CartProduct} from '../../model/cart/cart-product';
 import {CartService} from '../../service/interfaces/cart-service';
 import {CartHelper} from '../../helper/cart-helper';
 import cartProductHelper from '../../helper/cart-product-helper';
