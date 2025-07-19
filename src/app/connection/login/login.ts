@@ -1,36 +1,40 @@
 import { Component } from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './login.html',
-  styles: ''
+  styleUrls: ['./login.css']
 })
 export class Login {
+  readonly form= new FormGroup({
+    email: new FormControl("",
+      [
+        Validators.required,
+        Validators.email
+      ]
+    ),
+    password: new FormControl("",
+      [
+        Validators.required,
+        Validators.minLength(4)
+      ]
+    )
+  });
 
+  get email() : FormControl {
+    return this.form.get('email') as FormControl;
+  }
+
+  get password() : FormControl {
+    return this.form.get('password') as FormControl;
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
+  }
 }
-
-/**
- *
- * input LOGIN
- *
- * {"email": "koba@hotmail.com","password": "1234"}
- *
- * RESPONSE FROM LOGIN
- *
- * {
- *   "responseCode": 200,
- *   "responseMessage": "SUCCESS",
- *   "data": {
- *     "username": "koba@hotmail.com",
- *     "email": "koba@hotmail.com",
- *     "roles": [
- *       "ROLE_ADMIN"
- *     ],
- *     "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrb2JhQGhvdG1haWwuY29tIiwiaWF0IjoxNzUyODczMzI5LCJleHAiOjE3NTI4NzQyMjl9.3hTO6gsNODGiYxhOYZjG7MMoF5p-ap-rupZfca4-U4s",
- *     "token_type": "Bearer"
- *   }
- * }
- *
- *
- */
