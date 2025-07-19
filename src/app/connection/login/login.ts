@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, inject, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {LoginApiInput} from '../../model/login/login-api-input';
+import {LoginService} from '../../service/login/login-service';
+import {LoginApiResponse} from '../../model/login/login-api-response';
+import {Router} from '@angular/router';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-login',
@@ -10,7 +16,8 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-export class Login {
+export class Login
+{
   readonly form= new FormGroup({
     email: new FormControl("",
       [
@@ -26,6 +33,12 @@ export class Login {
     )
   });
 
+  @ViewChild('toastElement') toastElement!: ElementRef;
+  private toastInstance: any;
+
+  protected loginService = inject(LoginService)
+  readonly #router = inject(Router)
+
   get email() : FormControl {
     return this.form.get('email') as FormControl;
   }
@@ -34,7 +47,32 @@ export class Login {
     return this.form.get('password') as FormControl;
   }
 
-  onSubmit() {
-    console.log(this.form.value);
+  showToast(message: string) {
+    this.toastElement.nativeElement.querySelector('.toast-body').textContent = message;
+    this.toastInstance = new bootstrap.Toast(this.toastElement.nativeElement);
+    this.toastInstance.show();
+  }
+
+  onSubmit()
+  {
+    let loginApiInput:LoginApiInput = {
+      "email":String(this.form.value.email),
+      "password":String(this.form.value.password)
+    }
+
+    this.loginService.login(loginApiInput).subscribe({
+      next: (response: LoginApiResponse) => {
+        if (response.responseCode === 200) {
+          this.loginService.setValueToken(response.data.access_token)
+          this.#router.navigate(['/products']);
+        } else {
+          this.showToast(response.responseMessage || 'Erreur survenue');
+        }
+      },
+      error: (error: any) => {
+        const message = error.error.errorList[0]
+        this.showToast(message);
+      }
+    });
   }
 }
