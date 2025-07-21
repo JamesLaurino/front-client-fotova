@@ -40,7 +40,7 @@ export class Cart
   })
 
   order() {
-
+    this.#router.navigate(['/checkout']);
   }
 
   increment(key:string, cartProduct: CartProduct) {

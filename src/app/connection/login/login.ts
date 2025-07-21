@@ -64,6 +64,7 @@ export class Login
       next: (response: LoginApiResponse) => {
         if (response.responseCode === 200) {
           this.loginService.setValueToken(response.data.access_token)
+          this.loginService.isLogged();
           this.#router.navigate(['/products']);
         } else {
           this.showToast(response.responseMessage || 'Erreur survenue');

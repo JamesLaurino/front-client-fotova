@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
-import {CartService} from '../../service/interfaces/cart-service';
 import {CartHelper} from '../../helper/cart-helper';
+import {LoginHelper} from '../../helper/login-helper';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,8 +12,8 @@ import {CartHelper} from '../../helper/cart-helper';
 export class NavBar {
 
   readonly #router = inject(Router)
-  readonly #cartService = inject(CartService)
-  cartHelper = inject(CartHelper)
+  public cartHelper = inject(CartHelper)
+  public loginHelper = inject(LoginHelper)
 
   goToCart() {
     console.log('goToCart');

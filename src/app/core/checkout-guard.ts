@@ -1,8 +1,8 @@
-import {inject} from '@angular/core';
 import {CanActivateFn, Router} from '@angular/router';
+import {inject} from '@angular/core';
 import {LoginService} from '../service/login/login-service';
 
-export const AuthGuard :CanActivateFn = () => {
+export const CheckoutGuard :CanActivateFn = () => {
 
   let loginService = inject(LoginService)
   const router = inject(Router);
@@ -19,4 +19,3 @@ export const AuthGuard :CanActivateFn = () => {
     }
   }
 }
-
