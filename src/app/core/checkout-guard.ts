@@ -10,7 +10,7 @@ export const CheckoutGuard: CanActivateFn = () => {
   return userService.getUserInformation().pipe(
     map(user => {
       console.log(user)
-      return user.data.ClientAddressDto !== null ? true : router.createUrlTree(['/']);
+      return user.data.address !== null ? true : router.createUrlTree(['/']);
     }),
     catchError(() => of(router.createUrlTree(['/login'])))
   );

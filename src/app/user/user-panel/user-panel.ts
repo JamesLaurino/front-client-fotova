@@ -2,7 +2,6 @@ import {Component, inject, signal} from '@angular/core';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {map, tap} from 'rxjs';
 import {UserService} from '../../service/user/user-service';
-import urlHelper from '../../helper/url-helper';
 import {Router} from '@angular/router';
 import {LoginService} from '../../service/login/login-service';
 import {UserAddress} from '../user-address/user-address';
@@ -35,7 +34,6 @@ export class UserPanel {
         )
     }
   })
-  protected readonly urlHelper = urlHelper;
 
   logout() {
     this.#loginService.logout();

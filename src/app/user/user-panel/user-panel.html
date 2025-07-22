@@ -19,17 +19,15 @@
   </div>
 </div>
 
-<div class="main-content">
-  <h1>Bienvenue {{user.value()?.username}}</h1>
-
-  <div class="container d-flex justify-content-start mt-5 mb-5">
-    @if (activeComponent() === 'address') {
-      <app-user-address/>
-    } @else if (activeComponent() === 'order') {
-      <app-user-order/>
-    } @else if (activeComponent() === 'comment') {
-      <app-user-comment/>
-    }
+  <div class="main-content">
+    <h1>Bienvenue {{user.value()?.username}}</h1>
+    <div class="container d-flex justify-content-start mt-5 mb-5">
+      @if (activeComponent() === 'address') {
+        <app-user-address [userAddressInput]="user.value()?.address"/>
+      } @else if (activeComponent() === 'order') {
+        <app-user-order/>
+      } @else if (activeComponent() === 'comment') {
+        <app-user-comment [userCommentsInput]="user.value()?.comments"/>
+      }
+    </div>
   </div>
-
-</div>
