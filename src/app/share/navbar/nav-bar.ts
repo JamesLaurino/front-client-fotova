@@ -23,4 +23,8 @@ export class NavBar {
   goToAllProducts() {
     this.#router.navigate(['/']);
   }
+
+  goToUserPanel() {
+    this.#router.navigate(['/user']);
+  }
 }
