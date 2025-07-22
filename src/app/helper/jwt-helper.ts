@@ -2,7 +2,7 @@ import {jwtDecode} from 'jwt-decode';
 
 interface JwtPayload {
   exp: number;
-  email:string;
+  sub:string;
   [key: string]: any;
 }
 
@@ -22,7 +22,7 @@ export function isTokenExpired(token: string): boolean {
 export function getEmailFromToken(token: string): string | null {
   try {
     const decoded = jwtDecode<JwtPayload>(token);
-    return decoded.email ?? null;
+    return decoded.sub ?? null;
   } catch (e) {
     console.error('Erreur lors du décodage du token :', e);
     return null;

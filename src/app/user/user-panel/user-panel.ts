@@ -7,6 +7,7 @@ import {LoginService} from '../../service/login/login-service';
 import {UserAddress} from '../user-address/user-address';
 import {UserOrder} from '../user-order/user-order';
 import {UserComment} from '../user-comment/user-comment';
+import {getEmailFromToken} from '../../helper/jwt-helper';
 
 @Component({
   selector: 'app-user-panel',
@@ -31,6 +32,17 @@ export class UserPanel {
         .pipe(
           map(response => response.data),
           tap(user => console.log(user))
+        )
+    }
+  });
+
+  orders = rxResource({
+    stream: () => {
+      const token = getEmailFromToken(String(localStorage.getItem("token")));
+      return this.#userService.getOrdersByEmail(String(token))
+        .pipe(
+          map(response => response.data),
+          tap(orders => console.log(orders))
         )
     }
   })
