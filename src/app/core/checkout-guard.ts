@@ -1,21 +1,15 @@
-import {CanActivateFn, Router} from '@angular/router';
+import {CanActivateFn} from '@angular/router';
 import {inject} from '@angular/core';
-import {LoginService} from '../service/login/login-service';
+import {UserService} from '../service/user/user-service';
+import {map} from 'rxjs';
 
-export const CheckoutGuard :CanActivateFn = () => {
+export const CheckoutGuard: CanActivateFn = () => {
+  const userService = inject(UserService);
 
-  let loginService = inject(LoginService)
-  const router = inject(Router);
-
-  if(localStorage.getItem('token') === null) {
-    router.navigate(['/login']);
-    return false;
-  }
-  else {
-    try {
-      return loginService.isLogged();
-    } catch (e) {
-      return false;
-    }
-  }
-}
+  return userService.getUserInformation().pipe(
+    map(user => {
+      console.log(user);
+      return user.data.ClientAddressDto !== null;
+    })
+  );
+};
