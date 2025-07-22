@@ -1,1 +1,35 @@
-<p>{{userOrdersInput() | json}}</p>
+<div class="container my-5">
+  <div class="row">
+    @for (order of ordersOrdered(); track order) {
+      <div class="col-12 col-md-6 col-lg-4 mb-4" style="min-width: 300px">
+        <div class="card h-100 shadow-sm">
+          <div class="card-header bg-secondary text-white d-flex justify-content-between">
+            <strong>Commande #{{ order[0].orderId }}</strong>
+            <span>{{ order[0].creationDate | date: 'dd/mm/yyyy' }}</span>
+          </div>
+
+          <div class="card-body p-0">
+            <table class="table mb-0">
+              <thead class="table-light">
+              <tr>
+                <th>Nom</th>
+                <th>Qté</th>
+                <th>Prix</th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (item of order; track item) {
+                  <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price | currency:'EUR' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
