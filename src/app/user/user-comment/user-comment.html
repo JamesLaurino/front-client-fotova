@@ -1,1 +1,21 @@
-<p>{{userCommentsInput() | json}}</p>
+<div class="container py-5">
+  <h2 class="mb-4 text-center">Liste des commentaires postés</h2>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      @for (comment of userCommentsInput(); track comment) {
+        <div class="card mb-4 shadow-sm border-0 rounded-3">
+          <div class="card-body">
+            <h5 class="card-title">
+              Titre : {{ comment.header }}
+            </h5>
+            <p class="card-text">Contenu : {{ comment.body }}</p>
+            <p class="text-muted mb-0" style="font-size: 0.875rem;">
+              Créé le : <span class="fw-semibold">{{ comment.createAt | date:'dd/mm/yyyy' }}</span>
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

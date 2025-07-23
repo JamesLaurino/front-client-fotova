@@ -1,0 +1,58 @@
+<div class="container d-flex justify-content-center" style="max-width: 700px;" >
+  <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="col-6">
+      <label for="inputAddress" class="form-label">Street</label>
+      <input formControlName="street" type="text" class="form-control" id="inputAddress" placeholder="Avenue briart">
+      @if(street.hasError('required') && street.touched) {
+        <div class="text-danger">
+          Veuillez renseigner une rue
+        </div>
+      }
+    </div>
+    <div class="col-md-6">
+      <label for="inputCity" class="form-label">ZIP + City</label>
+      <input type="text" formControlName="city" class="form-control" id="inputCity">
+      @if(city.hasError('required') && city.touched) {
+        <div class="text-danger">
+          Veuillez renseigner une ville
+        </div>
+      }
+    </div>
+    <div class="col-md-6">
+      <label for="inputNumber" class="form-label">Number + bte</label>
+      <input type="text" formControlName="number" class="form-control" id="inputNumber">
+      @if(number.hasError('required') && number.touched) {
+        <div class="text-danger">
+          Veuillez renseigner une boite / numéro rue
+        </div>
+      }
+    </div>
+      <div class="col-md-6">
+        <label for="inputCountry" class="form-label">Country</label>
+        <input type="text" formControlName="country" class="form-control" id="inputCountry">
+        @if(country.hasError('required') && country.touched) {
+          <div class="text-danger">
+            Veuillez renseigner un pays
+          </div>
+        }
+      </div>
+    <div class="col-12">
+      <button [disabled]="form.invalid" type="submit" class="btn btn-dark">Editer</button>
+    </div>
+  </form>
+</div>
+
+<!-- TOASTER -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div #toastElement id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="{{toasterMessage().toastImageUrl}}" width="30px" height="30px" class="rounded me-2" alt="...">
+      <strong class="me-auto">{{toasterMessage().toastTitle}}</strong>
+      <small>{{toasterMessage().toastTime}}</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      {{toasterMessage().toastMessage}}
+    </div>
+  </div>
+</div>

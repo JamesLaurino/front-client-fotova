@@ -4,6 +4,7 @@ import {ClientResponseApi} from '../../model/client/client-response-api';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {OrderApiResponse} from '../../model/order/order-api-response';
+import {ClientAddress} from '../../model/client/client-address';
 
 @Injectable({providedIn: 'root'})
 export class UserService
@@ -15,6 +16,15 @@ export class UserService
 
   getOrdersByEmail(email: string): Observable<OrderApiResponse> {
     return this.#http.get<OrderApiResponse>(this.#API_URL + '/order-products/' + email);
+  }
+
+  updateAddressInformation(address:Omit<ClientAddress, 'id'>) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.#http.put<ClientResponseApi>(this.#API_URL + '/client/update', address,{ headers });
   }
 
   getUserInformation():Observable<ClientResponseApi> {

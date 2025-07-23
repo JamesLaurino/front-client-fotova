@@ -8,13 +8,15 @@ import {UserAddress} from '../user-address/user-address';
 import {UserOrder} from '../user-order/user-order';
 import {UserComment} from '../user-comment/user-comment';
 import {getEmailFromToken} from '../../helper/jwt-helper';
+import {UserEdit} from '../user-edit/user-edit';
 
 @Component({
   selector: 'app-user-panel',
   imports: [
     UserAddress,
     UserOrder,
-    UserComment
+    UserComment,
+    UserEdit
   ],
   templateUrl: './user-panel.html',
   styleUrl: 'user-panel.css'
@@ -47,6 +49,10 @@ export class UserPanel {
     }
   })
 
+  onAddressUpdated() {
+    this.user.reload() // 🔁 recharge l'utilisateur à jour
+  }
+
   logout() {
     this.#loginService.logout();
     this.#router.navigate(['/']);
@@ -62,5 +68,9 @@ export class UserPanel {
 
   displayUserComment() {
     this.activeComponent.update((address) => address = "comment")
+  }
+
+  displayEditAddress() {
+    this.activeComponent.update((address) => address = "edit-address")
   }
 }

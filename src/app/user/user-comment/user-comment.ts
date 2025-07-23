@@ -1,11 +1,11 @@
 import {Component, input, InputSignal} from '@angular/core';
 import {ClientComment} from '../../model/client/client-comment';
-import {JsonPipe} from '@angular/common';
+import {DatePipe, JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'app-user-comment',
   imports: [
-    JsonPipe
+    DatePipe
   ],
   templateUrl: './user-comment.html',
   styleUrl: './user-comment.css'
