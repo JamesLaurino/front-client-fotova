@@ -6,23 +6,25 @@
   </div>
 }
 
-<div class="sidebar">
-  <h5>{{user.value()?.username}}</h5>
-  <nav class="nav flex-column">
-    <a class="nav-link" (click)="displayUserAddress()">Informations</a>
-    <a class="nav-link" (click)="displayUserOrder()" >Orders</a>
-    <a class="nav-link" (click)="displayUserComment()">Comments</a>
-    <a class="nav-link" (click)="displayEditAddress()">edit address</a>
-  </nav>
-
-  <div class="sidebar-footer">
-    <a (click)="logout()" class="d-block text-dark">Se déconnecter</a>
+<div class="user-panel d-flex flex-column flex-md-row min-vh-100">
+  <div class="sidebar p-3 bg-light border-end" style="min-width: 200px;">
+    <h5>{{ user.value()?.username }}</h5>
+    <nav class="nav flex-column">
+      <a class="nav-link" (click)="displayUserAddress()">Informations</a>
+      <a class="nav-link" (click)="displayUserOrder()">Orders</a>
+      <a class="nav-link" (click)="displayUserComment()">Comments</a>
+      <a class="nav-link" (click)="displayEditAddress()">Edit address</a>
+    </nav>
+    <div class="sidebar-footer mt-auto pt-3 border-top">
+      <a (click)="logout()" class="d-block text-dark">Se déconnecter</a>
+    </div>
   </div>
-</div>
 
-  <div class="main-content">
-    <h1>Bienvenue {{user.value()?.username}}</h1>
-    <div class="container d-flex justify-content-start mt-5 mb-5">
+  <!-- Main content -->
+  <div class="main-content flex-fill p-4">
+    <h1>Bienvenue {{ user.value()?.username }}</h1>
+
+    <div class="container-fluid mt-4">
       @if (activeComponent() === 'address') {
         <app-user-address [userAddressInput]="user.value()?.address"/>
       } @else if (activeComponent() === 'order') {
@@ -36,3 +38,4 @@
       }
     </div>
   </div>
+</div>

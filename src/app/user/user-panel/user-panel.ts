@@ -50,7 +50,7 @@ export class UserPanel {
   })
 
   onAddressUpdated() {
-    this.user.reload() // 🔁 recharge l'utilisateur à jour
+    this.user.reload();
   }
 
   logout() {
