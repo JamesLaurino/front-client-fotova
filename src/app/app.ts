@@ -4,10 +4,11 @@ import {NavBar} from './share/navbar/nav-bar';
 import {CartService} from './service/interfaces/cart-service';
 import {CartHelper} from './helper/cart-helper';
 import {LoginService} from './service/login/login-service';
+import {Toast} from './share/toast/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [NavBar, RouterOutlet],
+  imports: [NavBar, RouterOutlet, Toast],
   templateUrl: './app.html',
   styles: ''
 })

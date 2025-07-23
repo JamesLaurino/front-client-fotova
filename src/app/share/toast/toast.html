@@ -1,0 +1,15 @@
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  @if(toaster.message()) {
+    <div #toastElement id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img [src]="toaster.message()?.toastImageUrl" width="30px" height="30px" class="rounded me-2" alt="...">
+        <strong class="me-auto">{{toaster.message()?.toastTitle}}</strong>
+        <small>{{toaster.message()?.toastTime}}</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        {{toaster.message()?.toastMessage}}
+      </div>
+    </div>
+  }
+</div>
