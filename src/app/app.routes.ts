@@ -8,12 +8,14 @@ import {AuthGuard} from './core/auth-guard';
 import {Login} from './connection/login/login';
 import {CheckoutGuard} from './core/checkout-guard';
 import {UserPanel} from './user/user-panel/user-panel';
+import {Register} from './connection/register/register';
 
 export const routes: Routes = [
   {path:'', component:Landing},
   {path:'product/:id', component:ProductDetail},
   {path:'products', component: ProductList},
   {path:'cart', component: Cart},
+  {path:'register', component: Register},
   {path:'login', component: Login},
   {
     path:'user',

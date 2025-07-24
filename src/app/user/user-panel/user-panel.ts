@@ -55,6 +55,7 @@ export class UserPanel {
 
   logout() {
     this.#loginService.logout();
+    window.location.reload();
     this.#router.navigate(['/']);
   }
 

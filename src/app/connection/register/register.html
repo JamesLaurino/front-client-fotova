@@ -1,1 +1,80 @@
-<p>register works!</p>
+<div class="container mt-5 shadow rounded p-4" style="max-width: 700px;">
+  <div class="row justify-content-center mb-3">
+    <div class="col-7 offset-4 text-left">
+      <div>
+        <p class="h4">Registration Page</p>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row justify-content-center">
+      <div class="col-6 text-center">
+        <div class="mat-input-field">
+          <input formControlName="email" type="text" class="mat-text" id="email">
+          <label class="mat-label" for="email">email</label>
+        </div>
+        @if(email.hasError('required') && email.dirty) {
+          <div class="text-danger">
+            Veuillez renseigner une adresse email
+          </div>
+        }
+
+        @if(email.hasError('email') && email.dirty) {
+          <div class="text-danger">
+            Adresse email invalide
+          </div>
+        }
+      </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+      <div class="col-6 text-center">
+        <div class="mat-input-field">
+          <input formControlName="username" type="text" class="mat-text" id="username">
+          <label class="mat-label" for="username">username</label>
+        </div>
+        @if(username.hasError('required') && username.dirty) {
+          <div class="text-danger">
+            Veuillez renseigner un nom
+          </div>
+        }
+
+        @if(username.hasError('minlength') && username.dirty) {
+          <div class="text-danger">
+            Nombre de caractère insufissant
+          </div>
+        }
+      </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+      <div class="col-6 text-center">
+        <div class="mat-input-field">
+          <input formControlName="password" type="text" class="mat-text" id="password">
+          <label class="mat-label" for="password">password</label>
+        </div>
+        @if(password.hasError('required') && password.dirty) {
+          <div class="text-danger">
+            Veuillez renseigner un mot de passe
+          </div>
+        }
+
+        @if(password.hasError('minlength') && password.dirty) {
+          <div class="text-danger">
+            Nombre de caractère insufissant
+          </div>
+        }
+      </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+      <div class="col-4 text-center">
+        <div>
+          <button [disabled]="form.invalid" class="btn btn-success">Register</button>
+        </div>
+      </div>
+      <div class="col-4 text-center">
+        <div>
+          <button class="fs-6 fw-bold btn btn-dark text-white">login</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
