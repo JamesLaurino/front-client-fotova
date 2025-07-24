@@ -1,0 +1,22 @@
+@if (categories.isLoading()) {
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+}
+
+<div class="container mt-5 mb-5">
+  <div class="row">
+    @for (category of categories.value(); track category.id)
+    {
+      <div (click)="goToCategoryDetails(category.id)" class="col-lg-4 col-md-6 col-sm-12 mb-3" style="cursor: pointer;">
+        <div class="container d-flex justify-content-center flex-column" style="width:350px;height: 350px;">
+          <span appProductBorder class="shadow p-3 h-75 d-flex justify-content-center align-items-center">
+            <p class="text-center h2"> <strong> {{category.name}} </strong> </p>
+          </span>
+        </div>
+      </div>
+    }
+  </div>
+</div>

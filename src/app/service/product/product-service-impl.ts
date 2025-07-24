@@ -18,4 +18,8 @@ export class ProductServiceImpl extends ProductService {
   getProductById(productId: number): Observable<ProductApiResponse> {
     return this.#http.get<ProductApiResponse>(this.#API_URL + '/product/' + productId);
   }
+
+  getProductsByCategoryId(categoryId: number): Observable<ProductsApiResponse> {
+    return this.#http.get<ProductsApiResponse>(this.#API_URL + '/products/category/' + categoryId);
+  }
 }
