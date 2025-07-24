@@ -18,6 +18,15 @@ export class UserService
     return this.#http.get<OrderApiResponse>(this.#API_URL + '/order-products/' + email);
   }
 
+  addAddressToUser(address:Omit<ClientAddress, 'id'>) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.#http.post<ClientResponseApi>(this.#API_URL + '/client/address', address,{ headers });
+  }
+
   updateAddressInformation(address:Omit<ClientAddress, 'id'>) {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({

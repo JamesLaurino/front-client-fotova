@@ -1,20 +1,8 @@
-import {
-  Component,
-  ElementRef, EventEmitter,
-  inject,
-  input,
-  InputSignal,
-  OnInit, Output,
-  signal,
-  ViewChild,
-  WritableSignal
-} from '@angular/core';
+import {Component, EventEmitter, inject, input, InputSignal, OnInit, Output} from '@angular/core';
 import {ClientAddress} from '../../model/client/client-address';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {UserService} from '../../service/user/user-service';
-import {ToasterModel} from '../../model/toaster/toaster-model';
-
-declare var bootstrap: any;
+import {ToasterService} from '../../service/toaster/toasterService';
 
 @Component({
   selector: 'app-user-edit',
@@ -28,18 +16,9 @@ export class UserEdit implements OnInit
 {
   userAddressInput:InputSignal<ClientAddress | undefined> = input.required<ClientAddress | undefined>();
   readonly #userService = inject(UserService);
-
-  @ViewChild('toastElement') toastElement!: ElementRef;
-  private toastInstance: any;
+  private toasterService = inject(ToasterService);
 
   @Output() addressUpdated = new EventEmitter<void>();
-
-  protected toasterMessage:WritableSignal<ToasterModel> = signal({
-    toastTitle: 'Succès',
-    toastTime: 'Just now',
-    toastImageUrl: '/fotova/check.jpg',
-    toastMessage: 'Mise à jour effectuée avec succès.'
-  });
 
   form= new FormGroup({
     street: new FormControl('',
@@ -101,22 +80,47 @@ export class UserEdit implements OnInit
       country:this.country.value
     }
 
-    this.#userService.updateAddressInformation(address).subscribe({
+    if(this.userAddressInput() == null) {
+      this.#userService.addAddressToUser(address).subscribe({
       next: (response) =>
       {
         this.addressUpdated.emit();
-        this.toastInstance = new bootstrap.Toast(this.toastElement.nativeElement);
-        this.toastInstance.show();
+        this.toasterService.show({
+          toastTitle: 'Succès',
+          toastTime: 'Just now',
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: 'Adresse ajoutée avec success.'
+        });
       },
       error: (error) => {
-        this.toasterMessage.set({
+        this.toasterService.show({
+          toastTitle: 'Error',
+          toastTime: 'Just now',
+          toastImageUrl: '/fotova/error.png',
+          toastMessage: "Une erreur est survenue lors de l'ajout de l'adresse."
+        });
+      }
+      })
+    }
+    else
+      this.#userService.updateAddressInformation(address).subscribe({
+      next: (response) =>
+      {
+        this.addressUpdated.emit();
+        this.toasterService.show({
+          toastTitle: 'Succès',
+          toastTime: 'Just now',
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: 'Mise à jour effectuée avec succès.'
+        });
+      },
+      error: (error) => {
+        this.toasterService.show({
           toastTitle: 'Error',
           toastTime: 'Just now',
           toastImageUrl: '/fotova/error.png',
           toastMessage: 'La mise à jour échouée.'
         });
-        this.toastInstance = new bootstrap.Toast(this.toastElement.nativeElement);
-        this.toastInstance.show();
       }
     });
   }
