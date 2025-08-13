@@ -11,6 +11,7 @@ import {UserPanel} from './user/user-panel/user-panel';
 import {Register} from './connection/register/register';
 import {CategoryList} from './category/category-list/category-list';
 import {CategoryDetail} from './category/category-detail/category-detail';
+import {Contact} from './contact/contact/contact';
 
 export const routes: Routes = [
   {path:'', component:Landing},
@@ -20,6 +21,7 @@ export const routes: Routes = [
   {path:'register', component: Register},
   {path:'categories', component: CategoryList},
   {path:'category/:id', component: CategoryDetail},
+  {path:'contact', component: Contact},
   {path:'login', component: Login},
   {
     path:'user',
