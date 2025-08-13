@@ -1,4 +1,4 @@
-import {Component, inject, input, InputSignal} from '@angular/core';
+import {Component, EventEmitter, inject, input, InputSignal, Output} from '@angular/core';
 import {ClientComment} from '../../model/client/client-comment';
 import {DatePipe} from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -20,6 +20,8 @@ export class UserComment {
   userCommentsInput:InputSignal<ClientComment[] | undefined> = input.required<ClientComment[] | undefined>();
   readonly #userService = inject(UserService)
   private toasterService = inject(ToasterService);
+
+  @Output() commentsUpdated = new EventEmitter<void>();
 
   readonly form = new FormGroup({
     header: new FormControl("",
@@ -53,13 +55,13 @@ export class UserComment {
     this.#userService.addUserComment(commentClient).subscribe({
       next: (response: CommentClientResponseApi) => {
         if (response.responseCode === 200) {
+          this.commentsUpdated.emit();
           this.toasterService.show({
             toastTitle: 'Comments success',
             toastTime: 'il y a 1 min',
             toastImageUrl: '/fotova/check.jpg',
             toastMessage: 'Commentaire ajouté avec success'
           })
-          window.location.reload();
         } else {
           this.toasterService.show({
             toastTitle: 'Comments error',

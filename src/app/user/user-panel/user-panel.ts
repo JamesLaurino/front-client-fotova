@@ -53,6 +53,10 @@ export class UserPanel {
     this.user.reload();
   }
 
+  onCommentUpdated() {
+    this.user.reload();
+  }
+
   logout() {
     this.#loginService.logout();
     window.location.reload();

@@ -30,7 +30,9 @@
       } @else if (activeComponent() === 'order') {
         <app-user-order [userOrdersInput]="orders.value()" />
       } @else if (activeComponent() === 'comment') {
-        <app-user-comment [userCommentsInput]="user.value()?.comments"/>
+        <app-user-comment
+          (commentsUpdated)="onCommentUpdated()"
+          [userCommentsInput]="user.value()?.comments"/>
       } @else if (activeComponent() === 'edit-address') {
         <app-user-edit
           (addressUpdated)="onAddressUpdated()"
