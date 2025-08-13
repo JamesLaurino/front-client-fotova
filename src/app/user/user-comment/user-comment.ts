@@ -5,6 +5,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {UserService} from '../../service/user/user-service';
 import {CommentClientResponseApi} from '../../model/comment/comment-client-response-api';
 import {ToasterService} from '../../service/toaster/toasterService';
+import {CommentService} from '../../service/comment/commentService';
 
 @Component({
   selector: 'app-user-comment',
@@ -12,14 +13,14 @@ import {ToasterService} from '../../service/toaster/toasterService';
     DatePipe,
     ReactiveFormsModule
   ],
-  templateUrl: './user-comment.html',
-  styleUrl: './user-comment.css'
+  templateUrl: './user-comment.html'
 })
 export class UserComment {
 
   userCommentsInput:InputSignal<ClientComment[] | undefined> = input.required<ClientComment[] | undefined>();
   readonly #userService = inject(UserService)
   private toasterService = inject(ToasterService);
+  private commentService = inject(CommentService);
 
   @Output() commentsUpdated = new EventEmitter<void>();
 
@@ -82,5 +83,17 @@ export class UserComment {
       }
     });
 
+  }
+
+  deleteComment(CommentId: number) {
+    this.commentService.deleteCommentById(CommentId).subscribe(() => {
+      this.toasterService.show({
+        toastTitle: 'Comments',
+        toastTime: 'il y a 1 min',
+        toastImageUrl: '/fotova/check.jpg',
+        toastMessage: "Commentaire supprimé avec success"
+      })
+      this.commentsUpdated.emit();
+    })
   }
 }
