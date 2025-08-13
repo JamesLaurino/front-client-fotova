@@ -1,1 +1,83 @@
-<p>checkout works!</p>
+<div class="checkout-container">
+  <div class="checkout-header">
+    <h1 class="checkout-title">Récapitulatif de votre commande</h1>
+    <p class="checkout-subtitle">Vérifiez vos articles avant de procéder au paiement</p>
+  </div>
+
+  <div class="checkout-content">
+    <!-- Panier vide -->
+    <div *ngIf="cartProducts.length === 0" class="empty-cart">
+      <div class="empty-cart-icon">🛒</div>
+      <h2>Votre panier est vide</h2>
+      <p>Ajoutez des produits pour continuer</p>
+      <button class="btn-continue-shopping" (click)="continueShopping()">
+        Continuer mes achats
+      </button>
+    </div>
+
+    <!-- Liste des produits -->
+    <div *ngIf="cartProducts.length > 0" class="checkout-items">
+      <div class="products-section">
+        <h2 class="section-title">Vos articles</h2>
+
+        <div class="product-list">
+          <div *ngFor="let product of cartProducts" class="product-item">
+            <div class="product-image">
+              <img [src]="urlHelper(product.url)" [alt]="product.name" onerror="this.src='/assets/images/default-product.png'">
+            </div>
+
+            <div class="product-details">
+              <h3 class="product-name">{{ product.name }}</h3>
+              <div class="product-info">
+                <span class="product-price">{{ product.price | currency:'EUR':'symbol':'1.2-2' }}</span>
+                <span class="product-quantity">x {{ product.quantity }}</span>
+              </div>
+            </div>
+
+            <div class="product-total">
+              <span class="item-total">{{ getItemTotal(product) | currency:'EUR':'symbol':'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Résumé de commande -->
+      <div class="order-summary">
+        <div class="summary-card">
+          <h2 class="section-title">Résumé</h2>
+
+          <div class="summary-line">
+            <span>Sous-total ({{ getTotalItems() }} articles)</span>
+            <span>{{ totalPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+          </div>
+
+          <div class="summary-line">
+            <span>Livraison</span>
+            <span class="free">Gratuite</span>
+          </div>
+
+          <div class="summary-line summary-total">
+            <span>Total</span>
+            <span class="total-amount">{{ totalPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+          </div>
+
+          <button class="btn-checkout" (click)="processPayment()" [disabled]="isProcessing">
+            <span *ngIf="!isProcessing" class="btn-text">
+              <i class="payment-icon">💳</i>
+              Procéder au paiement
+            </span>
+            <span *ngIf="isProcessing" class="btn-loading">
+              <i class="loading-spinner"></i>
+              Traitement en cours...
+            </span>
+          </button>
+
+          <div class="payment-security">
+            <i class="security-icon">🔒</i>
+            <span>Paiement sécurisé par Stripe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
