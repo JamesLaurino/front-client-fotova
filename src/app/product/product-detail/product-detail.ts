@@ -1,5 +1,5 @@
 import {Component, ElementRef, inject, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../../service/interfaces/product-service';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {map, tap} from 'rxjs';
@@ -11,8 +11,7 @@ import {CART_RULES} from '../../model/cart/cart-rule';
 import {CartService} from '../../service/interfaces/cart-service';
 import {CartHelper} from '../../helper/cart-helper';
 import cartProductHelper from '../../helper/cart-product-helper';
-
-declare var bootstrap: any;
+import {ToasterService} from '../../service/toaster/toasterService';
 
 @Component({
   selector: 'app-product-detail',
@@ -27,17 +26,16 @@ declare var bootstrap: any;
 export class ProductDetail {
 
   readonly #route = inject(ActivatedRoute);
+  readonly #router = inject(Router)
   readonly #productService = inject(ProductService)
   readonly #cartService = inject(CartService)
+  toasterService = inject(ToasterService)
   cartHelper = inject(CartHelper)
 
   private productId = this.#route.snapshot.params['id'];
   protected readonly urlHelper = urlHelper;
 
   @ViewChild('imgSwitch') imgSwitch!: ElementRef;
-
-  @ViewChild('toastElement') toastElement!: ElementRef;
-  private toastInstance: any;
 
   readonly form= new FormGroup({
     cartQuantity: new FormControl(1,
@@ -75,8 +73,16 @@ export class ProductDetail {
 
     this.cartHelper.cartsQuantity.update((n:number) => n + Number(this.cartQuantity.value));
 
-    this.toastInstance = new bootstrap.Toast(this.toastElement.nativeElement);
-    this.toastInstance.show();
+    this.toasterService.show({
+      toastMessage: "Produit ajouté au panier !",
+      toastTitle:"Pannier mis à jours",
+      toastImageUrl :'/fotova/check.jpg',
+      toastTime : 'il y a 1 min'
+    });
+  }
+
+  goToProductList() {
+    this.#router.navigate(['/products']);
   }
 
   decrementCartQuantity() {

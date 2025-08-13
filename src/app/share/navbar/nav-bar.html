@@ -1,26 +1,20 @@
 <nav class="navbar navbar-expand-lg" style="background-color: #403d3d; z-index: 1;">
   <div class="container-fluid">
-    <a (click)="goToAllProducts()" class="navbar-brand text-white">Fotova-creation</a>
+    <a (click)="goToLandingPage()" class="navbar-brand text-white" style="cursor: pointer;">Fotova-creation</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+          <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            More
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToCategories()" >Categories</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToAllProducts()" >Products</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToLandingPage()" >Accueil</a></li>
           </ul>
         </li>
       </ul>
@@ -29,6 +23,12 @@
         <span (click)="goToUserPanel()" class="me-3" style="cursor: pointer;">
           <img src="/fotova/user.png" width="30px" height="30px" class="rounded-circle bg-white" alt="..." />
         </span>
+      }
+      @else {
+        <!-- Icone du user non connecté -->
+        <div (click)="goToLogin()" class="position-relative p-2 me-2 mt-3" style="cursor: pointer;">
+          <p class="text-white">Se connecter</p>
+        </div>
       }
 
       <!-- Icône du panier avec badge -->
@@ -40,10 +40,10 @@
         </svg>
         @if(cartHelper.cartsQuantityComputed() > 0) {
           <span class="position-absolute top-25 start-75 translate-middle
-                   badge rounded-pill bg-danger"
+                badge rounded-pill bg-danger"
                 style="font-size: 0.6rem; padding: 4px 6px; min-width: 18px; text-align: center;">
-        {{ cartHelper.cartsQuantityComputed() }}
-      </span>
+            {{ cartHelper.cartsQuantityComputed() }}
+          </span>
         }
       </div>
     </div>

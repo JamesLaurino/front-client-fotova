@@ -16,15 +16,26 @@ export class NavBar {
   public loginHelper = inject(LoginHelper)
 
   goToCart() {
-    console.log('goToCart');
     this.#router.navigate(['/cart']);
   }
 
-  goToAllProducts() {
+  goToLandingPage() {
     this.#router.navigate(['/']);
+  }
+
+  goToAllProducts() {
+    this.#router.navigate(['/products']);
   }
 
   goToUserPanel() {
     this.#router.navigate(['/user']);
+  }
+
+  goToLogin() {
+    this.#router.navigate(['/login']);
+  }
+
+  goToCategories() {
+    this.#router.navigate(['/categories']);
   }
 }

@@ -1,11 +1,11 @@
-import {Component, ElementRef, inject, ViewChild} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LoginApiInput} from '../../model/login/login-api-input';
 import {LoginService} from '../../service/login/login-service';
 import {LoginApiResponse} from '../../model/login/login-api-response';
 import {Router} from '@angular/router';
+import {ToasterService} from '../../service/toaster/toasterService';
 
-declare var bootstrap: any;
 
 @Component({
   selector: 'app-login',
@@ -33,10 +33,8 @@ export class Login
     )
   });
 
-  @ViewChild('toastElement') toastElement!: ElementRef;
-  private toastInstance: any;
-
   protected loginService = inject(LoginService)
+  toasterService = inject(ToasterService)
   readonly #router = inject(Router)
 
   get email() : FormControl {
@@ -48,9 +46,12 @@ export class Login
   }
 
   showToast(message: string) {
-    this.toastElement.nativeElement.querySelector('.toast-body').textContent = message;
-    this.toastInstance = new bootstrap.Toast(this.toastElement.nativeElement);
-    this.toastInstance.show();
+    this.toasterService.show({
+      toastMessage: message,
+      toastTitle:"Une erreur est survenue",
+      toastImageUrl :'/fotova/error.png',
+      toastTime : 'il y a 1 min'
+    });
   }
 
   onSubmit()
