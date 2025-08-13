@@ -1,11 +1,10 @@
-import {Component, computed, input, InputSignal, signal} from '@angular/core';
+import {Component, computed, input, InputSignal} from '@angular/core';
 import {OrderModel} from '../../model/order/Order-model';
-import {CurrencyPipe, DatePipe, JsonPipe} from '@angular/common';
+import {CurrencyPipe, DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-user-order',
   imports: [
-    JsonPipe,
     DatePipe,
     CurrencyPipe,
   ],
