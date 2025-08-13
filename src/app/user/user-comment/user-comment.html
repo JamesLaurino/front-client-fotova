@@ -1,4 +1,52 @@
 <div class="container py-5">
+  <h2 class="mb-4 text-center">Ajouter un commentaire</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input formControlName="header" type="text" class="form-control" id="header" placeholder="Titre du commentaire">
+                  <label for="header">Titre du commentaire</label>
+                </div>
+                @if(header.hasError('required') && header.dirty) {
+                  <div class="text-danger">
+                    Veuillez renseigner un titre
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <textarea formControlName="body" class="form-control" id="body" placeholder="Contenu du commentaire" rows="4" style="height: 100px;"></textarea>
+                  <label for="body">Contenu du commentaire</label>
+                </div>
+                @if(body.hasError('required') && body.dirty) {
+                  <div class="text-danger">
+                    Veuillez renseigner un contenu
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12 text-center">
+                <button [disabled]="form.invalid" class="btn btn-success">Ajouter le commentaire</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5">
   <h2 class="mb-4 text-center">Liste des commentaires postés</h2>
   <div class="row justify-content-center">
     <div class="col-lg-8">

@@ -5,6 +5,7 @@ import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {OrderApiResponse} from '../../model/order/order-api-response';
 import {ClientAddress} from '../../model/client/client-address';
+import {CommentClientResponseApi} from '../../model/comment/comment-client-response-api';
 
 @Injectable({providedIn: 'root'})
 export class UserService
@@ -43,5 +44,14 @@ export class UserService
       'Authorization': `Bearer ${token}`
     });
     return this.#http.get<ClientResponseApi>(this.#BASE_API_URL + '/api/v1/user', { headers });
+  }
+
+  addUserComment(commentUser:CommentClient):Observable<CommentClientResponseApi> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.#http.post<CommentClientResponseApi>(this.#API_URL + '/client/comment', commentUser,{ headers });
   }
 }
