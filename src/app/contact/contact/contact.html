@@ -7,6 +7,15 @@
     </p>
   </div>
 
+  <!-- Loader -->
+  @if(isLoading().valueOf()) {
+    <div class="d-flex justify-content-center mt-3 mb-3">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  }
+
   <div class="row g-4">
     <!-- Informations -->
     <div class="col-md-5">
@@ -48,24 +57,64 @@
       <div class="card shadow-sm h-100">
         <div class="card-body">
           <h5 class="card-title mb-4">Envoyez-nous un message</h5>
-          <form>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="nom" class="form-label">Nom</label>
-              <input type="text" class="form-control" id="nom" placeholder="Votre nom" required>
+              <input type="text" class="form-control" id="nom" formControlName="nom" placeholder="Votre nom">
+              @if(nom.hasError('required') && nom.dirty) {
+                <div class="text-danger mt-1">
+                  Veuillez renseigner votre nom
+                </div>
+              }
+              @if(nom.hasError('minlength') && nom.dirty) {
+                <div class="text-danger mt-1">
+                  Le nom doit contenir au moins 2 caractères
+                </div>
+              }
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Adresse e-mail</label>
-              <input type="email" class="form-control" id="email" placeholder="exemple@email.com" required>
+              <input type="email" class="form-control" id="email" formControlName="email" placeholder="exemple@email.com">
+              @if(email.hasError('required') && email.dirty) {
+                <div class="text-danger mt-1">
+                  Veuillez renseigner une adresse email
+                </div>
+              }
+              @if(email.hasError('email') && email.dirty) {
+                <div class="text-danger mt-1">
+                  Adresse email invalide
+                </div>
+              }
             </div>
             <div class="mb-3">
               <label for="sujet" class="form-label">Sujet</label>
-              <input type="text" class="form-control" id="sujet" placeholder="Sujet de votre message" required>
+              <input type="text" class="form-control" id="sujet" formControlName="sujet" placeholder="Sujet de votre message">
+              @if(sujet.hasError('required') && sujet.dirty) {
+                <div class="text-danger mt-1">
+                  Veuillez renseigner le sujet
+                </div>
+              }
+              @if(sujet.hasError('minlength') && sujet.dirty) {
+                <div class="text-danger mt-1">
+                  Le sujet doit contenir au moins 3 caractères
+                </div>
+              }
             </div>
             <div class="mb-3">
               <label for="message" class="form-label">Message</label>
-              <textarea class="form-control" id="message" rows="5" placeholder="Votre message..." required></textarea>
+              <textarea class="form-control" id="message" formControlName="message" rows="5" placeholder="Votre message..."></textarea>
+              @if(message.hasError('required') && message.dirty) {
+                <div class="text-danger mt-1">
+                  Veuillez renseigner votre message
+                </div>
+              }
+              @if(message.hasError('minlength') && message.dirty) {
+                <div class="text-danger mt-1">
+                  Le message doit contenir au moins 10 caractères
+                </div>
+              }
             </div>
-            <button type="submit" class="btn btn-dark px-4">Envoyer</button>
+            <button type="submit" class="btn btn-dark px-4" [disabled]="form.invalid">Envoyer</button>
           </form>
         </div>
       </div>
