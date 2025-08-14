@@ -8,13 +8,13 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
           <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            More
+            {{ i18n.getTranslation('MORE') }}
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToCategories()" >Categories</a></li>
-            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToAllProducts()" >Products</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToCategories()" >{{ i18n.getTranslation('CATEGORIES') }}</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToAllProducts()" >{{ i18n.getTranslation('PRODUCTS') }}</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToLandingPage()" >Accueil</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToLandingPage()" >{{ i18n.getTranslation('HOME') }}</a></li>
           </ul>
         </li>
       </ul>
@@ -27,7 +27,7 @@
       @else {
         <!-- Icone du user non connecté -->
         <div (click)="goToLogin()" class="position-relative p-2 me-2 mt-3" style="cursor: pointer;">
-          <p class="text-white">Se connecter</p>
+          <p class="text-white">{{ i18n.getTranslation('LOGIN') }}</p>
         </div>
       }
 
@@ -45,6 +45,15 @@
             {{ cartHelper.cartsQuantityComputed() }}
           </span>
         }
+      </div>
+
+      <!-- Selecteur pour la langue -->
+      <div class="position-relative p-2 me-2">
+        <select id="language-select" (change)="changeLanguage($event)"
+                class="form-select rounded" aria-label="Default select example">
+          <option value="fr">FR</option>
+          <option value="en">EN</option>
+        </select>
       </div>
     </div>
   </div>

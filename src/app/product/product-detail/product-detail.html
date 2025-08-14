@@ -1,7 +1,7 @@
 @if (product.isLoading()) {
   <div class="d-flex justify-content-center mt-5">
     <div class="spinner-border text-success" role="status">
-      <span class="visually-hidden">Loading...</span>
+      <span class="visually-hidden">{{ i18n.getTranslation('LOADING') }}</span>
     </div>
   </div>
 }
@@ -36,7 +36,7 @@
                  [src]="urlHelper(product.value().url)"
                  [alt]="product.value().name" width="200px" height="200px">
 
-            <p>Available in stock : {{product.value().quantity}}</p>
+            <p>{{ i18n.getTranslation('AVAILABLE_IN_STOCK') }} : {{product.value().quantity}}</p>
 
             <div class="d-flex justify-content-evenly">
               <button type="button"
@@ -54,21 +54,21 @@
 
             @if(cartQuantity.hasError('required')) {
                 <div class="text-danger">
-                      Veuillez renseigner une quantité
+                      {{ i18n.getTranslation('PLEASE_ENTER_QUANTITY') }}
                 </div>
             }
 
             @if(cartQuantity.hasError('minlength')) {
               <div class="text-danger">
-                Une quantité minimale de 1 est requise
+                {{ i18n.getTranslation('MINIMUM_QUANTITY_REQUIRED') }}
               </div>
             }
 
-            <p class="text-center mt-3"> Price : {{product.value().price | currency: 'EUR'}} </p>
-            <button [disabled]="form.invalid" class="btn btn-success w-100">Add to cart</button>
+            <p class="text-center mt-3"> {{ i18n.getTranslation('PRICE') }} : {{product.value().price | currency: 'EUR'}} </p>
+            <button [disabled]="form.invalid" class="btn btn-success w-100">{{ i18n.getTranslation('ADD_TO_CART') }}</button>
         </form>
         <div class="mt-3">
-          <button (click)="goToProductList()" class="fs-6 fw-bold btn btn-dark text-white">Products</button>
+          <button (click)="goToProductList()" class="fs-6 fw-bold btn btn-dark text-white">{{ i18n.getTranslation('PRODUCTS') }}</button>
         </div>
       </div>
     </div>

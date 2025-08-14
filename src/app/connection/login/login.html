@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <div class="col-6 offset-4 text-left">
       <div>
-        <p class="h4">Login Page</p>
+        <p class="h4">{{ i18n.getTranslation('LOGIN_PAGE') }}</p>
       </div>
     </div>
   </div>
@@ -11,17 +11,17 @@
         <div class="col-6 text-center">
           <div class="mat-input-field">
             <input formControlName="email" type="text" class="mat-text" id="email">
-            <label class="mat-label" for="email">email</label>
+            <label class="mat-label" for="email">{{ i18n.getTranslation('EMAIL') }}</label>
           </div>
           @if(email.hasError('required') && email.dirty) {
             <div class="text-danger">
-              Veuillez renseigner une adresse email
+              {{ i18n.getTranslation('PLEASE_ENTER_EMAIL') }}
             </div>
           }
 
           @if(email.hasError('email') && email.dirty) {
             <div class="text-danger">
-              Adresse email invalide
+              {{ i18n.getTranslation('INVALID_EMAIL_ADDRESS') }}
             </div>
           }
         </div>
@@ -30,17 +30,17 @@
         <div class="col-6 text-center">
           <div class="mat-input-field">
             <input formControlName="password" type="password" class="mat-text" id="password">
-            <label class="mat-label" for="password">password</label>
+            <label class="mat-label" for="password">{{ i18n.getTranslation('PASSWORD') }}</label>
           </div>
           @if(password.hasError('required') && password.dirty) {
             <div class="text-danger">
-              Veuillez renseigner un mot de passe
+              {{ i18n.getTranslation('PLEASE_ENTER_PASSWORD') }}
             </div>
           }
 
           @if(password.hasError('minlength') && password.dirty) {
             <div class="text-danger">
-              Nombre de caractère insufissant
+              {{ i18n.getTranslation('INSUFFICIENT_CHARACTERS') }}
             </div>
           }
         </div>
@@ -48,12 +48,16 @@
       <div class="row justify-content-center mt-4">
         <div class="col-4 text-center">
           <div>
-            <button [disabled]="form.invalid" class="btn btn-success">submit</button>
+            <button [disabled]="form.invalid" class="btn btn-success">
+              {{ i18n.getTranslation('SUBMIT') }}
+            </button>
           </div>
         </div>
       <div class="col-4 text-center">
         <div>
-          <button (click)="goToRegister()" class="fs-6 fw-bold btn btn-dark text-white">Register</button>
+          <button (click)="goToRegister()" class="fs-6 fw-bold btn btn-dark text-white">
+            {{ i18n.getTranslation('REGISTER') }}
+          </button>
         </div>
       </div>
     </div>

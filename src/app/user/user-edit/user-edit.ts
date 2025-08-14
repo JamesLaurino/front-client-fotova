@@ -3,6 +3,7 @@ import {ClientAddress} from '../../model/client/client-address';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {UserService} from '../../service/user/user-service';
 import {ToasterService} from '../../service/toaster/toasterService';
+import {I18nService} from '../../service/i18n/i18nService';
 
 @Component({
   selector: 'app-user-edit',
@@ -17,6 +18,7 @@ export class UserEdit implements OnInit
   userAddressInput:InputSignal<ClientAddress | undefined> = input.required<ClientAddress | undefined>();
   readonly #userService = inject(UserService);
   private toasterService = inject(ToasterService);
+  readonly i18n = inject(I18nService);
 
   @Output() addressUpdated = new EventEmitter<void>();
 

@@ -1,0 +1,12 @@
+<label for="language-select">
+  {{ i18n.getTranslation('language_label') }} :
+</label>
+<select id="language-select" (change)="changeLanguage($event)">
+  <option value="fr">Français</option>
+  <option value="en">English</option>
+</select>
+
+<br><br>
+
+<h1>{{ i18n.getTranslation('CART_IS_EMPTY') }}</h1>
+<p>{{ i18n.getTranslation('CART_IS_EMPTY') }}</p>

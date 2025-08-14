@@ -6,6 +6,7 @@ import {UserService} from '../../service/user/user-service';
 import {CommentClientResponseApi} from '../../model/comment/comment-client-response-api';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {CommentService} from '../../service/comment/commentService';
+import {I18nService} from '../../service/i18n/i18nService';
 
 @Component({
   selector: 'app-user-comment',
@@ -21,6 +22,7 @@ export class UserComment {
   readonly #userService = inject(UserService)
   private toasterService = inject(ToasterService);
   private commentService = inject(CommentService);
+  readonly i18n = inject(I18nService);
 
   @Output() commentsUpdated = new EventEmitter<void>();
 

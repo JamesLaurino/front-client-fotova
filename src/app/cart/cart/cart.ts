@@ -7,6 +7,7 @@ import urlHelper from '../../helper/url-helper';
 import {CartProduct} from '../../model/cart/cart-product';
 import {Router} from '@angular/router';
 import {CartHelper} from '../../helper/cart-helper';
+import {I18nService} from '../../service/i18n/i18nService';
 
 @Component({
   selector: 'app-cart',
@@ -22,7 +23,7 @@ export class Cart
   readonly #router = inject(Router)
   public cartHelper = inject(CartHelper)
   protected readonly urlHelper = urlHelper;
-
+  readonly i18n = inject(I18nService);
 
   carts = rxResource({
     stream: () => {

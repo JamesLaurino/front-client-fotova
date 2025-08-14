@@ -5,6 +5,7 @@ import {RegisterService} from '../../service/register/RegisterService';
 import {RegisterApiInput} from '../../model/register/register-api-input';
 import {RegisterApiResponse} from '../../model/register/register-api-response';
 import {ToasterService} from '../../service/toaster/toasterService';
+import {I18nService} from '../../service/i18n/i18nService';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,7 @@ import {ToasterService} from '../../service/toaster/toasterService';
 })
 export class Register {
 
+  readonly i18n = inject(I18nService);
   readonly form= new FormGroup({
     email: new FormControl("",
       [

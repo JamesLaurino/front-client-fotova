@@ -1,9 +1,9 @@
 <div class="container py-5">
   <!-- Titre -->
   <div class="text-center mb-5">
-    <h1 class="fw-bold">Contactez-nous</h1>
+    <h1 class="fw-bold">{{ i18n.getTranslation('CONTACT_US') }}</h1>
     <p class="text-muted">
-      Fotova-Création – Artisanat en cachemire : bonnets, écharpes, gants et plus encore.
+      {{ i18n.getTranslation('FOTOVA_DESCRIPTION') }}
     </p>
   </div>
 
@@ -11,7 +11,7 @@
   @if(isLoading().valueOf()) {
     <div class="d-flex justify-content-center mt-3 mb-3">
       <div class="spinner-border text-success" role="status">
-        <span class="visually-hidden">Loading...</span>
+        <span class="visually-hidden">{{ i18n.getTranslation('LOADING') }}</span>
       </div>
     </div>
   }
@@ -21,9 +21,9 @@
     <div class="col-md-5">
       <div class="card shadow-sm h-100">
         <div class="card-body">
-          <h5 class="card-title mb-4">Coordonnées</h5>
+          <h5 class="card-title mb-4">{{ i18n.getTranslation('CONTACT_DETAILS') }}</h5>
           <p><i class="bi bi-geo-alt-fill text-primary me-2"></i>
-            Rue des Artisans 27, 1000 Bruxelles, Belgique
+            {{ i18n.getTranslation('ADDRESS_FULL') }}
           </p>
           <p><i class="bi bi-telephone-fill text-primary me-2"></i>
             <a href="tel:+3221234567" class="text-decoration-none text-dark">+32 2 123 45 67</a>
@@ -39,14 +39,14 @@
             </a>
           </p>
           <p><i class="bi bi-briefcase-fill text-primary me-2"></i>
-            N° TVA : BE0123.456.789
+            {{ i18n.getTranslation('VAT_NUMBER') }}
           </p>
           <hr>
-          <h6>Horaires</h6>
+          <h6>{{ i18n.getTranslation('OPENING_HOURS') }}</h6>
           <ul class="list-unstyled mb-0">
-            <li>Lun – Ven : 10h00 – 18h30</li>
-            <li>Samedi : 11h00 – 17h00</li>
-            <li>Dimanche : fermé</li>
+            <li>{{ i18n.getTranslation('MON_FRI_HOURS') }}</li>
+            <li>{{ i18n.getTranslation('SATURDAY_HOURS') }}</li>
+            <li>{{ i18n.getTranslation('SUNDAY_CLOSED') }}</li>
           </ul>
         </div>
       </div>
@@ -56,65 +56,65 @@
     <div class="col-md-7">
       <div class="card shadow-sm h-100">
         <div class="card-body">
-          <h5 class="card-title mb-4">Envoyez-nous un message</h5>
+          <h5 class="card-title mb-4">{{ i18n.getTranslation('SEND_US_A_MESSAGE') }}</h5>
           <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-              <label for="nom" class="form-label">Nom</label>
-              <input type="text" class="form-control" id="nom" formControlName="nom" placeholder="Votre nom">
+              <label for="nom" class="form-label">{{ i18n.getTranslation('NAME') }}</label>
+              <input type="text" class="form-control" id="nom" formControlName="nom" placeholder="{{ i18n.getTranslation('NAME') }}">
               @if(nom.hasError('required') && nom.dirty) {
                 <div class="text-danger mt-1">
-                  Veuillez renseigner votre nom
+                  {{ i18n.getTranslation('PLEASE_ENTER_NAME') }}
                 </div>
               }
               @if(nom.hasError('minlength') && nom.dirty) {
                 <div class="text-danger mt-1">
-                  Le nom doit contenir au moins 2 caractères
+                  {{ i18n.getTranslation('NAME_MIN_LENGTH') }}
                 </div>
               }
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Adresse e-mail</label>
-              <input type="email" class="form-control" id="email" formControlName="email" placeholder="exemple@email.com">
+              <label for="email" class="form-label">{{ i18n.getTranslation('EMAIL_ADDRESS') }}</label>
+              <input type="email" class="form-control" id="email" formControlName="email" placeholder="{{ i18n.getTranslation('EMAIL_ADDRESS') }}">
               @if(email.hasError('required') && email.dirty) {
                 <div class="text-danger mt-1">
-                  Veuillez renseigner une adresse email
+                  {{ i18n.getTranslation('PLEASE_ENTER_EMAIL') }}
                 </div>
               }
               @if(email.hasError('email') && email.dirty) {
                 <div class="text-danger mt-1">
-                  Adresse email invalide
+                  {{ i18n.getTranslation('INVALID_EMAIL_ADDRESS') }}
                 </div>
               }
             </div>
             <div class="mb-3">
-              <label for="sujet" class="form-label">Sujet</label>
-              <input type="text" class="form-control" id="sujet" formControlName="sujet" placeholder="Sujet de votre message">
+              <label for="sujet" class="form-label">{{ i18n.getTranslation('SUBJECT') }}</label>
+              <input type="text" class="form-control" id="sujet" formControlName="sujet" placeholder="{{ i18n.getTranslation('SUBJECT') }}">
               @if(sujet.hasError('required') && sujet.dirty) {
                 <div class="text-danger mt-1">
-                  Veuillez renseigner le sujet
+                  {{ i18n.getTranslation('PLEASE_ENTER_SUBJECT') }}
                 </div>
               }
               @if(sujet.hasError('minlength') && sujet.dirty) {
                 <div class="text-danger mt-1">
-                  Le sujet doit contenir au moins 3 caractères
+                  {{ i18n.getTranslation('SUBJECT_MIN_LENGTH') }}
                 </div>
               }
             </div>
             <div class="mb-3">
-              <label for="message" class="form-label">Message</label>
-              <textarea class="form-control" id="message" formControlName="message" rows="5" placeholder="Votre message..."></textarea>
+              <label for="message" class="form-label">{{ i18n.getTranslation('MESSAGE') }}</label>
+              <textarea class="form-control" id="message" formControlName="message" rows="5" placeholder="{{ i18n.getTranslation('MESSAGE') }}"></textarea>
               @if(message.hasError('required') && message.dirty) {
                 <div class="text-danger mt-1">
-                  Veuillez renseigner votre message
+                  {{ i18n.getTranslation('PLEASE_ENTER_MESSAGE') }}
                 </div>
               }
               @if(message.hasError('minlength') && message.dirty) {
                 <div class="text-danger mt-1">
-                  Le message doit contenir au moins 10 caractères
+                  {{ i18n.getTranslation('MESSAGE_MIN_LENGTH') }}
                 </div>
               }
             </div>
-            <button type="submit" class="btn btn-dark px-4" [disabled]="form.invalid">Envoyer</button>
+            <button type="submit" class="btn btn-dark px-4" [disabled]="form.invalid">{{ i18n.getTranslation('SEND') }}</button>
           </form>
         </div>
       </div>

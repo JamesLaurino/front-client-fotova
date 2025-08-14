@@ -5,6 +5,7 @@ import {LoginService} from '../../service/login/login-service';
 import {LoginApiResponse} from '../../model/login/login-api-response';
 import {Router} from '@angular/router';
 import {ToasterService} from '../../service/toaster/toasterService';
+import {I18nService} from '../../service/i18n/i18nService';
 
 
 @Component({
@@ -18,6 +19,8 @@ import {ToasterService} from '../../service/toaster/toasterService';
 })
 export class Login
 {
+
+  readonly i18n = inject(I18nService);
   readonly form= new FormGroup({
     email: new FormControl("",
       [

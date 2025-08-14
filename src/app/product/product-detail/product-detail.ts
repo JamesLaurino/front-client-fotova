@@ -12,6 +12,7 @@ import {CartService} from '../../service/interfaces/cart-service';
 import {CartHelper} from '../../helper/cart-helper';
 import cartProductHelper from '../../helper/cart-product-helper';
 import {ToasterService} from '../../service/toaster/toasterService';
+import {I18nService} from '../../service/i18n/i18nService';
 
 @Component({
   selector: 'app-product-detail',
@@ -31,6 +32,7 @@ export class ProductDetail {
   readonly #cartService = inject(CartService)
   toasterService = inject(ToasterService)
   cartHelper = inject(CartHelper)
+  readonly i18n = inject(I18nService);
 
   private productId = this.#route.snapshot.params['id'];
   protected readonly urlHelper = urlHelper;

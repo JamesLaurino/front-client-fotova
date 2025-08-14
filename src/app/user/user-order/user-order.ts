@@ -1,6 +1,7 @@
-import {Component, computed, input, InputSignal} from '@angular/core';
+import {Component, computed, inject, input, InputSignal} from '@angular/core';
 import {OrderModel} from '../../model/order/Order-model';
 import {CurrencyPipe, DatePipe} from '@angular/common';
+import {I18nService} from '../../service/i18n/i18nService';
 
 @Component({
   selector: 'app-user-order',
@@ -13,6 +14,7 @@ import {CurrencyPipe, DatePipe} from '@angular/common';
 })
 export class UserOrder {
   userOrdersInput:InputSignal<OrderModel[] | undefined> = input.required<OrderModel[] | undefined>();
+  readonly i18n = inject(I18nService);
 
   ordersOrdered = computed(() => {
     let myMap = new Map<number, OrderModel[]>();

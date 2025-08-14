@@ -9,6 +9,7 @@ import {UserOrder} from '../user-order/user-order';
 import {UserComment} from '../user-comment/user-comment';
 import {getEmailFromToken} from '../../helper/jwt-helper';
 import {UserEdit} from '../user-edit/user-edit';
+import {I18nService} from '../../service/i18n/i18nService';
 
 @Component({
   selector: 'app-user-panel',
@@ -27,6 +28,7 @@ export class UserPanel {
   readonly #router = inject(Router);
   readonly #loginService = inject(LoginService);
   activeComponent= signal("");
+  readonly i18n = inject(I18nService);
 
   user = rxResource({
     stream: () => {

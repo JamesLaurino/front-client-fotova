@@ -5,7 +5,7 @@
       <input formControlName="street" type="text" class="form-control" id="inputAddress" placeholder="Avenue briart">
       @if(street.hasError('required') && street.touched) {
         <div class="text-danger">
-          Veuillez renseigner une rue
+          {{ i18n.getTranslation('PLEASE_ENTER_STREET') }}
         </div>
       }
     </div>
@@ -14,7 +14,7 @@
       <input type="text" formControlName="city" class="form-control" id="inputCity">
       @if(city.hasError('required') && city.touched) {
         <div class="text-danger">
-          Veuillez renseigner une ville
+          {{ i18n.getTranslation('PLEASE_ENTER_CITY') }}
         </div>
       }
     </div>
@@ -23,7 +23,7 @@
       <input type="text" formControlName="number" class="form-control" id="inputNumber">
       @if(number.hasError('required') && number.touched) {
         <div class="text-danger">
-          Veuillez renseigner une boite / numéro rue
+          {{ i18n.getTranslation('PLEASE_ENTER_NUMBER_BOX') }}
         </div>
       }
     </div>
@@ -32,12 +32,12 @@
         <input type="text" formControlName="country" class="form-control" id="inputCountry">
         @if(country.hasError('required') && country.touched) {
           <div class="text-danger">
-            Veuillez renseigner un pays
+            {{ i18n.getTranslation('PLEASE_ENTER_COUNTRY') }}
           </div>
         }
       </div>
     <div class="col-12">
-      <button [disabled]="form.invalid" type="submit" class="btn btn-dark">Editer</button>
+      <button [disabled]="form.invalid" type="submit" class="btn btn-dark">{{ i18n.getTranslation('EDIT') }}</button>
     </div>
   </form>
 </div>

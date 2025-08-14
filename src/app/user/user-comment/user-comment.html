@@ -1,5 +1,5 @@
 <div class="container py-5">
-  <h2 class="mb-4 text-center">Ajouter un commentaire</h2>
+  <h2 class="mb-4 text-center">{{ i18n.getTranslation('ADD_A_COMMENT') }}</h2>
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="card shadow-sm border-0 rounded-3">
@@ -9,11 +9,11 @@
               <div class="col-12">
                 <div class="form-floating mb-3">
                   <input formControlName="header" type="text" class="form-control" id="header" placeholder="Titre du commentaire">
-                  <label for="header">Titre du commentaire</label>
+                  <label for="header">{{ i18n.getTranslation('COMMENT_TITLE') }}</label>
                 </div>
                 @if(header.hasError('required') && header.dirty) {
                   <div class="text-danger">
-                    Veuillez renseigner un titre
+                    {{ i18n.getTranslation('PLEASE_ENTER_TITLE') }}
                   </div>
                 }
               </div>
@@ -23,11 +23,11 @@
               <div class="col-12">
                 <div class="form-floating mb-3">
                   <textarea formControlName="body" class="form-control" id="body" placeholder="Contenu du commentaire" rows="4" style="height: 100px;"></textarea>
-                  <label for="body">Contenu du commentaire</label>
+                  <label for="body">{{ i18n.getTranslation('COMMENT_CONTENT') }}</label>
                 </div>
                 @if(body.hasError('required') && body.dirty) {
                   <div class="text-danger">
-                    Veuillez renseigner un contenu
+                    {{ i18n.getTranslation('PLEASE_ENTER_CONTENT') }}
                   </div>
                 }
               </div>
@@ -35,7 +35,9 @@
 
             <div class="row mt-4">
               <div class="col-12 text-center">
-                <button [disabled]="form.invalid" class="btn btn-success">Ajouter le commentaire</button>
+                <button [disabled]="form.invalid" class="btn btn-success">
+                  {{ i18n.getTranslation('ADD_COMMENT') }}
+                </button>
               </div>
             </div>
           </form>
@@ -46,7 +48,7 @@
 </div>
 
 <div class="container py-5">
-  <h2 class="mb-4 text-center">Liste des commentaires postés</h2>
+  <h2 class="mb-4 text-center">{{ i18n.getTranslation('COMMENT_LIST') }}</h2>
   <div class="row justify-content-center">
     <div class="col-lg-8">
 
@@ -54,14 +56,14 @@
         <div class="card mb-4 shadow-sm border-0 rounded-3">
           <div class="card-body">
             <h5 class="card-title">
-              Titre : {{ comment.header }}
+              {{ i18n.getTranslation('TITLE') }} : {{ comment.header }}
             </h5>
             <p class="card-text">Contenu : {{ comment.body }}</p>
             <p class="text-muted mb-0" style="font-size: 0.875rem;">
-              Créé le : <span class="fw-semibold">{{ comment.createAt | date:'dd/mm/yyyy' }}</span>
+              {{ i18n.getTranslation('CREATED_ON') }} : <span class="fw-semibold">{{ comment.createAt | date:'dd/mm/yyyy' }}</span>
             </p>
             <div class="mt-3">
-              <button (click)="deleteComment(comment.id)" class="btn btn-dark me-3">Delete</button>
+              <button (click)="deleteComment(comment.id)" class="btn btn-dark me-3">{{ i18n.getTranslation('DELETE') }}</button>
             </div>
           </div>
         </div>

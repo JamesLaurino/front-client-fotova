@@ -1,7 +1,7 @@
 @if (user.isLoading()) {
   <div class="d-flex justify-content-center">
     <div class="spinner-border text-success" role="status">
-      <span class="visually-hidden">Loading...</span>
+      <span class="visually-hidden">{{ i18n.getTranslation('LOADING') }}</span>
     </div>
   </div>
 }
@@ -10,19 +10,19 @@
   <div class="sidebar p-3 bg-light border-end" style="min-width: 200px;">
     <h5>{{ user.value()?.username }}</h5>
     <nav class="nav flex-column">
-      <a class="nav-link" (click)="displayUserAddress()">Informations</a>
-      <a class="nav-link" (click)="displayUserOrder()">Orders</a>
-      <a class="nav-link" (click)="displayUserComment()">Comments</a>
-      <a class="nav-link" (click)="displayEditAddress()">Edit address</a>
+      <a class="nav-link" (click)="displayUserAddress()">{{ i18n.getTranslation('INFORMATION') }}</a>
+      <a class="nav-link" (click)="displayUserOrder()">{{ i18n.getTranslation('ORDERS') }}</a>
+      <a class="nav-link" (click)="displayUserComment()">{{ i18n.getTranslation('COMMENTS') }}</a>
+      <a class="nav-link" (click)="displayEditAddress()">{{ i18n.getTranslation('EDIT_ADDRESS') }}</a>
     </nav>
     <div class="sidebar-footer mt-auto pt-3 border-top">
-      <a (click)="logout()" class="d-block text-dark">Se déconnecter</a>
+      <a (click)="logout()" class="d-block text-dark">{{ i18n.getTranslation('LOGOUT') }}</a>
     </div>
   </div>
 
   <!-- Main content -->
   <div class="main-content flex-fill p-4">
-    <h1>Bienvenue {{ user.value()?.username }}</h1>
+    <h1>{{ i18n.getTranslation('WELCOME') }} {{ user.value()?.username }}</h1>
 
     <div class="container-fluid mt-4">
       @if (activeComponent() === 'address') {

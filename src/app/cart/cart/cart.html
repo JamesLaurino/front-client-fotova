@@ -1,17 +1,17 @@
 @if (carts.isLoading()) {
   <div class="d-flex justify-content-center">
     <div class="spinner-border text-success" role="status">
-      <span class="visually-hidden">Loading...</span>
+      <span class="visually-hidden">{{ i18n.getTranslation('LOADING') }}</span>
     </div>
   </div>
 }
 
 <div class="container py-4">
 
-  <h2 class="mb-4">🛒 Mon Panier</h2>
+  <h2 class="mb-4">{{ i18n.getTranslation('MY_CART') }}</h2>
 
   @if(carts.value()?.length === 0) {
-    <div class="h4 mt-2 mb-3">Votre pannier est vide</div>
+    <div class="h4 mt-2 mb-3">{{ i18n.getTranslation('YOUR_CART_IS_EMPTY') }}</div>
   }
   <div class="vstack gap-3">
     @for (cart of carts.value(); track cart.id) {
@@ -24,8 +24,8 @@
           />
         <div class="ms-3">
           <span class="mb-1 my-1 h4">{{ cart.name }}</span>
-          <div class="text-muted">Prix : {{ cart.price | number:'1.2-2' }} €</div>
-          <div class="text-muted">Quantité : {{ cart.quantity }}</div>
+          <div class="text-muted">{{ i18n.getTranslation('PRICE') }} : {{ cart.price | number:'1.2-2' }} €</div>
+          <div class="text-muted">{{ i18n.getTranslation('QUANTITY') }} : {{ cart.quantity }}</div>
 
           <div class="btn-group mt-2" role="group" aria-label="Modifier la quantité">
 
@@ -53,23 +53,23 @@
               </button>
           </div>
           <div class="fw-bold mt-2">
-            Total : {{ cart.price * cart.quantity | number:'1.2-2' }} €
+            {{ i18n.getTranslation('TOTAL') }} : {{ cart.price * cart.quantity | number:'1.2-2' }} €
           </div>
         </div>
       </div>
     }
     <button (click)="goToAllProducts()" class="btn btn-secondary w-25" >
-      Go to shopping
+      {{ i18n.getTranslation('GO_TO_SHOPPING') }}
     </button>
   </div>
 
   <div class="d-flex justify-content-end mt-2">
     <div class="text-end">
-      <h5 class="mb-0 text-dark">Sous-total :</h5>
+      <h5 class="mb-0 text-dark">{{ i18n.getTranslation('SUBTOTAL') }} :</h5>
       <p class="fs-5 fw-bold text-dark">
         {{totalPrice.value() | number:'1.2-2'}} €
       </p>
-      <button  (click)="order()" class="btn btn-success w-100">Valider la commande</button>
+      <button  (click)="order()" class="btn btn-success w-100">{{ i18n.getTranslation('CONFIRM_ORDER') }}</button>
     </div>
   </div>
 </div>

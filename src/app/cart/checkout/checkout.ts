@@ -12,6 +12,7 @@ import {ClientResponseApi} from '../../model/client/client-response-api';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {CheckoutResponseApi} from '../../model/checkout/checkout-response-api';
 import {CheckoutService} from '../../service/checkout/checkoutService';
+import {I18nService} from '../../service/i18n/i18nService';
 
 @Component({
   selector: 'app-checkout',
@@ -27,6 +28,7 @@ export class Checkout implements OnInit {
   private router = inject(Router);
   private userService = inject(UserService);
   private checkoutService = inject(CheckoutService);
+  readonly i18n = inject(I18nService);
 
   cartProducts: CartProduct[] = [];
   totalPrice: number = 0;

@@ -1,24 +1,24 @@
 <div class="checkout-container">
   <div class="checkout-header">
-    <h1 class="checkout-title">Récapitulatif de votre commande</h1>
-    <p class="checkout-subtitle">Vérifiez vos articles avant de procéder au paiement</p>
+    <h1 class="checkout-title">{{ i18n.getTranslation('ORDER_SUMMARY') }}</h1>
+    <p class="checkout-subtitle">{{ i18n.getTranslation('CHECK_ITEMS_BEFORE_PAYMENT') }}</p>
   </div>
 
   <div class="checkout-content">
     <!-- Panier vide -->
     <div *ngIf="cartProducts.length === 0" class="empty-cart">
       <div class="empty-cart-icon">🛒</div>
-      <h2>Votre panier est vide</h2>
-      <p>Ajoutez des produits pour continuer</p>
+      <h2>{{ i18n.getTranslation('CART_IS_EMPTY') }}</h2>
+      <p>{{ i18n.getTranslation('ADD_PRODUCTS_TO_CONTINUE') }}</p>
       <button class="btn-continue-shopping" (click)="continueShopping()">
-        Continuer mes achats
+        {{ i18n.getTranslation('CONTINUE_SHOPPING') }}
       </button>
     </div>
 
     <!-- Liste des produits -->
     <div *ngIf="cartProducts.length > 0" class="checkout-items">
       <div class="products-section">
-        <h2 class="section-title">Vos articles</h2>
+        <h2 class="section-title">{{ i18n.getTranslation('YOUR_ITEMS') }}</h2>
 
         <div class="product-list">
           <div *ngFor="let product of cartProducts" class="product-item">
@@ -44,37 +44,37 @@
       <!-- Résumé de commande -->
       <div class="order-summary">
         <div class="summary-card">
-          <h2 class="section-title">Résumé</h2>
+          <h2 class="section-title">{{ i18n.getTranslation('SUMMARY') }}</h2>
 
           <div class="summary-line">
-            <span>Sous-total ({{ getTotalItems() }} articles)</span>
+            <span>{{ i18n.getTranslation('SUBTOTAL') }} ({{ getTotalItems() }} ) {{ i18n.getTranslation('ITEMS') }}</span>
             <span>{{ totalPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
           </div>
 
           <div class="summary-line">
-            <span>Livraison</span>
-            <span class="free">Gratuite</span>
+            <span>{{ i18n.getTranslation('DELIVERY') }}</span>
+            <span class="free">{{ i18n.getTranslation('FREE') }}</span>
           </div>
 
           <div class="summary-line summary-total">
-            <span>Total</span>
+            <span>{{ i18n.getTranslation('TOTAL') }}</span>
             <span class="total-amount">{{ totalPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
           </div>
 
           <button class="btn-checkout" (click)="processPayment()" [disabled]="isProcessing">
             <span *ngIf="!isProcessing" class="btn-text">
               <i class="payment-icon">💳</i>
-              Procéder au paiement
+              {{ i18n.getTranslation('PROCEED_TO_PAYMENT') }}
             </span>
             <span *ngIf="isProcessing" class="btn-loading">
               <i class="loading-spinner"></i>
-              Traitement en cours...
+              {{ i18n.getTranslation('PROCESSING') }}
             </span>
           </button>
 
           <div class="payment-security">
             <i class="security-icon">🔒</i>
-            <span>Paiement sécurisé par Stripe</span>
+            <span>{{ i18n.getTranslation('SECURE_PAYMENT_STRIPE') }}</span>
           </div>
         </div>
       </div>
