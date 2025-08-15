@@ -20,9 +20,16 @@
       </ul>
 
       @if(loginHelper.isLogged()) {
-        <span (click)="goToUserPanel()" class="me-3" style="cursor: pointer;">
-          <img src="/fotova/user.png" width="30px" height="30px" class="rounded-circle bg-white" alt="..." />
-        </span>
+
+        @if (userService.client().roles[0] === 'ROLE_ADMIN') {
+          <span (click)="goToAdminPanel()" class="me-3" style="cursor: pointer;">
+            <img src="/fotova/admin.jpg" width="30px" height="30px" class="rounded-circle bg-white" alt="..." />
+          </span>
+        } @else {
+          <span (click)="goToUserPanel()" class="me-3" style="cursor: pointer;">
+            <img src="/fotova/user.png" width="30px" height="30px" class="rounded-circle bg-white" alt="..." />
+          </span>
+        }
       }
       @else {
         <!-- Icone du user non connecté -->

@@ -8,6 +8,6 @@ export interface Client {
   "email":string,
   "isActive":boolean;
   "address":ClientAddress
-  "roles":ClientRole;
+  "roles":string[];
   "comments":ClientComment[];
 }

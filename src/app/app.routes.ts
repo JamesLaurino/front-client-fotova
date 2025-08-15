@@ -12,6 +12,8 @@ import {Register} from './connection/register/register';
 import {CategoryList} from './category/category-list/category-list';
 import {CategoryDetail} from './category/category-detail/category-detail';
 import {Contact} from './contact/contact/contact';
+import {AuthGuardAdmin} from './core/auth-guard-admin';
+import {AdminPanel} from './admin/admin-panel/admin-panel';
 
 export const routes: Routes = [
   {path:'', component:Landing},
@@ -27,6 +29,11 @@ export const routes: Routes = [
     path:'user',
     canActivate: [AuthGuard],
     component: UserPanel
+  },
+  {
+    path:'admin',
+    canActivate: [AuthGuardAdmin],
+    component: AdminPanel
   },
   {
     path:'checkout',
