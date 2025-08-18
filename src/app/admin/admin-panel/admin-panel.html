@@ -1,1 +1,40 @@
-<p>admin-panel works!</p>
+@if (user.isLoading() || clients.isLoading()) {
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">{{ i18n.getTranslation('LOADING') }}</span>
+    </div>
+  </div>
+}
+
+<div class="user-panel d-flex flex-column flex-md-row min-vh-100">
+  <div class="sidebar p-3 bg-light border-end" style="min-width: 200px;">
+    <h5>{{ user.value()?.username }}</h5>
+    <nav class="nav flex-column">
+      <a class="nav-link" (click)="manageClients()">{{ i18n.getTranslation('CLIENTS') }}</a>
+    </nav>
+    <div class="sidebar-footer mt-auto pt-3 border-top">
+      <a (click)="logout()" class="d-block text-dark">{{ i18n.getTranslation('LOGOUT') }}</a>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content flex-fill p-4">
+    <h1>{{ i18n.getTranslation('WELCOME') }} {{ user.value()?.username }}</h1>
+
+    <div class="container-fluid mt-4">
+      @if (activeComponent() === 'clients') {
+        <app-admin-client [clientsInput]="clients.value()"/>
+      } @else if (activeComponent() === 'order') {
+<!--        <app-user-order [userOrdersInput]="orders.value()" />-->
+      } @else if (activeComponent() === 'comment') {
+<!--        <app-user-comment-->
+<!--          (commentsUpdated)="onCommentUpdated()"-->
+<!--          [userCommentsInput]="user.value()?.comments"/>-->
+      } @else if (activeComponent() === 'edit-address') {
+<!--        <app-user-edit-->
+<!--          (addressUpdated)="onAddressUpdated()"-->
+<!--          [userAddressInput]="user.value()?.address"/>-->
+      }
+    </div>
+  </div>
+</div>

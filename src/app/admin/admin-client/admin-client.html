@@ -1,0 +1,31 @@
+<div class="container my-5">
+  <table class="table bg-dark text-white">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">{{i18n.getTranslation("ID")}}</th>
+      <th scope="col">{{i18n.getTranslation("EMAIL")}}</th>
+      <th scope="col">{{i18n.getTranslation("ADDRESS")}}</th>
+      <th scope="col">{{i18n.getTranslation("COMMENTS")}}</th>
+      <th scope="col">{{i18n.getTranslation("DETAIL")}}</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (client of clientsInput(); track client.id;let idx = $index)
+      {
+        @if(client.isActive) {
+          <tr>
+            <th scope="row">{{idx}}</th>
+            <td>{{ client.id }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.address.city }}</td>
+            <td>{{ client.commentEntities.length }}</td>
+            <td>
+              <button (click)="goToClientDetail(client.id)" class="btn btn-info">{{i18n.getTranslation("DETAIL")}}</button>
+            </td>
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>

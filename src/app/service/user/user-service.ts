@@ -1,5 +1,5 @@
 import {inject, Injectable, signal} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ClientResponseApi} from '../../model/client/client-response-api';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -7,7 +7,8 @@ import {OrderApiResponse} from '../../model/order/order-api-response';
 import {ClientAddress} from '../../model/client/client-address';
 import {CommentClientResponseApi} from '../../model/comment/comment-client-response-api';
 import {Client} from '../../model/client/client';
-import {ClientComment} from '../../model/client/client-comment';
+import {ClientResponseAllApi} from '../../model/client/client-response-all-api';
+import {ClientDetailResponseApi} from '../../model/client/ClientDetailResponseApi';
 
 @Injectable({providedIn: 'root'})
 export class UserService
@@ -35,6 +36,18 @@ export class UserService
 
   getOrdersByEmail(email: string): Observable<OrderApiResponse> {
     return this.#http.get<OrderApiResponse>(this.#API_URL + '/order-products/' + email);
+  }
+
+  getClientById(idClient: number): Observable<ClientDetailResponseApi> {
+    return this.#http.get<ClientDetailResponseApi>(this.#API_URL + '/client/' + idClient);
+  }
+
+  getAllClient(): Observable<ClientResponseAllApi> {
+    return this.#http.get<ClientResponseAllApi>(this.#API_URL + '/clients');
+  }
+
+  deleteClientById(idClient: number): Observable<ClientResponseApi> {
+    return this.#http.delete<ClientResponseApi>(this.#API_URL + '/client/' + idClient + "/delete");
   }
 
   addAddressToUser(address:Omit<ClientAddress, 'id'>) {
