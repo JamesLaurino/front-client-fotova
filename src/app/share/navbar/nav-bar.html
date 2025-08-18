@@ -25,10 +25,26 @@
           <span (click)="goToAdminPanel()" class="me-3" style="cursor: pointer;">
             <img src="/fotova/admin.jpg" width="30px" height="30px" class="rounded-circle bg-white" alt="..." />
           </span>
+
         } @else {
           <span (click)="goToUserPanel()" class="me-3" style="cursor: pointer;">
             <img src="/fotova/user.png" width="30px" height="30px" class="rounded-circle bg-white" alt="..." />
           </span>
+          <!-- Icône du panier avec badge -->
+          <div (click)="goToCart()" class="position-relative p-2 me-2" style="cursor: pointer;">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="28" height="28" fill="white"
+                 class="bi bi-cart3" viewBox="0 0 16 16">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 .485.379L2.89 5H14.5a.5.5 0 0 1 .49.598l-1.5 7A.5.5 0 0 1 13 13H4a.5.5 0 0 1-.49-.402L1.01 2H.5a.5.5 0 0 1-.5-.5zM3.102 6l1.313 6h8.17l1.313-6H3.102zM5 14a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+            </svg>
+            @if(cartHelper.cartsQuantityComputed() > 0) {
+              <span class="position-absolute top-25 start-75 translate-middle
+                badge rounded-pill bg-danger"
+                    style="font-size: 0.6rem; padding: 4px 6px; min-width: 18px; text-align: center;">
+            {{ cartHelper.cartsQuantityComputed() }}
+          </span>
+            }
+          </div>
         }
       }
       @else {
@@ -37,22 +53,6 @@
           <p class="text-white">{{ i18n.getTranslation('LOGIN') }}</p>
         </div>
       }
-
-      <!-- Icône du panier avec badge -->
-      <div (click)="goToCart()" class="position-relative p-2 me-2" style="cursor: pointer;">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="28" height="28" fill="white"
-             class="bi bi-cart3" viewBox="0 0 16 16">
-          <path d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 .485.379L2.89 5H14.5a.5.5 0 0 1 .49.598l-1.5 7A.5.5 0 0 1 13 13H4a.5.5 0 0 1-.49-.402L1.01 2H.5a.5.5 0 0 1-.5-.5zM3.102 6l1.313 6h8.17l1.313-6H3.102zM5 14a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-        </svg>
-        @if(cartHelper.cartsQuantityComputed() > 0) {
-          <span class="position-absolute top-25 start-75 translate-middle
-                badge rounded-pill bg-danger"
-                style="font-size: 0.6rem; padding: 4px 6px; min-width: 18px; text-align: center;">
-            {{ cartHelper.cartsQuantityComputed() }}
-          </span>
-        }
-      </div>
 
       <!-- Selecteur pour la langue -->
       <div class="position-relative p-2 me-2">
