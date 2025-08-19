@@ -1,0 +1,31 @@
+<div class="container my-5">
+  <table class="table bg-dark text-white">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">{{i18n.getTranslation("ID")}}</th>
+      <th scope="col">{{i18n.getTranslation("NAME")}}</th>
+      <th scope="col">{{i18n.getTranslation("DETAIL")}}</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (category of categoriesInput(); track category.id;let idx = $index)
+      {
+          <tr>
+            <th scope="row">{{idx}}</th>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>
+              <button (click)="goToCategoryDetail(category.id)" class="btn btn-info">{{i18n.getTranslation("DETAIL")}}</button>
+            </td>
+          </tr>
+      }
+    </tbody>
+  </table>
+</div>
+<div class="container d-flex mt-1 justify-content-start">
+  <button (click)="goToCategoryCreate()" class="btn btn-outline-success">
+    {{i18n.getTranslation("CREATE")}}
+    {{i18n.getTranslation("CATEGORY") | lowercase}}
+  </button>
+</div>

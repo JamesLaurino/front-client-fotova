@@ -1,0 +1,29 @@
+<div class="container d-flex justify-content-center mt-5">
+  <h1 class="h3">{{i18n.getTranslation("EDIT")}} {{i18n.getTranslation("CATEGORY")}}</h1>
+</div>
+<div class="container d-flex justify-content-center mt-5" style="max-width: 600px;">
+  <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- Champ ID (readonly) -->
+    <div class="col-md-6">
+      <label for="inputId" class="form-label">ID</label>
+      <input type="text" formControlName="id" class="form-control" id="inputId">
+    </div>
+
+    <!-- Champ Name -->
+    <div class="col-md-6">
+      <label for="inputName" class="form-label">Name</label>
+      <input type="text" formControlName="name" class="form-control" id="inputName">
+      @if(name.hasError('required') && name.touched) {
+        <div class="text-danger">Please enter a category name</div>
+      }
+    </div>
+
+    <!-- Submit -->
+    <div class="col-12">
+      <button [disabled]="form.invalid" type="submit" class="btn btn-dark">
+        Save Changes
+      </button>
+    </div>
+  </form>
+</div>

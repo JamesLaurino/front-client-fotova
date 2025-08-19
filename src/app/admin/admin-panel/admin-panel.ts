@@ -8,12 +8,15 @@ import {LoginService} from '../../service/login/login-service';
 import {AdminClient} from '../admin-client/admin-client';
 import {AdminProduct} from '../admin-product/admin-product';
 import {ProductService} from '../../service/interfaces/product-service';
+import {CategoryService} from '../../service/category/categoryService';
+import {AdminCategories} from '../admin-categories/admin-categories';
 
 @Component({
   selector: 'app-admin-panel',
   imports: [
     AdminClient,
-    AdminProduct
+    AdminProduct,
+    AdminCategories
   ],
   templateUrl: './admin-panel.html'
 })
@@ -24,6 +27,7 @@ export class AdminPanel {
   readonly i18n = inject(I18nService);
   activeComponent= signal("");
   readonly #loginService = inject(LoginService);
+  readonly #categoryService = inject(CategoryService);
   readonly #router = inject(Router);
 
   clients = rxResource({
@@ -48,6 +52,15 @@ export class AdminPanel {
     }
   });
 
+  categories = rxResource({
+    stream: () => {
+      return this.#categoryService.getAllCategories()
+        .pipe(
+          map(response => response.data)
+        )
+    }
+  })
+
   products = rxResource({
     stream: () => {
       return this.#productService.getAllProducts()
@@ -69,5 +82,9 @@ export class AdminPanel {
 
   manageClients() {
     this.activeComponent.update((clients) => clients = "clients")
+  }
+
+  manageCategories() {
+    this.activeComponent.update((categories) => categories = "categories")
   }
 }

@@ -15,6 +15,9 @@
     <nav class="nav flex-column">
       <a class="nav-link" style="cursor: pointer" (click)="manageProducts()">{{ i18n.getTranslation('PRODUCTS') }}</a>
     </nav>
+    <nav class="nav flex-column">
+      <a class="nav-link" style="cursor: pointer" (click)="manageCategories()">{{ i18n.getTranslation('CATEGORIES') }}</a>
+    </nav>
     <div class="sidebar-footer mt-auto pt-3 border-top">
       <a (click)="logout()" class="d-block text-dark">{{ i18n.getTranslation('LOGOUT') }}</a>
     </div>
@@ -25,14 +28,16 @@
     <h1>{{ i18n.getTranslation('WELCOME') }} {{ user.value()?.username }}</h1>
 
     <div class="container-fluid mt-4">
+      @if(activeComponent() === ""){
+        <app-admin-product [productsInput]="products.value()" />
+      }
+
       @if (activeComponent() === 'clients') {
         <app-admin-client [clientsInput]="clients.value()"/>
       } @else if (activeComponent() === 'products') {
         <app-admin-product [productsInput]="products.value()" />
-      } @else if (activeComponent() === 'comment') {
-<!--        <app-user-comment-->
-<!--          (commentsUpdated)="onCommentUpdated()"-->
-<!--          [userCommentsInput]="user.value()?.comments"/>-->
+      } @else if (activeComponent() === 'categories') {
+        <app-admin-categories [categoriesInput]="categories.value()" />
       } @else if (activeComponent() === 'edit-address') {
 <!--        <app-user-edit-->
 <!--          (addressUpdated)="onAddressUpdated()"-->
