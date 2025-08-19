@@ -43,9 +43,16 @@
 
       <select formControlName="categoryInnerProductDto" class="form-select" id="inputCategory">
         @for (category of categories.value(); track category.id) {
-          <option [value]="category.name">
-            {{ category.name }}
-          </option>
+          @if(category.name == product.value()?.categoryInnerProductDto?.name) {
+            <option [selected]="category.name">
+              {{ category.name }}
+            </option>
+          }
+          @else {
+            <option [value]="category.name">
+              {{ category.name }}
+            </option>
+          }
         }
       </select>
 

@@ -7,6 +7,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {I18nService} from '../../service/i18n/i18nService';
 import {CategoryService} from '../../service/category/categoryService';
 import {ProductUpdate} from '../../model/product/product-update';
+import {ToasterService} from '../../service/toaster/toasterService';
 
 @Component({
   selector: 'app-admin-product-detail',
@@ -20,6 +21,7 @@ export class AdminProductDetail {
   private productId = Number(this.#router.snapshot.params['id']);
   readonly #productService = inject(ProductService);
   readonly #categoryService = inject(CategoryService);
+  private toasterService = inject(ToasterService);
   readonly i18n = inject(I18nService);
 
   constructor() {
@@ -71,22 +73,56 @@ export class AdminProductDetail {
     }
   })
 
+  getCategoryAndId(): [string, number] | null {
+    if(Array.isArray(this.form.value.categoryInnerProductDto)) {
+      return [String(this.product.value()?.categoryInnerProductDto?.name),
+        Number(this.product.value()?.categoryInnerProductDto?.id)]
+    }
+    else {
+      for(let cat of this.categories.value()!) {
+        if(cat.name === String(this.form.value.categoryInnerProductDto)) {
+          return [String(this.form.value.categoryInnerProductDto),Number(cat.id)]
+        }
+      }
+    }
+    return null;
+  }
 
   onSubmit() {
     if (this.form.valid) {
-      const category = this.categories.value()?.find(c => c.name === String(this.form.value.categoryInnerProductDto));
+      let array = this.getCategoryAndId();
       let productUpdate: ProductUpdate = {
-        id:1,
+        id:Number(this.product.value()?.id),
         name: String(this.name.value),
         price: Number(this.price.value),
         url: String(this.product.value()?.url),
         quantity: Number(this.quantity.value),
         categoryInnerProductDto: {
-          id: Number(category?.id),
-          name: String(this.form.value.categoryInnerProductDto)
+          id: array![1],
+          name: array![0]
         }
       }
-      console.log(productUpdate)
+
+      this.#productService.updateProduct(productUpdate).subscribe({
+        next: () =>
+        {
+          this.toasterService.show({
+            toastTitle: 'Succès',
+            toastTime: 'Just now',
+            toastImageUrl: '/fotova/check.jpg',
+            toastMessage: 'Mise à jour du produit effectuée avec succès.'
+          });
+        },
+        error: (error) =>
+        {
+          this.toasterService.show({
+            toastTitle: 'Error',
+            toastTime: 'Just now',
+            toastImageUrl: '/fotova/error.png',
+            toastMessage: 'La mise du à jours produit échouée : ' + error.error.errorList[0]
+          });
+        }
+      })
     }
   }
 

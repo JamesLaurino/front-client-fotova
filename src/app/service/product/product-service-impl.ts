@@ -25,6 +25,6 @@ export class ProductServiceImpl extends ProductService {
   }
 
   updateProduct(product: ProductUpdate): Observable<ProductApiResponse> {
-    return this.#http.post<ProductApiResponse>(this.#API_URL + '/products/update', product);
+    return this.#http.put<ProductApiResponse>(this.#API_URL + '/product/update', product);
   }
 }
