@@ -6,17 +6,21 @@ import {I18nService} from '../../service/i18n/i18nService';
 import {Router} from '@angular/router';
 import {LoginService} from '../../service/login/login-service';
 import {AdminClient} from '../admin-client/admin-client';
+import {AdminProduct} from '../admin-product/admin-product';
+import {ProductService} from '../../service/interfaces/product-service';
 
 @Component({
   selector: 'app-admin-panel',
   imports: [
-    AdminClient
+    AdminClient,
+    AdminProduct
   ],
   templateUrl: './admin-panel.html'
 })
 export class AdminPanel {
 
   readonly #userService = inject(UserService);
+  readonly #productService = inject(ProductService);
   readonly i18n = inject(I18nService);
   activeComponent= signal("");
   readonly #loginService = inject(LoginService);
@@ -44,10 +48,23 @@ export class AdminPanel {
     }
   });
 
+  products = rxResource({
+    stream: () => {
+      return this.#productService.getAllProducts()
+        .pipe(
+          map(response => response.data)
+        )
+    }
+  })
+
   logout() {
     this.#loginService.logout();
     window.location.reload();
     this.#router.navigate(['/']);
+  }
+
+  manageProducts() {
+    this.activeComponent.update((products) => products = "products")
   }
 
   manageClients() {

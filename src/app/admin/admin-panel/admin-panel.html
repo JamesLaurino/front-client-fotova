@@ -10,7 +10,10 @@
   <div class="sidebar p-3 bg-light border-end" style="min-width: 200px;">
     <h5>{{ user.value()?.username }}</h5>
     <nav class="nav flex-column">
-      <a class="nav-link" (click)="manageClients()">{{ i18n.getTranslation('CLIENTS') }}</a>
+      <a class="nav-link" style="cursor: pointer" (click)="manageClients()">{{ i18n.getTranslation('CLIENTS') }}</a>
+    </nav>
+    <nav class="nav flex-column">
+      <a class="nav-link" style="cursor: pointer" (click)="manageProducts()">{{ i18n.getTranslation('PRODUCTS') }}</a>
     </nav>
     <div class="sidebar-footer mt-auto pt-3 border-top">
       <a (click)="logout()" class="d-block text-dark">{{ i18n.getTranslation('LOGOUT') }}</a>
@@ -24,8 +27,8 @@
     <div class="container-fluid mt-4">
       @if (activeComponent() === 'clients') {
         <app-admin-client [clientsInput]="clients.value()"/>
-      } @else if (activeComponent() === 'order') {
-<!--        <app-user-order [userOrdersInput]="orders.value()" />-->
+      } @else if (activeComponent() === 'products') {
+        <app-admin-product [productsInput]="products.value()" />
       } @else if (activeComponent() === 'comment') {
 <!--        <app-user-comment-->
 <!--          (commentsUpdated)="onCommentUpdated()"-->
