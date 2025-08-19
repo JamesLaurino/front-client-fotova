@@ -1,6 +1,8 @@
 <div class="container d-flex justify-content-center mt-5">
   <h1 class="h3">{{i18n.getTranslation("EDIT")}} {{i18n.getTranslation("PRODUCT")}}</h1>
 </div>
+
+<!-- Editer les info produits -->
 <div class="container d-flex justify-content-center mt-5" style="max-width: 700px;">
   <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit()">
 
@@ -59,3 +61,6 @@
     </div>
   </form>
 </div>
+
+
+<!-- Editer les images du produits -->

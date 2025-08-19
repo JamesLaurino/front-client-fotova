@@ -6,6 +6,7 @@ import {ProductService} from '../../service/interfaces/product-service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {I18nService} from '../../service/i18n/i18nService';
 import {CategoryService} from '../../service/category/categoryService';
+import {ProductUpdate} from '../../model/product/product-update';
 
 @Component({
   selector: 'app-admin-product-detail',
@@ -38,7 +39,7 @@ export class AdminProductDetail {
   }
 
   form = new FormGroup({
-    id: new FormControl({ value: this.productId, disabled: true }), // id non modifiable
+    id: new FormControl({ value: this.productId, disabled: true }),
     name: new FormControl('', [Validators.required]),
     quantity: new FormControl(0, [Validators.required, Validators.min(0)]),
     price: new FormControl(0, [Validators.required, Validators.min(0)]),
@@ -73,7 +74,19 @@ export class AdminProductDetail {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log(this.form.value)
+      const category = this.categories.value()?.find(c => c.name === String(this.form.value.categoryInnerProductDto));
+      let productUpdate: ProductUpdate = {
+        id:1,
+        name: String(this.name.value),
+        price: Number(this.price.value),
+        url: String(this.product.value()?.url),
+        quantity: Number(this.quantity.value),
+        categoryInnerProductDto: {
+          id: Number(category?.id),
+          name: String(this.form.value.categoryInnerProductDto)
+        }
+      }
+      console.log(productUpdate)
     }
   }
 

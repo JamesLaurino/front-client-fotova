@@ -1,10 +1,11 @@
 import {ProductService} from '../interfaces/product-service';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {inject} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {ProductsApiResponse} from '../../model/product/products-api-response';
 import {ProductApiResponse} from '../../model/product/product-api-response';
+import {ProductUpdate} from '../../model/product/product-update';
 
 export class ProductServiceImpl extends ProductService {
 
@@ -21,5 +22,9 @@ export class ProductServiceImpl extends ProductService {
 
   getProductsByCategoryId(categoryId: number): Observable<ProductsApiResponse> {
     return this.#http.get<ProductsApiResponse>(this.#API_URL + '/products/category/' + categoryId);
+  }
+
+  updateProduct(product: ProductUpdate): Observable<ProductApiResponse> {
+    return this.#http.post<ProductApiResponse>(this.#API_URL + '/products/update', product);
   }
 }
