@@ -87,4 +87,8 @@ export class AdminPanel {
   manageCategories() {
     this.activeComponent.update((categories) => categories = "categories")
   }
+
+  onCategoryDeleted() {
+    this.categories.reload();
+  }
 }

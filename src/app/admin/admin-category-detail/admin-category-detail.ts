@@ -1,10 +1,11 @@
 import {Component, effect, inject} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {CategoryService} from '../../service/category/categoryService';
 import {map, tap} from 'rxjs';
 import {I18nService} from '../../service/i18n/i18nService';
+import {ToasterService} from '../../service/toaster/toasterService';
 
 @Component({
   selector: 'app-admin-category-detail',
@@ -15,8 +16,10 @@ import {I18nService} from '../../service/i18n/i18nService';
 })
 export class AdminCategoryDetail {
   readonly #route = inject(ActivatedRoute);
+  readonly #router = inject(Router);
   readonly #categoryService = inject(CategoryService);
   private categoryId = this.#route.snapshot.params['id'];
+  private toasterService = inject(ToasterService);
   readonly i18n = inject(I18nService);
 
   constructor() {
@@ -45,16 +48,30 @@ export class AdminCategoryDetail {
   });
 
   onSubmit() {
+    console.log("ok")
     if (this.form.valid) {
-      console.log(this.form.value);
-      // const updatedCategory = {
-      //   id: this.categoryId,
-      //   name: this.name.value(),
-      // };
-      // this.#categoryService.updateCategory(updatedCategory).subscribe({
-      //   next: () => alert('Catégorie mise à jour ✅'),
-      //   error: (err) => console.error(err),
-      // });
+      const updatedCategory = {
+        id: this.categoryId,
+        name: this.name.value
+      };
+      this.#categoryService.updateCategory(updatedCategory).subscribe({
+        next: () => {
+          this.toasterService.show({
+            toastTitle: 'Succès',
+            toastTime: 'Just now',
+            toastImageUrl: '/fotova/check.jpg',
+            toastMessage: 'Mise à jour de la catégorie effectuée avec succès.'
+          });
+        },
+        error: (err) => {
+          this.toasterService.show({
+            toastTitle: 'Error',
+            toastTime: 'Just now',
+            toastImageUrl: '/fotova/error.png',
+            toastMessage: 'Echec de la mise à jour de la catégorie : ' + err.error.errorList[0]
+          });
+        },
+      });
     }
   }
 
@@ -62,4 +79,7 @@ export class AdminCategoryDetail {
     return this.form.get('name') as FormControl;
   }
 
+  backToPanel() {
+    this.#router.navigate(['/admin']);
+  }
 }

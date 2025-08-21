@@ -6,6 +6,7 @@
       <th scope="col">{{i18n.getTranslation("ID")}}</th>
       <th scope="col">{{i18n.getTranslation("NAME")}}</th>
       <th scope="col">{{i18n.getTranslation("DETAIL")}}</th>
+      <th scope="col">{{i18n.getTranslation("DELETE")}}</th>
     </tr>
     </thead>
     <tbody>
@@ -16,16 +17,23 @@
             <td>{{ category.id }}</td>
             <td>{{ category.name }}</td>
             <td>
-              <button (click)="goToCategoryDetail(category.id)" class="btn btn-info">{{i18n.getTranslation("DETAIL")}}</button>
+              <button (click)="goToCategoryDetail(category.id)" class="btn btn-info">{{i18n.getTranslation("EDIT")}}</button>
+            </td>
+            <td>
+              <button (click)="deleteCategory(category.id)" class="btn btn-danger">{{i18n.getTranslation("DELETE")}}</button>
             </td>
           </tr>
       }
     </tbody>
   </table>
 </div>
-<div class="container d-flex mt-1 justify-content-start">
-  <button (click)="goToCategoryCreate()" class="btn btn-outline-success">
-    {{i18n.getTranslation("CREATE")}}
-    {{i18n.getTranslation("CATEGORY") | lowercase}}
-  </button>
-</div>
+@if(!isDisplayForm()) {
+  <div class="container d-flex mt-1 justify-content-start">
+    <button (click)="displayCategoryForm()" class="btn btn-outline-success">
+      {{i18n.getTranslation("CREATE")}}
+      {{i18n.getTranslation("CATEGORY") | lowercase}}
+    </button>
+  </div>
+} @else {
+  <app-admin-category-create [isDisplayForm]="isDisplayForm()" (displayFormUpdate)="isDisplayFormUpdate()" />
+}
