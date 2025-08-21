@@ -33,3 +33,10 @@
     </tbody>
   </table>
 </div>
+
+<div class="container d-flex mt-1 justify-content-start">
+  <button (click)="createProduct()" class="btn btn-outline-success">
+    {{i18n.getTranslation("CREATE")}}
+    {{i18n.getTranslation("PRODUCT") | lowercase}}
+  </button>
+</div>

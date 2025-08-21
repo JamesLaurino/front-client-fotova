@@ -37,11 +37,9 @@
       } @else if (activeComponent() === 'products') {
         <app-admin-product [productsInput]="products.value()" />
       } @else if (activeComponent() === 'categories') {
-        <app-admin-categories [categoriesInput]="categories.value()" />
-      } @else if (activeComponent() === 'edit-address') {
-<!--        <app-user-edit-->
-<!--          (addressUpdated)="onAddressUpdated()"-->
-<!--          [userAddressInput]="user.value()?.address"/>-->
+        <app-admin-categories [categoriesInput]="categories.value()"
+                              [productsInput]="products.value()"
+                              (categoryDeleted)="onCategoryDeleted()" />
       }
     </div>
   </div>

@@ -3,10 +3,13 @@ import {I18nService} from '../../service/i18n/i18nService';
 import {ProductModel} from '../../model/product/product-model';
 import {Router} from '@angular/router';
 import urlHelper from '../../helper/url-helper';
+import {LowerCasePipe} from "@angular/common";
 
 @Component({
   selector: 'app-admin-product',
-  imports: [],
+    imports: [
+        LowerCasePipe
+    ],
   templateUrl: './admin-product.html',
 })
 export class AdminProduct {
@@ -18,5 +21,9 @@ export class AdminProduct {
 
   goToProductDetail(id: number) {
     this.#router.navigate(['/admin/product', id]);
+  }
+
+  createProduct() {
+    this.#router.navigate(['/admin/create/product']);
   }
 }
