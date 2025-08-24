@@ -1,0 +1,143 @@
+<!-- CONTAINER SLIDER -->
+<div class="slider-container" [class.show-images]="step === 'images'">
+
+  <!-- Écran 1 : Formulaire Produit -->
+  <div class="slider-screen">
+    <div class="container d-flex justify-content-center mt-5">
+      <h1 class="h3">
+        {{ i18n.getTranslation("CREATE") }} {{ i18n.getTranslation("PRODUCT") }}
+      </h1>
+    </div>
+
+    <div class="container d-flex justify-content-center mt-5" style="max-width: 700px;">
+      <form class="row g-3" [formGroup]="form" (ngSubmit)="goToImages()">
+
+        <div class="col-md-6">
+          <label for="inputName" class="form-label">{{i18n.getTranslation("NAME")}}</label>
+          <input type="text" formControlName="name" class="form-control" id="inputName">
+          @if(name.hasError('required') && name.touched) {
+            <div class="text-danger">{{i18n.getTranslation("PLEASE_ENTER_NAME_AGAIN")}}</div>
+          }
+        </div>
+
+        <div class="col-md-6">
+          <label for="inputQuantity" class="form-label">{{i18n.getTranslation("QUANTITY")}}</label>
+          <input type="number" formControlName="quantity" class="form-control" id="inputQuantity">
+          @if(quantity.hasError('required') && quantity.touched) {
+            <div class="text-danger">{{i18n.getTranslation("PLEASE_ENTER_QUANTITY")}}</div>
+          }
+          @if(quantity.hasError('min')) {
+            <div class="text-danger">{{i18n.getTranslation("QUANTITY_GREATER_THAN_ZERO")}}</div>
+          }
+        </div>
+
+        <div class="col-md-6">
+          <label for="inputPrice" class="form-label">{{i18n.getTranslation("PRICE")}}</label>
+          <input type="number" formControlName="price" class="form-control" id="inputPrice" step="0.01">
+          @if(price.hasError('required') && price.touched) {
+            <div class="text-danger">{{i18n.getTranslation("PLEASE_ENTER_PRICE")}}</div>
+          }
+          @if(price.hasError('min')) {
+            <div class="text-danger">{{i18n.getTranslation("PRICE_GREATER_EQUAL_THAN_ZERO")}}</div>
+          }
+        </div>
+
+        <div class="col-md-6">
+          <label for="inputCategory" class="form-label">
+            {{ i18n.getTranslation("CATEGORY") }}
+          </label>
+
+          <select formControlName="categoryInnerProductDto" class="form-select" id="inputCategory">
+            @for (category of categories.value(); track category.id) {
+              <option [value]="category.name">{{ category.name }}</option>
+            }
+          </select>
+
+          @if(category.hasError('required') && category.touched) {
+            <div class="text-danger">
+              {{ i18n.getTranslation("CATEGORY_REQUIRED") }}
+            </div>
+          }
+        </div>
+
+        <div class="col-12">
+          <button [disabled]="form.invalid" type="submit" class="btn btn-dark">
+            {{ i18n.getTranslation("CREATE") }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Écran 2 : Gestion d’Images -->
+  <div class="slider-screen">
+      <div class="container d-flex justify-content-center mt-5">
+        <h1 class="h3">
+          {{ i18n.getTranslation("ADD") }} {{ i18n.getTranslation("IMAGES") }}
+        </h1>
+      </div>
+
+    <p>{{ i18n.getTranslation("ADD") }} {{ i18n.getTranslation("MAIN") }} {{ i18n.getTranslation("ADD") }} {{ i18n.getTranslation("IMAGES") }}</p>
+    <div class="container-fluid d-flex py-2 pe-2">
+      <!-- Ligne des fichiers -->
+      <div class="d-flex flex-wrap gap-3 align-items-start me-4">
+        @for (box of fileBoxes; track box; let i = $index)
+        {
+          <div class="flex-shrink-0 position-relative">
+            <div class="card card-file-box shadow-sm d-flex flex-column justify-content-center align-items-center position-relative"
+                 (drop)="onFileDrop($event, i)"
+                 (dragover)="onDragOver($event)"
+                 (dragleave)="onDragLeave($event)">
+
+              <!-- Bouton de suppression -->
+              <button type="button"
+                      class="btn btn-sm btn-light rounded-circle shadow position-absolute top-0 end-0 m-2"
+                      (click)="removeFileBox(i)">
+                <i class="bi bi-x-lg"></i>
+              </button>
+
+              <!-- Pas encore de fichier -->
+              @if(!box.file) {
+                <div class="text-center">
+                  <i class="bi bi-cloud-arrow-up text-success" style="font-size: 3rem;"></i>
+                  <p class="text-muted small mt-2">Glissez-déposez un fichier<br>ou cliquez ici</p>
+                  <input type="file" (change)="onFileSelect($event, i)" hidden #fileInput>
+                  <button class="btn btn-outline-success btn-sm mt-2" (click)="fileInput.click()">Sélectionner</button>
+                </div>
+              }
+
+              <!-- Fichier présent -->
+              @if ( box.file) {
+                <div class="text-center p-3">
+                  <i class="bi bi-file-earmark-text text-primary" style="font-size: 3rem;"></i>
+                  <p class="fw-bold small mt-2 text-truncate">{{ box.file?.name }}</p>
+                  <p class="text-muted small">{{ (box.file?.size! / 1024).toFixed(1) }} Ko</p>
+                  <button class="btn btn-primary btn-sm mt-2 mb-2"
+                          (click)="uploadFile(i)"
+                          [disabled]="box.uploading">
+                    @if(box.uploading) {
+                      <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                    }
+                    {{ box.uploading ? 'En cours...' : 'Ajouter' }}
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Bouton ajout en dessous -->
+    <div class="container d-flex justify-content-start">
+      <div class="mt-4 text-center">
+        <button class="btn btn-outline-success btn-add-box d-flex flex-column justify-content-center align-items-center mx-auto"
+                (click)="addFileBox()">
+          <i class="bi bi-plus-lg" style="font-size: 2rem;"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{ productWithoutImage() | json }}

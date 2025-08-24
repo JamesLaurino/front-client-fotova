@@ -1,0 +1,3 @@
+interface FileApiResponse {
+  filelist:string[];
+}
