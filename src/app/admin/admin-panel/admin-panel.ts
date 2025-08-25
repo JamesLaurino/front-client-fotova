@@ -10,13 +10,18 @@ import {AdminProduct} from '../admin-product/admin-product';
 import {ProductService} from '../../service/interfaces/product-service';
 import {CategoryService} from '../../service/category/categoryService';
 import {AdminCategories} from '../admin-categories/admin-categories';
+import {OrderService} from '../../service/order/orderService';
+import {AdminOrder} from '../admin-order/admin-order';
+import {AdminChart} from '../admin-chart/admin-chart';
 
 @Component({
   selector: 'app-admin-panel',
   imports: [
     AdminClient,
     AdminProduct,
-    AdminCategories
+    AdminCategories,
+    AdminOrder,
+    AdminChart
   ],
   templateUrl: './admin-panel.html'
 })
@@ -25,10 +30,11 @@ export class AdminPanel {
   readonly #userService = inject(UserService);
   readonly #productService = inject(ProductService);
   readonly i18n = inject(I18nService);
-  activeComponent= signal("");
   readonly #loginService = inject(LoginService);
   readonly #categoryService = inject(CategoryService);
   readonly #router = inject(Router);
+  readonly #orderService = inject(OrderService);
+  activeComponent= signal("");
 
   clients = rxResource({
     stream: () => {
@@ -70,6 +76,24 @@ export class AdminPanel {
     }
   })
 
+  orders = rxResource({
+    stream: () => {
+      return this.#orderService.getAllOrders()
+        .pipe(
+          map(response => response.data)
+        )
+    }
+  })
+
+  ordersDetailed = rxResource({
+    stream: () => {
+      return this.#orderService.getOrdersDetailed()
+        .pipe(
+          map(response => response.data)
+        )
+    }
+  })
+
   logout() {
     this.#loginService.logout();
     window.location.reload();
@@ -90,5 +114,9 @@ export class AdminPanel {
 
   onCategoryDeleted() {
     this.categories.reload();
+  }
+
+  manageOrders() {
+    this.activeComponent.update((orders) => orders = "orders")
   }
 }

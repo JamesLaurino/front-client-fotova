@@ -6,54 +6,82 @@
   </div>
 }
 
-<div class="container d-flex justify-content-center mt-5 mb-5">
+<div class="container mt-5 mb-5">
   <div class="card shadow-sm border-0">
-    <!-- Header -->
-    <div class="card-body text-center">
-      <div class="container d-flex justify-content-center">
-        <h5 class="card-title mb-1 me-1">{{ clientDetail.value()?.username }}</h5>
-        <svg (click)="deleteClient()" style="cursor: pointer"
-             width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M232.7 69.9C237.1 56.8 249.3 48 263.1 48L377 48C390.8 48 403 56.8 407.4 69.9L416 96L512 96C529.7 96 544 110.3 544 128C544 145.7 529.7 160 512 160L128 160C110.3 160 96 145.7 96 128C96 110.3 110.3 96 128 96L224 96L232.7 69.9zM128 208L512 208L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 208zM216 272C202.7 272 192 282.7 192 296L192 488C192 501.3 202.7 512 216 512C229.3 512 240 501.3 240 488L240 296C240 282.7 229.3 272 216 272zM320 272C306.7 272 296 282.7 296 296L296 488C296 501.3 306.7 512 320 512C333.3 512 344 501.3 344 488L344 296C344 282.7 333.3 272 320 272zM424 272C410.7 272 400 282.7 400 296L400 488C400 501.3 410.7 512 424 512C437.3 512 448 501.3 448 488L448 296C448 282.7 437.3 272 424 272z"/></svg>
-      </div>
-      <p class="text-muted mb-2">{{ clientDetail.value()?.email }}</p>
-      <span
-        class="badge"
-        [ngClass]="clientDetail.value()?.isActive ? 'bg-success' : 'bg-secondary'">
-        {{ clientDetail.value()?.isActive ? 'Active' : 'Inactive' }}
-      </span>
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Client Details</h5>
+      <button (click)="deleteClient()" class="btn btn-danger btn-sm">
+        <i class="bi bi-trash"></i> Delete Client
+      </button>
     </div>
-
-    <!-- Infos utilisateur -->
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        <strong>{{ i18n.getTranslation('ID') }}:</strong> {{ clientDetail.value()?.id }}
-      </li>
-      <li class="list-group-item">
-        <strong>{{ i18n.getTranslation('ADDRESS') }}:</strong>
-        <div class="small text-muted mt-1">
-          {{ clientDetail.value()?.address?.street }} {{ clientDetail.value()?.address?.number }},
-          {{ clientDetail.value()?.address?.city }} ({{ clientDetail.value()?.address?.country }})
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>Username:</strong> {{ clientDetail.value()?.username }}
+            </li>
+            <li class="list-group-item">
+              <strong>Email:</strong> {{ clientDetail.value()?.email }}
+            </li>
+            <li class="list-group-item">
+              <strong>Status:</strong>
+              <span class="badge" [ngClass]="clientDetail.value()?.isActive ? 'bg-success' : 'bg-secondary'">
+                {{ clientDetail.value()?.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </li>
+          </ul>
         </div>
-      </li>
-    </ul>
-
-    <!-- Commentaires -->
-    <div class="card-body shadow">
-      <h6 class="fw-bold">{{ i18n.getTranslation('COMMENTS') }}</h6>
-      <div class="d-flex flex-row flex-wrap gap-3">
-        @for(comment of clientDetail.value()?.commentEntities; track comment.id) {
-          <div class="card shadow-sm border-0" style="min-width: 200px; max-width: 250px;">
-            <div class="card-body p-3">
-              <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1">{{ comment.header }}</h6>
-                <small class="text-muted">{{ comment.createAt | date:'short' }}</small>
+        <div class="col-md-6">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>ID:</strong> {{ clientDetail.value()?.id }}
+            </li>
+            <li class="list-group-item">
+              <strong>Address:</strong>
+              <div class="small text-muted mt-1">
+                {{ clientDetail.value()?.address?.street }} {{ clientDetail.value()?.address?.number }},
+                {{ clientDetail.value()?.address?.city }} ({{ clientDetail.value()?.address?.country }})
               </div>
-              <p class="mb-2">{{ comment.body }}</p>
-                <button
-                  (click)="deleteComment(comment.id)"
-                  class="btn btn-sm btn-outline-danger w-100">
-                  {{ i18n.getTranslation('DELETE') }}
-                </button>
+            </li>
+             <li class="list-group-item">
+              <strong>Roles:</strong>
+              <div>
+                @for(role of clientDetail.value()?.roles; track role) {
+                  <span class="badge bg-primary me-1">{{ role }}</span>
+                }
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 mt-4">
+    <div class="card-header bg-light">
+      <h6 class="fw-bold mb-0">Comments</h6>
+    </div>
+    <div class="card-body">
+      @if(clientDetail.value()?.commentEntities?.length === 0) {
+        <p class="text-muted">No comments yet.</p>
+      }
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        @for(comment of clientDetail.value()?.commentEntities; track comment.id) {
+          <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body">
+                <div class="d-flex w-100 justify-content-between">
+                  <h6 class="mb-1">{{ comment.header }}</h6>
+                  <small class="text-muted">{{ comment.createAt | date:'short' }}</small>
+                </div>
+                <p class="card-text">{{ comment.body }}</p>
+              </div>
+              <div class="card-footer bg-white border-0">
+                 <button (click)="deleteComment(comment.id)" class="btn btn-outline-danger btn-sm w-100">
+                   <i class="bi bi-trash"></i> Delete
+                 </button>
+              </div>
             </div>
           </div>
         }
@@ -61,4 +89,3 @@
     </div>
   </div>
 </div>
-

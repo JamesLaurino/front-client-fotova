@@ -1,0 +1,29 @@
+<div class="container my-5">
+  <table class="table bg-dark text-white">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">{{i18n.getTranslation("ID")}}</th>
+      <th scope="col">{{i18n.getTranslation("DATE")}}</th>
+      <th scope="col">{{i18n.getTranslation("USER")}}</th>
+      <th scope="col">{{i18n.getTranslation("TOTAL")}}</th>
+      <th scope="col">{{i18n.getTranslation("SHOW")}}</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (order of ordersInput(); track order.id;let idx = $index)
+      {
+        <tr>
+          <th scope="row">{{idx}}</th>
+          <td>{{ order.id }}</td>
+          <td>{{ order.createAt | date:'dd-MM-yyyy' }}</td>
+          <td>{{ order.client.email }}</td>
+          <td>{{ getTotalByOrder(order)  | currency:'EUR'}}</td>
+          <td>
+            <button (click)="goToOrderDetail(order.id,order.client.email)" class="btn btn-info">{{i18n.getTranslation("EDIT")}}</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

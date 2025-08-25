@@ -18,6 +18,9 @@
     <nav class="nav flex-column">
       <a class="nav-link" style="cursor: pointer" (click)="manageCategories()">{{ i18n.getTranslation('CATEGORIES') }}</a>
     </nav>
+    <nav class="nav flex-column">
+      <a class="nav-link" style="cursor: pointer" (click)="manageOrders()">{{ i18n.getTranslation('ORDERS') }}</a>
+    </nav>
     <div class="sidebar-footer mt-auto pt-3 border-top">
       <a (click)="logout()" class="d-block text-dark">{{ i18n.getTranslation('LOGOUT') }}</a>
     </div>
@@ -29,7 +32,7 @@
 
     <div class="container-fluid mt-4">
       @if(activeComponent() === ""){
-        <app-admin-product [productsInput]="products.value()" />
+        <app-admin-chart [ordersDetailedInput]="ordersDetailed.value()" />
       }
 
       @if (activeComponent() === 'clients') {
@@ -40,6 +43,10 @@
         <app-admin-categories [categoriesInput]="categories.value()"
                               [productsInput]="products.value()"
                               (categoryDeleted)="onCategoryDeleted()" />
+      } @else if (activeComponent() === 'orders') {
+        <app-admin-order
+          [ordersDetailedInput]="ordersDetailed.value()"
+          [ordersInput]="orders.value()"/>
       }
     </div>
   </div>

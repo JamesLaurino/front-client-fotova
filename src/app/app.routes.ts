@@ -19,6 +19,7 @@ import {AdminProductDetail} from './admin/admin-product-detail/admin-product-det
 import {AdminCategoryCreate} from './admin/admin-category-create/admin-category-create';
 import {AdminCategoryDetail} from './admin/admin-category-detail/admin-category-detail';
 import {AdminProductCreate} from './admin/admin-product-create/admin-product-create';
+import {AdminOrderDetail} from './admin/admin-order-detail/admin-order-detail';
 
 export const routes: Routes = [
   {path:'', component:Landing},
@@ -64,6 +65,11 @@ export const routes: Routes = [
     path:'admin/category/:id',
     canActivate: [AuthGuardAdmin],
     component: AdminCategoryDetail
+  },
+  {
+    path:'admin/order/:id/:email',
+    canActivate: [AuthGuardAdmin],
+    component: AdminOrderDetail
   },
   {
     path:'checkout',
