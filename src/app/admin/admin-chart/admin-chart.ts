@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, InputSignal} from '@angular/core';
+import {Component, effect, inject, input, InputSignal, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {I18nService} from '../../service/i18n/i18nService';
 import {OrderDetail} from '../../model/order/order-detail';
@@ -13,12 +13,15 @@ import 'chart.js/auto';
   styleUrl: './admin-chart.css'
 })
 export class AdminChart {
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
   ordersDetailedInput: InputSignal<OrderDetail[] | undefined> = input.required<OrderDetail[] | undefined>();
   readonly #router = inject(Router);
   readonly i18n = inject(I18nService);
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       x: {},
       y: {
@@ -44,6 +47,7 @@ export class AdminChart {
       const orders = this.ordersDetailedInput();
       if (orders) {
         this.processOrders(orders);
+        this.chart?.update();
       }
     });
   }
