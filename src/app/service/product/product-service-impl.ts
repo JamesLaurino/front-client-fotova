@@ -7,11 +7,16 @@ import {ProductsApiResponse} from '../../model/product/products-api-response';
 import {ProductApiResponse} from '../../model/product/product-api-response';
 import {ProductUpdate} from '../../model/product/product-update';
 import {ProductAdd} from '../../model/product/product-add';
+import {ProductDeleteApiResponse} from '../../model/product/product-delete-api-response';
 
 export class ProductServiceImpl extends ProductService {
-
   readonly #API_URL = environment.apiUrl;
+
   readonly #http:HttpClient = inject(HttpClient)
+
+  deleteProduct(productId: number): Observable<ProductDeleteApiResponse> {
+    return this.#http.delete<ProductDeleteApiResponse>(this.#API_URL + '/product/' + productId + '/delete');
+  }
 
   getAllProducts(): Observable<ProductsApiResponse> {
     return this.#http.get<ProductsApiResponse>(this.#API_URL + '/products');

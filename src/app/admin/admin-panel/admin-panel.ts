@@ -119,4 +119,8 @@ export class AdminPanel {
   manageOrders() {
     this.activeComponent.update((orders) => orders = "orders")
   }
+
+  onProductDeleted() {
+    this.products.reload();
+  }
 }

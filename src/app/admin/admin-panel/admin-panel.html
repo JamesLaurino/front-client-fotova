@@ -38,7 +38,9 @@
       @if (activeComponent() === 'clients') {
         <app-admin-client [clientsInput]="clients.value()"/>
       } @else if (activeComponent() === 'products') {
-        <app-admin-product [productsInput]="products.value()" />
+        <app-admin-product
+          [productsInput]="products.value()"
+          (productDeleted)="onProductDeleted()"  />
       } @else if (activeComponent() === 'categories') {
         <app-admin-categories [categoriesInput]="categories.value()"
                               [productsInput]="products.value()"
