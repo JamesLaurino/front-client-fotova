@@ -27,6 +27,9 @@ export class AdminProductDetail {
   readonly i18n = inject(I18nService);
 
   private productId = this.route.snapshot.paramMap.get('id');
+  protected readonly urlHelper = urlHelper;
+  protected readonly String = String;
+
 
   productResource = rxResource({
     stream: () => this.productService.getProductById(Number(this.productId)).pipe(
@@ -132,8 +135,6 @@ export class AdminProductDetail {
     const formData = new FormData();
     formData.append('file', box.file, box.file.name);
 
-    // supprimer les images par le produit ID.
-
     this.fileService.uploadFile(formData).pipe(
       switchMap(() => {
         if (index === 0) {
@@ -181,9 +182,6 @@ export class AdminProductDetail {
     event.preventDefault();
     this.fileBoxes[index].isDragging = false;
   }
-
-  protected readonly urlHelper = urlHelper;
-  protected readonly String = String;
 
   deleteImageMain() {
     let currentProduct = this.product()!;
