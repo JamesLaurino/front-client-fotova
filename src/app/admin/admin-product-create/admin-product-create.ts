@@ -80,13 +80,15 @@ export class AdminProductCreate {
   }
 
   finish() {
-    this.toasterService.show({
-      toastTitle: 'Succès',
-      toastTime: 'Just now',
-      toastImageUrl: '/fotova/check.jpg',
-      toastMessage: 'Produit créé et images téléversées avec succès.'
-    });
-    this.#router.navigate(['/admin']);
+    if(confirm('Attention les images non uploadées seront perdues. Voulez-vous continuer ?')) {
+      this.toasterService.show({
+        toastTitle: 'Succès',
+        toastTime: 'Just now',
+        toastImageUrl: '/fotova/check.jpg',
+        toastMessage: 'Produit créé et images téléversées avec succès.'
+      });
+      this.#router.navigate(['/admin']);
+    }
   }
 
   goToImages() {

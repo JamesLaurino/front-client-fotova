@@ -17,10 +17,12 @@
 
   <!-- Écran 1 : Formulaire Produit -->
   @if (step === 'form') {
-    <div class="card shadow-sm">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+        <div class="card shadow-sm">
       <div class="card-body p-4">
         <h1 class="card-title h3 text-center mb-4">
-          {{ i18n.getTranslation("CREATE") }} {{ i18n.getTranslation("PRODUCT") }}
+          {{ i18n.getTranslation("CREATE_NEW_PRODUCT") }}
         </h1>
 
         <form class="row g-3" [formGroup]="form" (ngSubmit)="goToImages()">
@@ -73,6 +75,8 @@
           </div>
         </form>
       </div>
+    </div>
+    </div>
     </div>
   }
 
