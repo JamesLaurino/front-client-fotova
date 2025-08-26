@@ -74,13 +74,19 @@
           <div class="d-flex flex-wrap gap-3 mb-4">
             @if(product()?.url) {
               <div class="image-existing-container">
-                <img (click)="deleteImageMain()" [src]="urlHelper(String(product()?.url))" alt="Image du produit" class="image-existing shadow-sm" style="cursor: pointer;">
+                <img [src]="urlHelper(String(product()?.url))" alt="Image du produit" class="image-existing shadow-sm">
+                <button type="button" class="btn btn-sm btn-danger rounded-circle shadow position-absolute top-0 end-0 m-1" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .7rem;" (click)="deleteImageMain()">
+                  <i class="bi bi-x-lg"></i>
+                </button>
                 <div class="badge bg-primary position-absolute bottom-0 start-50 translate-middle-x mb-1">{{ i18n.getTranslation("MAIN_IMAGE") }}</div>
               </div>
             }
             @for (image of product()?.images; track image) {
-              <div class="image-existing-container" (click)="deleteImageGallery(Number(product()?.id), imageHelper(image))" style="cursor: pointer;">
+              <div class="image-existing-container">
                 <img [src]="urlHelper(image)" alt="Image du produit" class="image-existing shadow-sm">
+                <button type="button" class="btn btn-sm btn-danger rounded-circle shadow position-absolute top-0 end-0 m-1" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .7rem;" (click)="deleteImageGallery(Number(product()?.id), imageHelper(image))">
+                  <i class="bi bi-x-lg"></i>
+                </button>
                 <div class="badge bg-secondary position-absolute bottom-0 start-50 translate-middle-x mb-1">{{ i18n.getTranslation("GALLERY_IMAGE") }}</div>
               </div>
             }
