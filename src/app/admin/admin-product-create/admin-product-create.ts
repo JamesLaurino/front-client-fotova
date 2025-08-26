@@ -10,6 +10,7 @@ import {ProductService} from '../../service/interfaces/product-service';
 import {ProductApiResponse} from '../../model/product/product-api-response';
 import {ProductAdd} from '../../model/product/product-add';
 import {FileService} from '../../service/file/fileService';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -28,6 +29,7 @@ export class AdminProductCreate {
   readonly #productService = inject(ProductService);
   readonly #fileService = inject(FileService);
   readonly i18n = inject(I18nService);
+  readonly #router = inject(Router);
 
   productWithoutImage = signal<ProductModel>({
     id:0,
@@ -58,7 +60,7 @@ export class AdminProductCreate {
     }
   })
   step: 'form' | 'images' = 'form';
-  fileBoxes: FileBox[] = [{ file: undefined, uploading: false }];
+  fileBoxes: FileBox[] = [{ file: undefined, uploading: false, isDragging: false }];
 
   get name() { return this.form.get('name') as FormControl; }
   get quantity() { return this.form.get('quantity') as FormControl; }
@@ -67,14 +69,24 @@ export class AdminProductCreate {
 
 
   addFileBox() {
-    this.fileBoxes.push({ file: undefined, uploading: false });
+    this.fileBoxes.push({ file: undefined, uploading: false, isDragging: false });
   }
 
   removeFileBox(index: number) {
     this.fileBoxes.splice(index, 1);
     if (this.fileBoxes.length === 0) {
-      this.fileBoxes.push({ file: undefined, uploading: false });
+      this.fileBoxes.push({ file: undefined, uploading: false, isDragging: false });
     }
+  }
+
+  finish() {
+    this.toasterService.show({
+      toastTitle: 'Succès',
+      toastTime: 'Just now',
+      toastImageUrl: '/fotova/check.jpg',
+      toastMessage: 'Produit créé et images téléversées avec succès.'
+    });
+    this.#router.navigate(['/admin']);
   }
 
   goToImages() {
@@ -109,12 +121,14 @@ export class AdminProductCreate {
     }
   }
 
-  onDragOver(event: DragEvent) {
+  onDragOver(event: DragEvent, index: number) {
     event.preventDefault();
+    this.fileBoxes[index].isDragging = true;
   }
 
-  onDragLeave(event: DragEvent) {
+  onDragLeave(event: DragEvent, index: number) {
     event.preventDefault();
+    this.fileBoxes[index].isDragging = false;
   }
 
   onFileDrop(event: DragEvent, index: number) {
@@ -122,6 +136,7 @@ export class AdminProductCreate {
     if (event.dataTransfer?.files?.length) {
       this.fileBoxes[index].file = event.dataTransfer.files[0];
     }
+    this.fileBoxes[index].isDragging = false;
   }
 
   onFileSelect(event: any, index: number) {
@@ -152,83 +167,11 @@ export class AdminProductCreate {
     }
     box.uploading = true;
 
-    //this.removeFileBox(index);
-    //this.#fileService.uploadFile(formData).subscribe({
-    //   next: () => {
-    //     this.toasterService.show({
-    //       toastTitle: 'Succès',
-    //       toastTime: 'Just now',
-    //       toastImageUrl: '/fotova/check.jpg',
-    //       toastMessage: 'Mise à jour de la catégorie effectuée avec succès.'
-    //     });
-    //     box.uploading = false;
-    //   },
-    //   error:(error) => {
-    //     this.toasterService.show({
-    //       toastTitle: 'Echec',
-    //       toastTime: 'Just now',
-    //       toastImageUrl: '/fotova/error.png',
-    //       toastMessage: "Erreur lors de l'upload de l'image : " + error.error.errorList[0]
-    //     });
-    //     box.uploading = false;
-    //   }
-    // })
-
-    // if(index == 0) {
-    //   this.#productService.updateProduct(this.productWithoutImage())
-    //     .subscribe({
-    //       next:() => {
-    //         this.toasterService.show({
-    //           toastTitle: 'Succès',
-    //           toastTime: 'Just now',
-    //           toastImageUrl: '/fotova/check.jpg',
-    //           toastMessage: 'Mise à jour du produit effectuée avec succès.'
-    //         });
-    //       },
-    //       error: (error) => {
-    //         this.toasterService.show({
-    //           toastTitle: 'Echec',
-    //           toastTime: 'Just now',
-    //           toastImageUrl: '/fotova/error.png',
-    //           toastMessage: "Erreur lors de la mise à jours du produit : " + error.error.errorList[0]
-    //         });
-    //       }
-    //     })
-    // } else {
-    //   this.#fileService.linkImageToProduct(
-    //     this.productWithoutImage().categoryInnerProductDto.id, (String(box.file.name)))
-    //     .subscribe({
-    //       next:() => {
-    //         this.toasterService.show({
-    //           toastTitle: 'Succès',
-    //           toastTime: 'Just now',
-    //           toastImageUrl: '/fotova/check.jpg',
-    //           toastMessage: 'Mise à jour de la catégorie effectuée avec succès.'
-    //         });
-    //       },
-    //       error: (error) => {
-    //         this.toasterService.show({
-    //           toastTitle: 'Echec',
-    //           toastTime: 'Just now',
-    //           toastImageUrl: '/fotova/error.png',
-    //           toastMessage: "Erreur lors de l'upload de l'image : " + error.error.errorList[0]
-    //         });
-    //       }
-    //     })
-    // }
-
-
-    /* GEMINI */
     this.#fileService.uploadFile(formData).pipe(
-      // concatMap attend la fin de uploadFile avant de continuer.
       concatMap(() => {
-        console.log("Donnée envoyée : ");
-        console.log(this.productWithoutImage())
         if (index === 0) {
-          console.log("INDEX : " + index)
           return this.#productService.updateProduct(this.productWithoutImage());
         } else {
-          console.log("INDEX : " + index)
           return this.#fileService.linkImageToProduct(
             this.productWithoutImage().id,
             String(box.file!.name)
@@ -237,7 +180,6 @@ export class AdminProductCreate {
       }),
       finalize(() => {
         box.uploading = false;
-        this.removeFileBox(index);
       })
     ).subscribe({
       next: () => {
@@ -245,8 +187,9 @@ export class AdminProductCreate {
           toastTitle: 'Succès',
           toastTime: 'Just now',
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Mise à jour du produit effectuée avec succès.'
+          toastMessage: 'Image uploadée et produit mis à jour.'
         });
+        this.removeFileBox(index);
       },
       error: (error) => {
         console.error('Erreur détaillée reçue dans la chaîne RxJS :', error);
@@ -254,13 +197,10 @@ export class AdminProductCreate {
           toastTitle: 'Échec',
           toastTime: 'Just now',
           toastImageUrl: '/fotova/error.png',
-          // Utilisation d'un "optional chaining" pour éviter une erreur si la structure de l'erreur change.
           toastMessage: `Erreur : ${error.error?.errorList?.[0] || 'Une erreur inconnue est survenue.'}`
         });
       }
     });
-
-    //this.removeFileBox(index);
   }
 
   getCategoryAndId(): number | null {

@@ -1,44 +1,107 @@
-.card {
-  border: 2px dashed #dee2e6;
-  transition: border-color 0.3s, background-color 0.3s;
+/* Stepper Styles */
+.stepper {
+  width: 100%;
+  max-width: 400px;
 }
 
-.card:hover {
-  border-color: #1b732c;
-  background-color: #f8f9fa;
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
 }
 
-button.btn-outline-primary {
-  border: 2px dashed #1b732c;
+.step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
 }
 
+.step-label {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.step.active .step-icon {
+  background-color: #fff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.step.active .step-label {
+  color: #0d6efd;
+  font-weight: bold;
+}
+
+.step.completed .step-icon {
+  background-color: #198754;
+  border-color: #198754;
+  color: #fff;
+}
+
+.step.completed .step-label {
+  color: #198754;
+}
+
+.step-line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #e9ecef;
+  margin: 0 1rem;
+  position: relative;
+  top: -18px; /* Align with middle of icons */
+  transition: background-color 0.3s ease;
+}
+
+.step-line.completed {
+  background-color: #198754;
+}
+
+/* File Upload Box Styles */
 .card-file-box {
   width: 200px;
   height: 200px;
-  cursor: pointer;
+  border: 2px dashed #dee2e6;
+  transition: border-color 0.3s, background-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-file-box:hover, .card-file-box.is-dragging {
+  border-color: #0d6efd;
+  background-color: #f8f9fa;
 }
 
 .btn-add-box {
-  width: 200px;
-  height: 200px;
+  cursor: pointer;
+  border: 2px dashed #198754;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
-.slider-container {
-  display: flex;
-  width: 200%; /* deux écrans côte à côte */
-  transition: transform 0.6s ease-in-out;
+.btn-add-box:hover {
+  border-color: #157347;
+  background-color: #f8f9fa;
 }
 
-.slider-screen {
-  width: 50%;
-  flex-shrink: 0;
-  padding: 20px;
+.text-truncate {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.slider-container:not(.show-images) {
-  transform: translateX(0);
-}
-
-.slider-container.show-images {
-  transform: translateX(-50%);
+.card-file-box .btn-sm {
+  z-index: 10;
 }
