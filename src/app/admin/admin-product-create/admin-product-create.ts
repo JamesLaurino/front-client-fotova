@@ -2,14 +2,13 @@ import {Component, inject, signal} from '@angular/core';
 import {I18nService} from '../../service/i18n/i18nService';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {rxResource} from '@angular/core/rxjs-interop';
-import {catchError, concatMap, finalize, map, switchMap, tap} from 'rxjs';
+import {concatMap, finalize, map, tap} from 'rxjs';
 import {CategoryService} from '../../service/category/categoryService';
 import {ProductModel} from '../../model/product/product-model';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {ProductService} from '../../service/interfaces/product-service';
 import {ProductApiResponse} from '../../model/product/product-api-response';
 import {ProductAdd} from '../../model/product/product-add';
-import {JsonPipe} from '@angular/common';
 import {FileService} from '../../service/file/fileService';
 
 
@@ -17,8 +16,7 @@ import {FileService} from '../../service/file/fileService';
   selector: 'app-admin-product-create',
   imports: [
     FormsModule,
-    ReactiveFormsModule,
-    JsonPipe
+    ReactiveFormsModule
   ],
   templateUrl: './admin-product-create.html',
   styleUrl: './admin-product-create.css'
