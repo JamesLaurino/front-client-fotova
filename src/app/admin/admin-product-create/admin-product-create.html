@@ -89,6 +89,29 @@
         </h1>
         <p class="text-center text-muted mb-4">{{ i18n.getTranslation("ADD_MAIN_IMAGE_AND_GALLERY") }}</p>
 
+        <!-- Image Previews -->
+        @if (previewFiles().length > 0) {
+          <div class="mb-4">
+            <h2 class="h5 mb-3">{{ i18n.getTranslation("IMAGE_PREVIEWS") }}</h2>
+            <div class="d-flex flex-wrap gap-3">
+              @for (preview of previewFiles(); track preview.url) {
+                <div class="image-preview-container">
+                  <img [src]="preview.url" [alt]="preview.file.name" class="image-preview shadow-sm">
+                  <button type="button" class="btn btn-sm btn-danger rounded-circle shadow position-absolute top-0 end-0 m-1" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .7rem;" (click)="removePreview(preview)">
+                    <i class="bi bi-x-lg"></i>
+                  </button>
+                  @if (preview.sourceIndex === 0) {
+                    <div class="badge bg-primary position-absolute bottom-0 start-50 translate-middle-x mb-1">{{ i18n.getTranslation("MAIN_IMAGE") }}</div>
+                  } @else {
+                    <div class="badge bg-secondary position-absolute bottom-0 start-50 translate-middle-x mb-1">{{ i18n.getTranslation("GALLERY_IMAGE") }}</div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          <hr class="my-4">
+        }
+
         <div class="d-flex flex-wrap gap-3">
           @for (box of fileBoxes; track box; let i = $index) {
             <div class="flex-shrink-0 position-relative pb-4">
@@ -135,7 +158,7 @@
 
           <!-- Bouton pour ajouter une nouvelle boîte -->
           <div class="flex-shrink-0">
-            <div class="card card-file-box btn-add-box d-flex flex-column justify-content-center align-items-center" (click)="addFileBox()">
+            <div class="card card-file-box btn-add-box d-flex flex-column justify-content-center align-items.center" (click)="addFileBox()">
               <i class="bi bi-plus-lg text-success" style="font-size: 2rem;"></i>
               <p class="text-muted small mt-2">{{ i18n.getTranslation("ADD_IMAGE") }}</p>
             </div>

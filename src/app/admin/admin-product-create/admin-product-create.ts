@@ -11,7 +11,7 @@ import {ProductApiResponse} from '../../model/product/product-api-response';
 import {ProductAdd} from '../../model/product/product-add';
 import {FileService} from '../../service/file/fileService';
 import {Router} from "@angular/router";
-
+import {PreviewFile} from '../../model/file/preview-file';
 
 @Component({
   selector: 'app-admin-product-create',
@@ -61,6 +61,7 @@ export class AdminProductCreate {
   })
   step: 'form' | 'images' = 'form';
   fileBoxes: FileBox[] = [{ file: undefined, uploading: false, isDragging: false }];
+  previewFiles = signal<PreviewFile[]>([]);
 
   get name() { return this.form.get('name') as FormControl; }
   get quantity() { return this.form.get('quantity') as FormControl; }
@@ -73,10 +74,37 @@ export class AdminProductCreate {
   }
 
   removeFileBox(index: number) {
+    const previewToRemove = this.previewFiles().find(p => p.sourceIndex === index);
+    if (previewToRemove) {
+      this.removePreview(previewToRemove);
+    }
+
     this.fileBoxes.splice(index, 1);
     if (this.fileBoxes.length === 0) {
       this.fileBoxes.push({ file: undefined, uploading: false, isDragging: false });
     }
+  }
+
+  removePreview(previewToRemove: PreviewFile) {
+    URL.revokeObjectURL(previewToRemove.url);
+    this.previewFiles.update(files => files.filter(p => p.url !== previewToRemove.url));
+    const box = this.fileBoxes[previewToRemove.sourceIndex];
+    if (box) {
+      box.file = undefined;
+    }
+  }
+
+  private addPreview(file: File, index: number) {
+    const existingPreview = this.previewFiles().find(p => p.sourceIndex === index);
+    if (existingPreview) {
+      URL.revokeObjectURL(existingPreview.url);
+    }
+
+    const url = URL.createObjectURL(file);
+    this.previewFiles.update(files => {
+      const otherFiles = files.filter(p => p.sourceIndex !== index);
+      return [...otherFiles, { file, url, sourceIndex: index }];
+    });
   }
 
   finish() {
@@ -141,7 +169,9 @@ export class AdminProductCreate {
   onFileDrop(event: DragEvent, index: number) {
     event.preventDefault();
     if (event.dataTransfer?.files?.length) {
-      this.fileBoxes[index].file = event.dataTransfer.files[0];
+      const file = event.dataTransfer.files[0];
+      this.fileBoxes[index].file = file;
+      this.addPreview(file, index);
     }
     this.fileBoxes[index].isDragging = false;
   }
@@ -150,6 +180,7 @@ export class AdminProductCreate {
     const file: File = event.target.files[0];
     if (file) {
       this.fileBoxes[index].file = file;
+      this.addPreview(file, index);
     }
   }
 
