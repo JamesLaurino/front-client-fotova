@@ -115,8 +115,13 @@ export class AdminProductCreate {
             return n;
           })
         },
-        error: (error) => {
-          console.log("Une erreur est survenue")
+        error: () => {
+          this.toasterService.show({
+            toastTitle: 'Erreur',
+            toastTime: 'Just now',
+            toastImageUrl: '/fotova/error.png',
+            toastMessage: "Produit et images n'ont pas pu être téléversée"
+          });
         }
       })
 
