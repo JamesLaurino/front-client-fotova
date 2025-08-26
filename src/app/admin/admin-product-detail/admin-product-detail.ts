@@ -1,129 +1,245 @@
-import {Component, effect, inject} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {rxResource} from '@angular/core/rxjs-interop';
-import {map, tap} from 'rxjs';
-import {ProductService} from '../../service/interfaces/product-service';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {I18nService} from '../../service/i18n/i18nService';
-import {CategoryService} from '../../service/category/categoryService';
-import {ProductUpdate} from '../../model/product/product-update';
-import {ToasterService} from '../../service/toaster/toasterService';
+import {Component, computed, effect, inject} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {ProductService} from "../../service/interfaces/product-service";
+import {I18nService} from "../../service/i18n/i18nService";
+import {rxResource} from "@angular/core/rxjs-interop";
+import {finalize, map, switchMap} from "rxjs";
+import {ProductModel} from "../../model/product/product-model";
+import {ProductUpdate} from "../../model/product/product-update";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ToasterService} from "../../service/toaster/toasterService";
+import {FileService} from "../../service/file/fileService";
+import urlHelper from '../../helper/url-helper';
+import imageHelper from '../../helper/image-helper';
 
 @Component({
   selector: 'app-admin-product-detail',
-  imports: [
-    ReactiveFormsModule
-  ],
-  templateUrl: './admin-product-detail.html'
+  imports: [ReactiveFormsModule],
+  templateUrl: './admin-product-detail.html',
+  styleUrl: './admin-product-detail.css'
 })
 export class AdminProductDetail {
-  readonly #router = inject(ActivatedRoute)
-  private productId = Number(this.#router.snapshot.params['id']);
-  readonly #productService = inject(ProductService);
-  readonly #categoryService = inject(CategoryService);
-  private toasterService = inject(ToasterService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly productService = inject(ProductService);
+  private readonly toasterService = inject(ToasterService);
+  private readonly fileService = inject(FileService);
+  private readonly router = inject(Router);
   readonly i18n = inject(I18nService);
+
+  private productId = this.route.snapshot.paramMap.get('id');
+
+  productResource = rxResource({
+    stream: () => this.productService.getProductById(Number(this.productId)).pipe(
+      map(response => response.data)
+    )
+  });
+
+  product = computed(() => this.productResource.value());
+
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    quantity: new FormControl(0, [Validators.required]),
+    price: new FormControl(0, [Validators.required]),
+  });
+
+  step: 'form' | 'images' = 'form';
+  fileBoxes: FileBox[] = [{ file: undefined, uploading: false, isDragging: false }];
 
   constructor() {
     effect(() => {
-      const product = this.product.value();
-      const categories = this.categories.value();
-      if (product) {
-        this.form.setValue({
-          id: Number(product.id),
-          name: product.name,
-          quantity: product.quantity,
-          price: product.price,
-          categoryInnerProductDto: categories ? categories.map(category => category.name) : [],
-        })
+      const p = this.product();
+      if (p) {
+        this.form.patchValue(p);
+
       }
     });
   }
 
-  form = new FormGroup({
-    id: new FormControl({ value: this.productId, disabled: true }),
-    name: new FormControl('', [Validators.required]),
-    quantity: new FormControl(0, [Validators.required, Validators.min(0)]),
-    price: new FormControl(0, [Validators.required, Validators.min(0)]),
-    categoryInnerProductDto: new FormControl<string[]>([], [Validators.required]),
-  });
-
   get name() { return this.form.get('name') as FormControl; }
   get quantity() { return this.form.get('quantity') as FormControl; }
   get price() { return this.form.get('price') as FormControl; }
-  get category() { return this.form.get('categoryInnerProductDto') as FormControl; }
 
-  product = rxResource({
-    stream: () => {
-      return this.#productService.getProductById(this.productId)
-        .pipe(
-          map(response => response.data),
-          tap(product => console.log(product))
-        )
-    }
-  })
+  updateProduct() {
+    if (this.form.invalid || !this.product()) return;
 
-  categories = rxResource({
-    stream: () => {
-      return this.#categoryService.getAllCategories()
-        .pipe(
-          map(response => response.data),
-          tap(product => console.log(product))
-        )
-    }
-  })
+    const currentProduct = this.product()!;
+    const formValue = this.form.value;
 
-  getCategoryAndId(): [string, number] | null {
-    if(Array.isArray(this.form.value.categoryInnerProductDto)) {
-      return [String(this.product.value()?.categoryInnerProductDto?.name),
-        Number(this.product.value()?.categoryInnerProductDto?.id)]
-    }
-    else {
-      for(let cat of this.categories.value()!) {
-        if(cat.name === String(this.form.value.categoryInnerProductDto)) {
-          return [String(this.form.value.categoryInnerProductDto),Number(cat.id)]
-        }
+    const productUpdate: ProductUpdate = {
+      id: currentProduct.id,
+      name: formValue.name ?? currentProduct.name,
+      price: formValue.price ?? currentProduct.price,
+      quantity: formValue.quantity ?? currentProduct.quantity,
+      url: currentProduct.url,
+      categoryInnerProductDto: currentProduct.categoryInnerProductDto
+    };
+
+    this.productService.updateProduct(productUpdate).subscribe({
+      next: () => {
+        this.toasterService.show({
+          toastTitle: 'Succès',
+          toastTime: 'Just now',
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: 'Produit mis à jour avec succès.'
+        });
+        this.step = 'images';
+      },
+      error: (err) => {
+        this.toasterService.show({
+          toastTitle: 'Échec',
+          toastTime: 'Just now',
+          toastImageUrl: '/fotova/error.png',
+          toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
+        });
       }
-    }
-    return null;
+    });
   }
 
-  onSubmit() {
-    if (this.form.valid) {
-      let array = this.getCategoryAndId();
-      let productUpdate: ProductUpdate = {
-        id:Number(this.product.value()?.id),
-        name: String(this.name.value),
-        price: Number(this.price.value),
-        url: String(this.product.value()?.url),
-        quantity: Number(this.quantity.value),
-        categoryInnerProductDto: {
-          id: array![1],
-          name: array![0]
-        }
-      }
+  addFileBox() {
+    this.fileBoxes.push({ file: undefined, uploading: false, isDragging: false });
+  }
 
-      this.#productService.updateProduct(productUpdate).subscribe({
-        next: () =>
-        {
+  removeFileBox(index: number) {
+    this.fileBoxes.splice(index, 1);
+    if (this.fileBoxes.length === 0) {
+      this.fileBoxes.push({ file: undefined, uploading: false, isDragging: false });
+    }
+  }
+
+  onFileDrop(event: DragEvent, index: number) {
+    event.preventDefault();
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      this.fileBoxes[index].file = files[0];
+      this.fileBoxes[index].isDragging = false;
+    }
+  }
+
+  onFileSelect(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.fileBoxes[index].file = input.files[0];
+    }
+  }
+
+  uploadFile(index: number) {
+    const box = this.fileBoxes[index];
+    const currentProduct = this.product();
+    if (!box.file || !currentProduct) return;
+
+    box.uploading = true;
+
+    const formData = new FormData();
+    formData.append('file', box.file, box.file.name);
+
+    // supprimer les images par le produit ID.
+
+    this.fileService.uploadFile(formData).pipe(
+      switchMap(() => {
+        if (index === 0) {
+          const updatedProduct: ProductModel = { ...currentProduct, url: box.file!.name };
+          return this.productService.updateProduct(updatedProduct);
+        } else {
+          return this.fileService.linkImageToProduct(currentProduct.id, box.file!.name);
+        }
+      }),
+      finalize(() => {
+        box.uploading = false;
+      })
+    ).subscribe({
+      next: () => {
+        this.toasterService.show({
+          toastTitle: 'Succès',
+          toastTime: 'Just now',
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: 'Image téléversée avec succès.'
+        });
+        this.productResource.reload();
+        this.removeFileBox(index);
+      },
+      error: (err) => {
+        this.toasterService.show({
+          toastTitle: 'Échec',
+          toastTime: 'Just now',
+          toastImageUrl: '/fotova/error.png',
+          toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
+        });
+      }
+    });
+  }
+
+  finish() {
+    this.router.navigate(['/admin']);
+  }
+
+  onDragOver(event: DragEvent, index: number) {
+    event.preventDefault();
+    this.fileBoxes[index].isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent, index: number) {
+    event.preventDefault();
+    this.fileBoxes[index].isDragging = false;
+  }
+
+  protected readonly urlHelper = urlHelper;
+  protected readonly String = String;
+
+  deleteImageMain() {
+    let currentProduct = this.product()!;
+    let productUpdateImages: ProductUpdate = {
+      id: currentProduct.id,
+      name: currentProduct.name,
+      price: currentProduct.price,
+      quantity: currentProduct.quantity,
+      url: "",
+      categoryInnerProductDto: currentProduct.categoryInnerProductDto
+    };
+
+    this.productService.updateProduct(productUpdateImages).subscribe({
+      next: () => {
+        this.toasterService.show({
+          toastTitle: 'Succès',
+          toastTime: 'Just now',
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: 'Image du produit mise à jour avec succès.'
+        });
+        this.productResource.reload();
+      },
+      error: (err) => {
+        this.toasterService.show({
+          toastTitle: 'Échec',
+          toastTime: 'Just now',
+          toastImageUrl: '/fotova/error.png',
+          toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
+        });
+      }
+    });
+  }
+
+  deleteImageGallery(productId:number,imageName:string) {
+    console.log(productId,imageName)
+    this.fileService.removeImageGallery(imageName, productId)
+      .subscribe({
+        next:() => {
           this.toasterService.show({
             toastTitle: 'Succès',
             toastTime: 'Just now',
             toastImageUrl: '/fotova/check.jpg',
-            toastMessage: 'Mise à jour du produit effectuée avec succès.'
+            toastMessage: 'Image du produit mise à jour avec succès.'
           });
+          this.productResource.reload();
         },
-        error: (error) =>
-        {
+        error: (err) => {
           this.toasterService.show({
-            toastTitle: 'Error',
+            toastTitle: 'Échec',
             toastTime: 'Just now',
             toastImageUrl: '/fotova/error.png',
-            toastMessage: 'La mise du à jours produit échouée : ' + error.error.errorList[0]
+            toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
           });
         }
       })
-    }
   }
-
+  protected readonly Number = Number;
+  protected readonly imageHelper = imageHelper;
 }

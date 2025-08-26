@@ -1,73 +1,163 @@
-<div class="container d-flex justify-content-center mt-5">
-  <h1 class="h3">{{i18n.getTranslation("EDIT_PRODUCT")}}</h1>
-</div>
+<div class="container mt-5">
 
-<!-- Editer les info produits -->
-<div class="container d-flex justify-content-center mt-5" style="max-width: 700px;">
-  <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit()">
-
-    <div class="col-md-6">
-      <label for="inputName" class="form-label">{{i18n.getTranslation("NAME")}}</label>
-      <input type="text" formControlName="name" class="form-control" id="inputName">
-      @if(name.hasError('required') && name.touched) {
-        <div class="text-danger">{{i18n.getTranslation("PLEASE_ENTER_NAME_AGAIN")}}</div>
-      }
+  <!-- Stepper -->
+  <div class="d-flex justify-content-center mb-4">
+    <div class="stepper d-flex align-items-center">
+      <div class="step" [class.active]="step === 'form'" [class.completed]="step === 'images'">
+        <div class="step-icon">1</div>
+        <div class="step-label">{{ i18n.getTranslation("PRODUCT_DETAILS") }}</div>
+      </div>
+      <div class="step-line" [class.completed]="step === 'images'"></div>
+      <div class="step" [class.active]="step === 'images'">
+        <div class="step-icon">2</div>
+        <div class="step-label">{{ i18n.getTranslation("MANAGE_IMAGES") }}</div>
+      </div>
     </div>
+  </div>
 
-    <div class="col-md-6">
-      <label for="inputQuantity" class="form-label">{{i18n.getTranslation("QUANTITY")}}</label>
-      <input type="number" formControlName="quantity" class="form-control" id="inputQuantity">
-      @if(quantity.hasError('required') && quantity.touched) {
-        <div class="text-danger">{{i18n.getTranslation("PLEASE_ENTER_QUANTITY")}}</div>
-      }
-      @if(quantity.hasError('min')) {
-        <div class="text-danger">{{i18n.getTranslation("QUANTITY_GREATER_THAN_ZERO")}}</div>
-      }
-    </div>
+  @if (product()) {
+    <!-- Écran 1 : Formulaire Produit -->
+    @if (step === 'form') {
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+          <div class="card shadow-sm">
+            <div class="card-body p-4">
+              <h1 class="card-title h3 text-center mb-4">
+                {{ i18n.getTranslation("UPDATE") }} {{ i18n.getTranslation("PRODUCT") }}
+              </h1>
 
-    <div class="col-md-6">
-      <label for="inputPrice" class="form-label">{{i18n.getTranslation("PRICE")}}</label>
-      <input type="number" formControlName="price" class="form-control" id="inputPrice" step="0.01">
-      @if(price.hasError('required') && price.touched) {
-        <div class="text-danger">{{i18n.getTranslation("PLEASE_ENTER_PRICE")}}</div>
-      }
-      @if(price.hasError('min')) {
-        <div class="text-danger">{{i18n.getTranslation("PRICE_GREATER_EQUAL_THAN_ZERO")}}</div>
-      }
-    </div>
+              <form class="row g-3" [formGroup]="form" (ngSubmit)="updateProduct()">
+                <div class="col-md-6">
+                  <label for="inputName" class="form-label">{{i18n.getTranslation("NAME")}}</label>
+                  <input type="text" formControlName="name" class="form-control" id="inputName">
+                  @if(name.hasError('required') && name.touched) {
+                    <div class="text-danger small mt-1">{{i18n.getTranslation("PLEASE_ENTER_NAME_AGAIN")}}</div>
+                  }
+                </div>
 
-    <div class="col-md-6">
-      <label for="inputCategory" class="form-label">
-        {{ i18n.getTranslation("CATEGORY") }} : {{product.value()?.categoryInnerProductDto?.name}}
-      </label>
+                <div class="col-md-6">
+                  <label for="inputQuantity" class="form-label">{{i18n.getTranslation("QUANTITY")}}</label>
+                  <input type="number" formControlName="quantity" class="form-control" id="inputQuantity">
+                  @if(quantity.hasError('required') && quantity.touched) {
+                    <div class="text-danger small mt-1">{{i18n.getTranslation("PLEASE_ENTER_QUANTITY")}}</div>
+                  }
+                </div>
 
-      <select formControlName="categoryInnerProductDto" class="form-select" id="inputCategory">
-        @for (category of categories.value(); track category.id) {
-          @if(category.name == product.value()?.categoryInnerProductDto?.name) {
-            <option [selected]="category.name">
-              {{ category.name }}
-            </option>
-          }
-          @else {
-            <option [value]="category.name">
-              {{ category.name }}
-            </option>
-          }
-        }
-      </select>
+                <div class="col-md-12">
+                  <label for="inputPrice" class="form-label">{{i18n.getTranslation("PRICE")}}</label>
+                  <input type="number" formControlName="price" class="form-control" id="inputPrice" step="0.01">
+                  @if(price.hasError('required') && price.touched) {
+                    <div class="text-danger small mt-1">{{i18n.getTranslation("PLEASE_ENTER_PRICE")}}</div>
+                  }
+                </div>
 
-      @if(category.hasError('required') && category.touched) {
-        <div class="text-danger">
-          {{ i18n.getTranslation("CATEGORY_REQUIRED") }}
+                <div class="col-12 d-flex justify-content-end mt-4">
+                  <button [disabled]="form.invalid" type="submit" class="btn btn-primary">
+                    {{ i18n.getTranslation("NEXT_STEP") }} <i class="bi bi-arrow-right"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-      }
-    </div>
+      </div>
+    }
 
-    <div class="col-12">
-      <button [disabled]="form.invalid" type="submit" class="btn btn-dark">{{i18n.getTranslation("EDIT")}}</button>
-    </div>
-  </form>
+    <!-- Écran 2 : Gestion d’Images -->
+    @if (step === 'images') {
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h1 class="card-title h3 text-center mb-4">{{ i18n.getTranslation("MANAGE_IMAGES") }}</h1>
+
+          <!-- Existing Images -->
+          <h2 class="h5 mb-3">{{ i18n.getTranslation("EXISTING_IMAGES") }}</h2>
+          @if(String(product()?.url)) {
+            <div class="image-existing-container">
+              <small>
+                {{ i18n.getTranslation("MAIN_IMAGE") }}
+              </small>
+              <img (click)="deleteImageMain()" [src]="urlHelper(String(product()?.url))" alt="Image du produit" class="image-existing shadow-sm">
+            </div>
+          }
+          <div class="d-flex flex-wrap gap-3 mb-4">
+            @if(String(product()?.url)) {
+            }
+            @for (image of product()?.images; track image) {
+              <div (click)="deleteImageGallery(Number(product()?.id), imageHelper(image))" class="image-existing-container">
+                <small>
+                  {{ i18n.getTranslation("GALLERY_IMAGE") }}
+                </small>
+                <img [src]="urlHelper(image)" alt="Image du produit" class="image-existing shadow-sm">
+              </div>
+            }
+            @if (!product()?.images?.length) {
+              <p class="text-muted">{{ i18n.getTranslation("NO_EXISTING_IMAGES") }}</p>
+            }
+          </div>
+
+          <!-- Add New Images -->
+          <h2 class="h5 mb-3">{{ i18n.getTranslation("ADD_NEW_IMAGES") }}</h2>
+          <div class="d-flex flex-wrap gap-3">
+            @for (box of fileBoxes; track box; let i = $index) {
+              <div class="flex-shrink-0 position-relative pb-4">
+                <div class="card card-file-box d-flex flex-column justify-content-center align-items-center"
+                     [class.is-dragging]="box.isDragging"
+                     (drop)="onFileDrop($event, i)"
+                     (dragover)="onDragOver($event, i)"
+                     (dragleave)="onDragLeave($event, i)">
+
+                  @if (box.file) {
+                    <button type="button" class="btn btn-sm btn-danger rounded-circle shadow position-absolute top-0 end-0 m-2" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .7rem;" (click)="removeFileBox(i)">
+                      <i class="bi bi-x-lg"></i>
+                    </button>
+                  }
+
+                  @if(!box.file) {
+                    <div class="text-center p-3">
+                      <i class="bi bi-cloud-arrow-up text-success" style="font-size: 3rem;"></i>
+                      <p class="text-muted small mt-2">{{ i18n.getTranslation("DRAG_DROP_OR_CLICK") }}</p>
+                      <input type="file" (change)="onFileSelect($event, i)" hidden #fileInput>
+                      <button class="btn btn-outline-success btn-sm mt-2" (click)="fileInput.click()">{{ i18n.getTranslation("SELECT_FILE") }}</button>
+                    </div>
+                  } @else {
+                    <div class="text-center p-3">
+                      <i class="bi bi-file-earmark-image text-primary" style="font-size: 3rem;"></i>
+                      <p class="fw-bold small mt-2 text-truncate">{{ box.file?.name }}</p>
+                      <p class="text-muted small">{{ (box.file?.size! / 1024).toFixed(1) }} Ko</p>
+                      <button class="btn btn-primary btn-sm mt-2 mb-2" (click)="uploadFile(i)" [disabled]="box.uploading">
+                        @if(box.uploading) {
+                          <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                        }
+                        {{ box.uploading ? i18n.getTranslation("UPLOADING") : i18n.getTranslation("UPLOAD") }}
+                      </button>
+                    </div>
+                  }
+                </div>
+                @if (i === 0) {
+                  <div class="badge bg-primary position-absolute bottom-0 start-50 translate-middle-x">{{ i18n.getTranslation("MAIN_IMAGE") }}</div>
+                } @else {
+                  <div class="badge bg-secondary position-absolute bottom-0 start-50 translate-middle-x">{{ i18n.getTranslation("GALLERY_IMAGE") }}</div>
+                }
+              </div>
+            }
+
+            <div class="flex-shrink-0">
+              <div class="card card-file-box btn-add-box d-flex flex-column justify-content-center align-items-center" (click)="addFileBox()">
+                <i class="bi bi-plus-lg text-success" style="font-size: 2rem;"></i>
+                <p class="text-muted small mt-2">{{ i18n.getTranslation("ADD_IMAGE") }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-success" (click)="finish()">
+              {{ i18n.getTranslation("FINISH") }} <i class="bi bi-check-lg"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  } @else {
+    <p class="text-center">{{ i18n.getTranslation("LOADING_PRODUCT") }}</p>
+  }
 </div>
-
-
-<!-- Editer les images du produits -->
