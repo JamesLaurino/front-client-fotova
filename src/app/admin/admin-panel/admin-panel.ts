@@ -123,4 +123,8 @@ export class AdminPanel {
   onProductDeleted() {
     this.products.reload();
   }
+
+  onOrderCompleteUpdate() {
+    this.orders.reload();
+  }
 }

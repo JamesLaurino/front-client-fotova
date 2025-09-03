@@ -20,6 +20,10 @@ export class OrderService {
     return this.#http.get<OrderDetailApiResponse>(this.#API_URL + '/order-products/detailed');
   }
 
+  toggleCompleted(orderId: number): Observable<OrderAdminApiResponse> {
+    return this.#http.put<OrderAdminApiResponse>(this.#API_URL + '/order/complete/' + orderId,{});
+  }
+
   getOrderByIdAndEmail(orderId: number, email: string): Observable<OrderDetailApiResponse> {
     const params = new HttpParams()
       .set('email', email)

@@ -48,7 +48,9 @@
       } @else if (activeComponent() === 'orders') {
         <app-admin-order
           [ordersDetailedInput]="ordersDetailed.value()"
-          [ordersInput]="orders.value()"/>
+          [ordersInput]="orders.value()"
+          (orderCompleteUpdate)="onOrderCompleteUpdate()"
+          />
       }
     </div>
   </div>
