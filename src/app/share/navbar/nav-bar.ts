@@ -9,7 +9,24 @@ import {UserService} from '../../service/user/user-service';
   selector: 'app-nav-bar',
   imports: [],
   templateUrl: './nav-bar.html',
-  styles: ''
+  styles: [
+    `
+      .navbar {
+        position: relative;
+      }
+      .navbar-title {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.8rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+    `
+  ]
 })
 export class NavBar {
 
