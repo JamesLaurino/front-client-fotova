@@ -34,6 +34,10 @@ export class I18nService {
     });
   }
 
+  getLanguage(): string {
+    return this.currentLanguage();
+  }
+
   setLanguage(lang: string): void {
     this.currentLanguage.set(lang);
   }

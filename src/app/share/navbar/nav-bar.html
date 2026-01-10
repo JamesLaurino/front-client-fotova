@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #343030; z-index: 1;">
+<nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <span class="navbar-title text-white">
       Fotova-Creation
@@ -12,14 +12,24 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
-          <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle text-white nav-link-premium"
+             href="#"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false">
             {{ i18n.getTranslation('MORE') }}
           </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToCategories()" >{{ i18n.getTranslation('CATEGORIES') }}</a></li>
-            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToAllProducts()" >{{ i18n.getTranslation('PRODUCTS') }}</a></li>
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-premium">
+            <li style="cursor: pointer"><a class="dropdown-item" (click)="goToCategories()">
+              {{ i18n.getTranslation('CATEGORIES') }}
+            </a></li>
+            <li style="cursor: pointer"><a class="dropdown-item" (click)="goToAllProducts()">
+              {{ i18n.getTranslation('PRODUCTS') }}
+            </a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" style="cursor: pointer;" (click)="goToLandingPage()" >{{ i18n.getTranslation('HOME') }}</a></li>
+            <li style="cursor: pointer"><a class="dropdown-item" (click)="goToLandingPage()">
+              {{ i18n.getTranslation('HOME') }}
+            </a></li>
           </ul>
         </li>
       </ul>
@@ -32,7 +42,7 @@
           </span>
 
         } @else {
-          <span (click)="goToUserPanel()" class="me-3" style="cursor: pointer;">
+          <span (click)="goToUserPanel()" class="me-3 user-icon" style="cursor: pointer;">
             <img src="/fotova/user.png" width="30px" height="30px" class="rounded-circle bg-white" alt="..." />
           </span>
           <!-- Icône du panier avec badge -->
@@ -55,17 +65,23 @@
       @else {
         <!-- Icone du user non connecté -->
         <div (click)="goToLogin()" class="position-relative p-2 me-2 mt-3" style="cursor: pointer;">
-          <p class="text-white">{{ i18n.getTranslation('LOGIN') }}</p>
+        <p class="btn btn-login ms-2" (click)="goToLogin()">
+          {{ i18n.getTranslation('LOGIN') }}
+        </p>
         </div>
       }
 
       <!-- Selecteur pour la langue -->
       <div class="position-relative p-2 me-2">
-        <select id="language-select" (change)="changeLanguage($event)"
-                class="form-select rounded" aria-label="Default select example">
-          <option value="fr">FR</option>
-          <option value="en">EN</option>
-        </select>
+        <div class="dropdown me-3">
+          <button class="btn btn-language dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            {{ this.getLanguage() }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li style="cursor: pointer;" ><a class="dropdown-item" (click)="setLanguage('fr')">🇫🇷 Français</a></li>
+            <li style="cursor: pointer;"><a class="dropdown-item" (click)="setLanguage('en')">🇬🇧 English</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
