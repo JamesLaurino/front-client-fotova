@@ -1,0 +1,89 @@
+.email-card {
+  width: 100%;
+  max-width: 620px;
+  max-height: 800px;
+  margin-top: -250px;
+  margin-left: -100px;
+}
+
+.mat-textarea {
+  resize: vertical;
+}
+
+/* MATERIAL STYLE */
+.mat-input-field {
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.mat-input-field .mat-text {
+  border: none;
+  border-bottom: 1px solid #b8b2a7;
+  background: transparent;
+  width: 100%;
+  padding: 6px 0;
+  font-size: 15px;
+  color: #343030;
+}
+
+.mat-input-field input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.mat-input-field::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: #c8b38a;
+  transition: width 0.3s ease;
+}
+
+.mat-input-field:focus-within::after {
+  width: 100%;
+}
+
+.mat-input-field .mat-label {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  font-size: 14px;
+  color: #8c857a;
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+
+.mat-input-field input:focus + .mat-label,
+.mat-input-field input:valid + .mat-label {
+  top: -14px;
+  font-size: 11px;
+  color: #c8b38a;
+}
+
+/* MAT text area */
+.mat-textarea {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  resize: none;
+}
+
+.mat-textarea-field .mat-text {
+  padding-top: 14px;
+  min-height: 90px;
+}
+
+.mat-textarea-field .mat-label {
+  top: 14px;
+}
+
+.mat-textarea-field textarea:focus + .mat-label,
+.mat-textarea-field textarea:valid + .mat-label {
+  top: -10px;
+  font-size: 11px;
+  color: #c8b38a;
+}
+

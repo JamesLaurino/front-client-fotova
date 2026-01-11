@@ -1,0 +1,54 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="login-card shadow-lg rounded-4 p-5 email-card">
+
+    <div class="text-center mb-4">
+      <h2 class="login-title">
+        {{ i18n.getTranslation('CONTACT_US') }}
+      </h2>
+      <p class="login-subtitle">
+        Fotova-Creation
+      </p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <!-- Email -->
+      <div class="mb-4">
+        <div class="mat-input-field">
+          <input formControlName="email" type="email" class="mat-text">
+          <label class="mat-label">{{ i18n.getTranslation('EMAIL') }}</label>
+        </div>
+      </div>
+
+      <!-- Sujet -->
+      <div class="mb-4">
+        <div class="mat-input-field">
+          <input formControlName="sujet" type="text" class="mat-text">
+          <label class="mat-label">{{ i18n.getTranslation('SUBJECT') }}</label>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div class="mb-4">
+        <div class="mat-input-field mat-textarea-field">
+          <textarea
+            formControlName="message"
+            class="mat-text mat-textarea"
+            rows="4"></textarea>
+          <label class="mat-label">
+            {{ i18n.getTranslation('MESSAGE') }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Bouton -->
+      <div class="d-grid mt-4">
+        <button [disabled]="form.invalid" class="btn btn-login-primary">
+          {{ i18n.getTranslation('SEND') }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+

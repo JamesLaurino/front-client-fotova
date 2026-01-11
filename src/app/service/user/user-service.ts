@@ -9,6 +9,8 @@ import {CommentClientResponseApi} from '../../model/comment/comment-client-respo
 import {Client} from '../../model/client/client';
 import {ClientResponseAllApi} from '../../model/client/client-response-all-api';
 import {ClientDetailResponseApi} from '../../model/client/ClientDetailResponseApi';
+import {ClientEmail} from '../../model/client/client-email';
+import {ClientResponseEmailApi} from '../../model/client/client-response-email-api';
 
 @Injectable({providedIn: 'root'})
 export class UserService
@@ -36,6 +38,15 @@ export class UserService
 
   getOrdersByEmail(email: string): Observable<OrderApiResponse> {
     return this.#http.get<OrderApiResponse>(this.#API_URL + '/order-products/' + email);
+  }
+
+  sendEmail(clientEmail: ClientEmail): Observable<ClientResponseEmailApi> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.#http.post<ClientResponseEmailApi>(this.#API_URL + '/amq/contact', clientEmail,{ headers });
   }
 
   getClientById(idClient: number): Observable<ClientDetailResponseApi> {
