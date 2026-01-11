@@ -4,26 +4,27 @@ import {Directive, ElementRef, HostListener} from '@angular/core';
   selector: '[appProductBorder]'
 })
 export class ProductBorderDirective {
-  private initialColor: string;
+
+  private readonly hoverColor = '#3F333A';
 
   constructor(private el: ElementRef) {
-    this.initialColor = this.el.nativeElement.style.border;
-    this.el.nativeElement.style.borderWidth = '3px';
+    const element = this.el.nativeElement;
+
+    // Bordure TOUJOURS présente
+    element.style.border = '3px solid transparent';
+    element.style.boxSizing = 'border-box';
+    element.style.transition = 'border-color 0.2s ease, transform 0.2s ease';
   }
 
-
-  @HostListener('mouseenter') onMouseEnter() {
-    const color = "#3F333A";
-    this.setColor(color);
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    this.el.nativeElement.style.borderColor = this.hoverColor;
+    this.el.nativeElement.style.transform = 'translateY(-2px)';
   }
 
-  @HostListener('mouseleave') onMouseLeave() {
-    this.setColor(this.initialColor);
-    this.el.nativeElement.style.border = '';
-  }
-
-  private setColor(color: string) {
-    this.el.nativeElement.style.border = 'solid';
-    this.el.nativeElement.style.borderColor = color;
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    this.el.nativeElement.style.borderColor = 'transparent';
+    this.el.nativeElement.style.transform = 'translateY(0)';
   }
 }
