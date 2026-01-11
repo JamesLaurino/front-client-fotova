@@ -170,7 +170,7 @@ export class AdminProductDetail {
   }
 
   finish() {
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/admin'],{queryParams:{active:'products'}});
   }
 
   onDragOver(event: DragEvent, index: number) {

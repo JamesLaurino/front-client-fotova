@@ -184,6 +184,10 @@ export class AdminProductCreate {
     }
   }
 
+  backToPanel(){
+    this.#router.navigate(['/admin'],{queryParams:{active:'products'}});
+  }
+
   uploadFile(index: number) {
     const box = this.fileBoxes[index];
     if (!box.file) return;

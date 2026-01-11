@@ -18,53 +18,60 @@
   @if (product()) {
     <!-- Écran 1 : Formulaire Produit -->
     @if (step === 'form') {
-      <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
-          <div class="card shadow-sm">
-            <div class="card-body p-4">
-              <h1 class="card-title h3 text-center mb-4">
-                {{ i18n.getTranslation("UPDATE") }} {{ i18n.getTranslation("PRODUCT") }}
-              </h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <h1 class="card-title h3 text-center mb-4">
+              {{ i18n.getTranslation("UPDATE") }} {{ i18n.getTranslation("PRODUCT") }}
+            </h1>
 
-              <form class="row g-3" [formGroup]="form" (ngSubmit)="updateProduct()">
-                <div class="col-md-6">
-                  <label for="inputName" class="form-label">{{i18n.getTranslation("NAME")}}</label>
-                  <input type="text" formControlName="name" class="form-control" id="inputName">
-                  @if(name.hasError('required') && name.touched) {
-                    <div class="text-danger small mt-1">{{i18n.getTranslation("PLEASE_ENTER_NAME_AGAIN")}}</div>
-                  }
-                </div>
+            <!-- Form avec les champs -->
+            <form [formGroup]="form" (ngSubmit)="updateProduct()" class="row g-3">
+              <div class="col-md-6">
+                <label for="inputName" class="form-label">{{i18n.getTranslation("NAME")}}</label>
+                <input type="text" formControlName="name" class="form-control" id="inputName">
+                @if(name.hasError('required') && name.touched) {
+                  <div class="text-danger small mt-1">{{i18n.getTranslation("PLEASE_ENTER_NAME_AGAIN")}}</div>
+                }
+              </div>
 
-                <div class="col-md-6">
-                  <label for="inputQuantity" class="form-label">{{i18n.getTranslation("QUANTITY")}}</label>
-                  <input type="number" formControlName="quantity" class="form-control" id="inputQuantity">
-                  @if(quantity.hasError('required') && quantity.touched) {
-                    <div class="text-danger small mt-1">{{i18n.getTranslation("PLEASE_ENTER_QUANTITY")}}</div>
-                  }
-                </div>
+              <div class="col-md-6">
+                <label for="inputQuantity" class="form-label">{{i18n.getTranslation("QUANTITY")}}</label>
+                <input type="number" formControlName="quantity" class="form-control" id="inputQuantity">
+                @if(quantity.hasError('required') && quantity.touched) {
+                  <div class="text-danger small mt-1">{{i18n.getTranslation("PLEASE_ENTER_QUANTITY")}}</div>
+                }
+              </div>
 
-                <div class="col-md-12">
-                  <label for="inputPrice" class="form-label">{{i18n.getTranslation("PRICE")}}</label>
-                  <input type="number" formControlName="price" class="form-control" id="inputPrice" step="0.01">
-                  @if(price.hasError('required') && price.touched) {
-                    <div class="text-danger small mt-1">{{i18n.getTranslation("PLEASE_ENTER_PRICE")}}</div>
-                  }
-                </div>
+              <div class="col-md-12">
+                <label for="inputPrice" class="form-label">{{i18n.getTranslation("PRICE")}}</label>
+                <input type="number" formControlName="price" class="form-control" id="inputPrice" step="0.01">
+                @if(price.hasError('required') && price.touched) {
+                  <div class="text-danger small mt-1">{{i18n.getTranslation("PLEASE_ENTER_PRICE")}}</div>
+                }
+              </div>
+            </form>
 
-                <div class="col-12 d-flex justify-content-end mt-4">
-                  <button class="m-1 btn btn-primary"  (click)="backToPanel()">
-                    <i class="bi bi-arrow-left"></i> Retour au panel
-                  </button>
-                  <button [disabled]="form.invalid" type="submit" class="btn btn-primary">
-                    {{ i18n.getTranslation("NEXT_STEP") }} <i class="bi bi-arrow-right"></i>
-                  </button>
-                </div>
-              </form>
+            <!-- Conteneur pour les deux boutons sur la même ligne -->
+            <div class="d-flex justify-content-between mt-4">
+              <!-- Bouton Back -->
+              <button (click)="backToPanel()" class="btn btn-outline-info">
+                <i class="bi bi-arrow-left"></i> {{ i18n.getTranslation("BACK_TO_PANEL") }}
+              </button>
+
+              <!-- Bouton Submit -->
+              <button [disabled]="form.invalid" type="submit" class="btn btn-primary" (click)="updateProduct()">
+                {{ i18n.getTranslation("NEXT_STEP") }} <i class="bi bi-arrow-right"></i>
+              </button>
             </div>
+
           </div>
         </div>
       </div>
-    }
+    </div>
+
+  }
 
     <!-- Écran 2 : Gestion d’Images -->
     @if (step === 'images') {
