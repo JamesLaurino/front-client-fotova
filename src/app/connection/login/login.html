@@ -1,65 +1,65 @@
-<div class="container mt-5 shadow rounded p-4" style="max-width: 700px;">
-  <div class="row justify-content-center">
-    <div class="col-8 offset-4 text-left mb-3">
-      <div>
-        <p class="h4">{{ i18n.getTranslation('LOGIN_PAGE') }}</p>
-      </div>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="login-card shadow-lg rounded-4 p-5">
+
+    <div class="text-center mb-4">
+      <h2 class="login-title">
+        {{ i18n.getTranslation('LOGIN_PAGE') }}
+      </h2>
+      <p class="login-subtitle">
+        Fotova-Creation
+      </p>
     </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <div class="mb-4">
+        <div class="mat-input-field">
+          <input formControlName="email" type="text" class="mat-text" id="email">
+          <label class="mat-label" for="email">{{ i18n.getTranslation('EMAIL') }}</label>
+        </div>
+
+        @if(email.hasError('required') && email.dirty) {
+          <div class="error-text">
+            {{ i18n.getTranslation('PLEASE_ENTER_EMAIL') }}
+          </div>
+        }
+        @if(email.hasError('email') && email.dirty) {
+          <div class="error-text">
+            {{ i18n.getTranslation('INVALID_EMAIL_ADDRESS') }}
+          </div>
+        }
+      </div>
+
+      <div class="mb-4">
+        <div class="mat-input-field">
+          <input formControlName="password" type="password" class="mat-text" id="password">
+          <label class="mat-label" for="password">{{ i18n.getTranslation('PASSWORD') }}</label>
+        </div>
+
+        @if(password.hasError('required') && password.dirty) {
+          <div class="error-text">
+            {{ i18n.getTranslation('PLEASE_ENTER_PASSWORD') }}
+          </div>
+        }
+        @if(password.hasError('minlength') && password.dirty) {
+          <div class="error-text">
+            {{ i18n.getTranslation('INSUFFICIENT_CHARACTERS') }}
+          </div>
+        }
+      </div>
+
+      <div class="d-grid gap-3 mt-4">
+        <button [disabled]="form.invalid" class="btn btn-login-primary">
+          {{ i18n.getTranslation('SUBMIT') }}
+        </button>
+
+        <button type="button"
+                (click)="goToRegister()"
+                class="btn btn-login-secondary">
+          {{ i18n.getTranslation('REGISTER') }}
+        </button>
+      </div>
+
+    </form>
   </div>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="row justify-content-center">
-        <div class="col-6 text-center">
-          <div class="mat-input-field">
-            <input formControlName="email" type="text" class="mat-text" id="email">
-            <label class="mat-label" for="email">{{ i18n.getTranslation('EMAIL') }}</label>
-          </div>
-          @if(email.hasError('required') && email.dirty) {
-            <div class="text-danger">
-              {{ i18n.getTranslation('PLEASE_ENTER_EMAIL') }}
-            </div>
-          }
-
-          @if(email.hasError('email') && email.dirty) {
-            <div class="text-danger">
-              {{ i18n.getTranslation('INVALID_EMAIL_ADDRESS') }}
-            </div>
-          }
-        </div>
-      </div>
-      <div class="row justify-content-center mt-3">
-        <div class="col-6 text-center">
-          <div class="mat-input-field">
-            <input formControlName="password" type="password" class="mat-text" id="password">
-            <label class="mat-label" for="password">{{ i18n.getTranslation('PASSWORD') }}</label>
-          </div>
-          @if(password.hasError('required') && password.dirty) {
-            <div class="text-danger">
-              {{ i18n.getTranslation('PLEASE_ENTER_PASSWORD') }}
-            </div>
-          }
-
-          @if(password.hasError('minlength') && password.dirty) {
-            <div class="text-danger">
-              {{ i18n.getTranslation('INSUFFICIENT_CHARACTERS') }}
-            </div>
-          }
-        </div>
-      </div>
-      <div class="row justify-content-center mt-4">
-        <div class="col-4 text-center">
-          <div>
-            <button [disabled]="form.invalid" class="btn btn-success">
-              {{ i18n.getTranslation('SUBMIT') }}
-            </button>
-          </div>
-        </div>
-      <div class="col-4 text-center">
-        <div>
-          <button (click)="goToRegister()" class="fs-6 fw-bold btn btn-dark text-white">
-            {{ i18n.getTranslation('REGISTER') }}
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
 </div>
