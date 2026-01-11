@@ -8,7 +8,7 @@
 
 <div class="user-panel d-flex flex-column flex-md-row min-vh-100">
   <div class="sidebar p-3 bg-light border-end" style="min-width: 200px;">
-    <h5>{{ user.value()?.username }}</h5>
+    <h5 class="mt-5">{{ i18n.getTranslation('WELCOME') }} {{ user.value()?.username }}</h5>
     <nav class="nav flex-column">
       <a class="nav-link" style="cursor: pointer" (click)="manageClients()">{{ i18n.getTranslation('CLIENTS') }}</a>
     </nav>
@@ -28,8 +28,6 @@
 
   <!-- Main content -->
   <div class="main-content flex-fill p-4">
-    <h1>{{ i18n.getTranslation('WELCOME') }} {{ user.value()?.username }}</h1>
-
     <div class="container-fluid mt-4">
       @if(activeComponent() === ""){
         <app-admin-chart [ordersDetailedInput]="ordersDetailed.value()" />

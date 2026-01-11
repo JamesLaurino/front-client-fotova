@@ -23,7 +23,8 @@ import {AdminChart} from '../admin-chart/admin-chart';
     AdminOrder,
     AdminChart
   ],
-  templateUrl: './admin-panel.html'
+  templateUrl: './admin-panel.html',
+  styleUrl: 'admin-panel.css'
 })
 export class AdminPanel {
 
