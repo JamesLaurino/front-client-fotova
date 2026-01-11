@@ -8,12 +8,13 @@
 
 <div class="user-panel d-flex flex-column flex-md-row min-vh-100">
   <div class="sidebar p-3 bg-light border-end" style="min-width: 200px;">
-    <h5>{{ user.value()?.username }}</h5>
+    <h5 class="mt-5">{{ i18n.getTranslation('WELCOME') }} {{ user.value()?.username }}</h5>
     <nav class="nav flex-column">
       <a class="nav-link" (click)="displayUserAddress()">{{ i18n.getTranslation('INFORMATION') }}</a>
       <a class="nav-link" (click)="displayUserOrder()">{{ i18n.getTranslation('ORDERS') }}</a>
       <a class="nav-link" (click)="displayUserComment()">{{ i18n.getTranslation('COMMENTS') }}</a>
       <a class="nav-link" (click)="displayEditAddress()">{{ i18n.getTranslation('EDIT_ADDRESS') }}</a>
+      <a class="nav-link" (click)="displayUserEmail()">{{ i18n.getTranslation('EMAIL') }}</a>
     </nav>
     <div class="sidebar-footer mt-auto pt-3 border-top">
       <a (click)="logout()" class="d-block text-dark">{{ i18n.getTranslation('LOGOUT') }}</a>
@@ -22,8 +23,6 @@
 
   <!-- Main content -->
   <div class="main-content flex-fill p-4">
-    <h1>{{ i18n.getTranslation('WELCOME') }} {{ user.value()?.username }}</h1>
-
     <div class="container-fluid mt-4">
       @if (activeComponent() === 'address') {
         <app-user-address [userAddressInput]="user.value()?.address"/>
@@ -37,6 +36,9 @@
         <app-user-edit
           (addressUpdated)="onAddressUpdated()"
           [userAddressInput]="user.value()?.address"/>
+      } @else if (activeComponent() === 'email'){
+        <app-user-email
+          [userEmailInput]="user.value()?.username"/>
       }
     </div>
   </div>

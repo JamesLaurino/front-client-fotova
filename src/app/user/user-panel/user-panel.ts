@@ -10,6 +10,7 @@ import {UserComment} from '../user-comment/user-comment';
 import {getEmailFromToken} from '../../helper/jwt-helper';
 import {UserEdit} from '../user-edit/user-edit';
 import {I18nService} from '../../service/i18n/i18nService';
+import {UserEmail} from '../user-email/user-email';
 
 @Component({
   selector: 'app-user-panel',
@@ -17,7 +18,8 @@ import {I18nService} from '../../service/i18n/i18nService';
     UserAddress,
     UserOrder,
     UserComment,
-    UserEdit
+    UserEdit,
+    UserEmail
   ],
   templateUrl: './user-panel.html',
   styleUrl: 'user-panel.css'
@@ -79,5 +81,9 @@ export class UserPanel {
 
   displayEditAddress() {
     this.activeComponent.update((address) => address = "edit-address")
+  }
+
+  displayUserEmail() {
+    this.activeComponent.update((address) => address = "email")
   }
 }
