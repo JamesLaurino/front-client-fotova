@@ -12,16 +12,7 @@ import {I18nService} from '../service/i18n/i18nService';
     DatePipe
   ],
   templateUrl: './landing.html',
-  styles: [`
-    .parallax {
-      background-image: url('/fotova/parallax.png');
-      min-height: 500px;
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-  `]
+  styleUrls: ['./landing.css'],
 })
 export class Landing {
 
