@@ -6,10 +6,6 @@
   margin-left: -100px;
 }
 
-.pointer {
-  cursor: pointer;
-}
-
 .mat-textarea {
   resize: vertical;
 }
@@ -91,3 +87,14 @@
   color: #c8b38a;
 }
 
+.btn-login-primary {
+  background-color: #5d5656;
+  color: white;
+  border-radius: 30px;
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+.btn-login-primary:hover {
+  background-color: #494646;
+}
