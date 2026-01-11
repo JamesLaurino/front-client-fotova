@@ -40,6 +40,15 @@ export class UserEmail {
     }
   }
 
+  resetForm(): void  {
+    this.form.patchValue({
+      nom: this.userEmailInput(),
+      email:'',
+      sujet:'',
+      message:''
+    });
+  }
+
   onSubmit(): void {
     if (this.form.invalid) return;
 
@@ -61,6 +70,7 @@ export class UserEmail {
             toastImageUrl: '/fotova/check.jpg',
             toastMessage: 'Email send with success'
           })
+          this.resetForm();
         } else {
           this.toasterService.show({
             toastTitle: 'Mail error',
