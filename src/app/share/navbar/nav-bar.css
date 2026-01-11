@@ -98,7 +98,7 @@
 }
 
 
-/* ADMIN */
+/* ADMIN LOGO */
 .admin-avatar-img {
   width: 40px;
   height: 40px;
@@ -112,5 +112,25 @@
 .admin-avatar-img:hover {
   transform: scale(1.2);
   box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* BRAND LOGO */
+
+.logo-premium {
+  cursor: pointer;
+}
+
+.logo-wrapper {
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  display: inline-flex;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logo-wrapper:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 }
 
