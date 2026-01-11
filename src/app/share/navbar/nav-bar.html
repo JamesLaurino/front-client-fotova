@@ -38,12 +38,12 @@
 
         @if (userService.client().roles[0] === 'ROLE_ADMIN') {
           <span (click)="goToAdminPanel()" class="me-3" style="cursor: pointer;">
-            <img src="/fotova/admin.jpg" width="30px" height="30px" class="rounded-circle bg-white" alt="..." />
+            <img src="/fotova/admin.png" class="admin-avatar-img" alt="..." />
           </span>
 
         } @else {
           <span (click)="goToUserPanel()" class="me-3 user-icon" style="cursor: pointer;">
-            <img src="/fotova/user.png" width="30px" height="30px" class="rounded-circle bg-white" alt="..." />
+            <img src="/fotova/user.png" width="40px" height="40px" class="rounded-circle bg-white" alt="..." />
           </span>
           <!-- Icône du panier avec badge -->
           <div (click)="goToCart()" class="position-relative p-2 me-2" style="cursor: pointer;">
