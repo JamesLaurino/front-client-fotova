@@ -1,9 +1,9 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {map, tap} from 'rxjs';
 import {UserService} from '../../service/user/user-service';
 import {I18nService} from '../../service/i18n/i18nService';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../../service/login/login-service';
 import {AdminClient} from '../admin-client/admin-client';
 import {AdminProduct} from '../admin-product/admin-product';
@@ -26,7 +26,7 @@ import {AdminChart} from '../admin-chart/admin-chart';
   templateUrl: './admin-panel.html',
   styleUrl: 'admin-panel.css'
 })
-export class AdminPanel {
+export class AdminPanel implements OnInit{
 
   readonly #userService = inject(UserService);
   readonly #productService = inject(ProductService);
@@ -36,6 +36,15 @@ export class AdminPanel {
   readonly #router = inject(Router);
   readonly #orderService = inject(OrderService);
   activeComponent= signal("");
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const comp = params['active'] || '';
+      this.activeComponent.update((componant) => componant = comp)
+    });
+  }
 
   clients = rxResource({
     stream: () => {

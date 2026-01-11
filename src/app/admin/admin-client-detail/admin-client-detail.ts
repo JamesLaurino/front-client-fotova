@@ -63,4 +63,8 @@ export class AdminClientDetail {
       })
     }
   }
+
+  backToPanel() {
+    this.router.navigate(['/admin'],{queryParams:{active:'clients'}});
+  }
 }

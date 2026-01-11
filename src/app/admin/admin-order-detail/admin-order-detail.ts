@@ -34,6 +34,6 @@ export class AdminOrderDetail {
   })
 
   goBack() {
-    this.#router.navigate(['/admin']);
+    this.#router.navigate(['/admin'], {queryParams:{active:'orders'}});
   }
 }

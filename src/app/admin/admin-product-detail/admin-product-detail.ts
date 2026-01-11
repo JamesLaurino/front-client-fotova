@@ -240,4 +240,8 @@ export class AdminProductDetail {
   }
   protected readonly Number = Number;
   protected readonly imageHelper = imageHelper;
+
+  backToPanel() {
+    this.router.navigate(['/admin'],{queryParams:{active:'products'}});
+  }
 }

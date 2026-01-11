@@ -52,6 +52,9 @@
                 </div>
 
                 <div class="col-12 d-flex justify-content-end mt-4">
+                  <button class="m-1 btn btn-primary"  (click)="backToPanel()">
+                    <i class="bi bi-arrow-left"></i> Retour au panel
+                  </button>
                   <button [disabled]="form.invalid" type="submit" class="btn btn-primary">
                     {{ i18n.getTranslation("NEXT_STEP") }} <i class="bi bi-arrow-right"></i>
                   </button>

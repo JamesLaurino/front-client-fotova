@@ -10,9 +10,14 @@
   <div class="card shadow-sm border-0">
     <div class="card-header bg-light d-flex justify-content-between align-items-center">
       <h5 class="mb-0">Client Details</h5>
-      <button (click)="deleteClient()" class="btn btn-danger btn-sm">
-        <i class="bi bi-trash"></i> Delete Client
-      </button>
+      <div>
+        <button (click)="backToPanel()" class="btn btn-success btn-sm m-1">
+          Retour au panel
+        </button>
+        <button (click)="deleteClient()" class="btn btn-danger btn-sm">
+          <i class="bi bi-trash"></i> Delete Client
+        </button>
+      </div>
     </div>
     <div class="card-body">
       <div class="row">

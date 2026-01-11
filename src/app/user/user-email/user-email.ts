@@ -32,14 +32,6 @@ export class UserEmail {
     message: ['', [Validators.required, Validators.minLength(10)]],
   });
 
-  ngOnInit() {
-    if (this.userEmailInput()) {
-      this.form.patchValue({
-        nom: this.userEmailInput()
-      });
-    }
-  }
-
   resetForm(): void  {
     this.form.patchValue({
       nom: this.userEmailInput(),

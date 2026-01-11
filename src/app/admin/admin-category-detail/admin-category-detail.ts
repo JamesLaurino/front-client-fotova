@@ -80,6 +80,6 @@ export class AdminCategoryDetail {
   }
 
   backToPanel() {
-    this.#router.navigate(['/admin']);
+    this.#router.navigate(['/admin'],{queryParams:{active:'categories'}});
   }
 }
