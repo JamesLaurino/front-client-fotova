@@ -1,5 +1,5 @@
 <div class="container my-5">
-  <table class="table bg-dark text-white">
+  <table class="table table-orders">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -12,7 +12,7 @@
     </tr>
     </thead>
     <tbody>
-      @for (order of ordersInput(); track order.id;let idx = $index)
+      @for (order of ordersInput(); track order.id; let idx = $index)
       {
         <tr>
           <th scope="row">{{idx}}</th>
@@ -22,10 +22,10 @@
           <td>{{ getTotalByOrder(order)  | currency:'EUR'}}</td>
           <td>
             @if(order.isDone) {
-             <img src="/fotova/check.jpg" alt="check" width="40px" height="40px" />
+              <img src="/fotova/check.jpg" alt="check" class="status-icon" />
             } @else {
-              <span>
-                <svg width="40" height="25" viewBox="0 0 100 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <span class="status-pending">
+                <svg viewBox="0 0 100 300" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="35" y="0" width="30" height="200" rx="15" fill="red"/>
                   <circle cx="50" cy="265" r="35" fill="red"/>
                 </svg>
@@ -33,11 +33,17 @@
             }
           </td>
           <td>
-            <button (click)="goToOrderDetail(order.id,order.client.email)" class="btn btn-info me-2">{{i18n.getTranslation("EDIT")}}</button>
+            <button (click)="goToOrderDetail(order.id,order.client.email)" class="btn btn-detail me-2">
+              {{i18n.getTranslation("EDIT")}}
+            </button>
             @if (order.isDone) {
-              <button (click)="completeOrder(order.id)" class="btn btn-dark">{{i18n.getTranslation("UN_COMPLETE")}}</button>
+              <button (click)="completeOrder(order.id)" class="btn btn-uncomplete">
+                {{i18n.getTranslation("UN_COMPLETE")}}
+              </button>
             } @else {
-              <button (click)="completeOrder(order.id)" class="btn btn-success">{{i18n.getTranslation("COMPLETE")}}</button>
+              <button (click)="completeOrder(order.id)" class="btn btn-complete">
+                {{i18n.getTranslation("COMPLETE")}}
+              </button>
             }
           </td>
         </tr>

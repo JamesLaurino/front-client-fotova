@@ -15,6 +15,7 @@ import {ProductModel} from '../../model/product/product-model';
     AdminCategoryCreate
   ],
   templateUrl: './admin-categories.html',
+  styleUrls:['./admin-categorie.css']
 })
 export class AdminCategories {
   categoriesInput:InputSignal<CategoryModel[] | undefined> = input.required<CategoryModel[] | undefined>();

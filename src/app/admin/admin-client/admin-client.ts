@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
   selector: 'app-admin-client',
   imports: [],
   templateUrl: './admin-client.html',
+  styleUrls: ['admin-client.css'],
 })
 export class AdminClient {
   clientsInput:InputSignal<ClientAll[] | undefined> = input.required<ClientAll[] | undefined>();

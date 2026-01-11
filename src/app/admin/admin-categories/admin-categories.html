@@ -1,5 +1,5 @@
 <div class="container my-5">
-  <table class="table bg-dark text-white">
+  <table class="table table-categories">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -10,26 +10,31 @@
     </tr>
     </thead>
     <tbody>
-      @for (category of categoriesInput(); track category.id;let idx = $index)
+      @for (category of categoriesInput(); track category.id; let idx = $index)
       {
-          <tr>
-            <th scope="row">{{idx}}</th>
-            <td>{{ category.id }}</td>
-            <td>{{ category.name }}</td>
-            <td>
-              <button (click)="goToCategoryDetail(category.id)" class="btn btn-info">{{i18n.getTranslation("EDIT")}}</button>
-            </td>
-            <td>
-              <button (click)="deleteCategory(category.id)" class="btn btn-danger">{{i18n.getTranslation("DELETE")}}</button>
-            </td>
-          </tr>
+        <tr>
+          <th scope="row">{{idx}}</th>
+          <td>{{ category.id }}</td>
+          <td>{{ category.name }}</td>
+          <td>
+            <button (click)="goToCategoryDetail(category.id)" class="btn btn-detail">
+              {{i18n.getTranslation("EDIT")}}
+            </button>
+          </td>
+          <td>
+            <button (click)="deleteCategory(category.id)" class="btn btn-delete">
+              {{i18n.getTranslation("DELETE")}}
+            </button>
+          </td>
+        </tr>
       }
     </tbody>
   </table>
 </div>
+
 @if(!isDisplayForm()) {
-  <div class="container d-flex mt-1 justify-content-start">
-    <button (click)="displayCategoryForm()" class="btn btn-outline-success">
+  <div class="container d-flex mt-3 justify-content-start">
+    <button (click)="displayCategoryForm()" class="btn btn-create">
       {{i18n.getTranslation("CREATE")}}
       {{i18n.getTranslation("CATEGORY") | lowercase}}
     </button>

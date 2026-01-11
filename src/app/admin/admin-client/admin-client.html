@@ -1,5 +1,5 @@
 <div class="container my-5">
-  <table class="table bg-dark text-white">
+  <table class="table table-custom">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -11,7 +11,7 @@
     </tr>
     </thead>
     <tbody>
-      @for (client of clientsInput(); track client.id;let idx = $index)
+      @for (client of clientsInput(); track client.id; let idx = $index)
       {
         @if(client.isActive) {
           <tr>
@@ -21,7 +21,9 @@
             <td>{{ client.address.city }}</td>
             <td>{{ client.commentEntities.length }}</td>
             <td>
-              <button (click)="goToClientDetail(client.id)" class="btn btn-info">{{i18n.getTranslation("DETAIL")}}</button>
+              <button (click)="goToClientDetail(client.id)" class="btn btn-detail">
+                {{i18n.getTranslation("DETAIL")}}
+              </button>
             </td>
           </tr>
         }

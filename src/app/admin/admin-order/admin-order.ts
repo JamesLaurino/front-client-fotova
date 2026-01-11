@@ -14,6 +14,7 @@ import {ToasterService} from '../../service/toaster/toasterService';
     CurrencyPipe
   ],
   templateUrl: './admin-order.html',
+  styleUrls: ['./admin-order.css']
 })
 export class AdminOrder {
   ordersInput:InputSignal<OrderAdminModel[] | undefined> = input.required<OrderAdminModel[] | undefined>();

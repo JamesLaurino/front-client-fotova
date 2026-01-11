@@ -1,5 +1,5 @@
 <div class="container my-5">
-  <table class="table bg-dark text-white">
+  <table class="table table-products">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -14,32 +14,36 @@
     </tr>
     </thead>
     <tbody>
-      @for (product of productsInput(); track product.id;let idx = $index)
+      @for (product of productsInput(); track product.id; let idx = $index)
       {
-          <tr>
-            <th scope="row">{{idx}}</th>
-            <td>{{ product.id }}</td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-            <td>{{ product.quantity }}</td>
-            <td>{{ product.categoryInnerProductDto.name }}</td>
-            <td>
-              <img [src]="urlHelper(product.url)" [alt]="product.name" width="50px" height="50px">
-            </td>
-            <td>
-              <button (click)="goToProductDetail(product.id)" class="btn btn-info">{{i18n.getTranslation("DETAIL")}}</button>
-            </td>
-            <td>
-              <button (click)="deleteProduct(product.id)" class="btn btn-dark">{{i18n.getTranslation("DELETE")}}</button>
-            </td>
-          </tr>
+        <tr>
+          <th scope="row">{{idx}}</th>
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>${{ product.price }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>{{ product.categoryInnerProductDto.name }}</td>
+          <td>
+            <img [src]="urlHelper(product.url)" [alt]="product.name" class="product-img">
+          </td>
+          <td>
+            <button (click)="goToProductDetail(product.id)" class="btn btn-detail">
+              {{i18n.getTranslation("DETAIL")}}
+            </button>
+          </td>
+          <td>
+            <button (click)="deleteProduct(product.id)" class="btn btn-delete">
+              {{i18n.getTranslation("DELETE")}}
+            </button>
+          </td>
+        </tr>
       }
     </tbody>
   </table>
 </div>
 
-<div class="container d-flex mt-1 justify-content-start">
-  <button (click)="createProduct()" class="btn btn-outline-success">
+<div class="container d-flex mt-3 justify-content-start">
+  <button (click)="createProduct()" class="btn btn-create">
     {{i18n.getTranslation("CREATE")}}
     {{i18n.getTranslation("PRODUCT") | lowercase}}
   </button>

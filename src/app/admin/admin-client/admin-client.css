@@ -1,0 +1,59 @@
+.table-custom {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #f7f5f2; /* beige cashmere */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* En-têtes */
+.table-custom thead th {
+  background-color: #222221; /* cashmere */
+  color: #ffffff;
+  font-weight: 600;
+  text-align: center;
+  padding: 12px 15px;
+}
+
+/* Lignes */
+.table-custom tbody tr {
+  background-color: #fff; /* fond blanc pour chaque ligne */
+  transition: background-color 0.3s ease;
+}
+
+.table-custom tbody tr:nth-child(even) {
+  background-color: #f5f0e8; /* alternance de ligne claire */
+}
+
+.table-custom tbody tr:hover {
+  background-color: #e6d9b8; /* hover premium */
+  cursor: pointer;
+}
+
+/* Cellules */
+.table-custom td, .table-custom th {
+  padding: 10px 15px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+}
+
+/* Bouton detail */
+.btn-detail {
+  background-color: #c8b38a;
+  color: #343030;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 2px solid #c8b38a;
+  transition: all 0.3s ease;
+}
+
+.btn-detail:hover {
+  background-color: #343030;
+  color: #c8b38a;
+  border-color: #c8b38a;
+  transform: scale(1.05);
+}

@@ -1,0 +1,88 @@
+/* Table style premium */
+.table-categories {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #f7f5f2; /* beige cashmere */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.table-categories thead th {
+  background-color: #222221; /* cashmere */
+  color: #ffffff;
+  font-weight: 600;
+  text-align: center;
+  padding: 12px 15px;
+}
+
+.table-categories tbody tr {
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.table-categories tbody tr:nth-child(even) {
+  background-color: #f5f0e8;
+}
+
+.table-categories tbody tr:hover {
+  background-color: #e6d9b8;
+  cursor: pointer;
+}
+
+.table-categories td, .table-categories th {
+  padding: 10px 12px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+}
+
+/* Boutons */
+.btn-detail {
+  background-color: #c8b38a;
+  color: #343030;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 2px solid #c8b38a;
+  transition: all 0.3s ease;
+}
+
+.btn-detail:hover {
+  background-color: #343030;
+  color: #c8b38a;
+  transform: scale(1.05);
+}
+
+.btn-delete {
+  background-color: #343030;
+  color: #c8b38a;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 2px solid #c8b38a;
+  transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+  background-color: #c8b38a;
+  color: #343030;
+  transform: scale(1.05);
+}
+
+.btn-create {
+  background-color: transparent;
+  border: 2px solid #c8b38a;
+  color: #c8b38a;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-create:hover {
+  background-color: #c8b38a;
+  color: #343030;
+  transform: scale(1.05);
+}

@@ -13,6 +13,7 @@ import {ToasterService} from '../../service/toaster/toasterService';
         LowerCasePipe
     ],
   templateUrl: './admin-product.html',
+  styleUrls: ['./admin-product.css']
 })
 export class AdminProduct {
   readonly i18n = inject(I18nService);
