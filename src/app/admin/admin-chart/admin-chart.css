@@ -1,0 +1,8 @@
+.chart-container {
+  height: 400px; /* fixe la hauteur pour avoir de belles barres */
+  width: 100%;
+  background-color: #f7f5f2; /* léger beige cashmere derrière */
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(37, 36, 36, 0.1);
+}

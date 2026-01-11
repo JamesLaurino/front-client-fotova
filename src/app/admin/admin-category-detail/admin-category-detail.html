@@ -1,8 +1,9 @@
 <div class="container d-flex justify-content-center mt-5">
   <h1 class="h3">{{i18n.getTranslation("EDIT")}} {{i18n.getTranslation("CATEGORY")}}</h1>
 </div>
+
 <div class="container d-flex justify-content-center mt-5" style="max-width: 600px;">
-  <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form class="row g-3 w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <!-- Champ ID (readonly) -->
     <div class="col-md-6">
@@ -19,16 +20,17 @@
       }
     </div>
 
-    <!-- Submit -->
-    <div class="col-3">
+    <!-- Boutons -->
+    <div class="col-12 d-flex justify-content-start gap-3 mt-3">
       <button [disabled]="form.invalid" type="submit" class="btn btn-dark">
         {{i18n.getTranslation("SAVE")}}
       </button>
-    </div>
-    <div class="col-6">
-      <button class="btn btn-warning" (click)="backToPanel()">
+
+      <!-- BACK hors du form submit -->
+      <button type="button" class="btn btn-warning" (click)="backToPanel()">
         {{i18n.getTranslation("BACK")}}
       </button>
     </div>
+
   </form>
 </div>
