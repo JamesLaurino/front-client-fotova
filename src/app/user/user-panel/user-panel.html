@@ -38,6 +38,7 @@
           [userAddressInput]="user.value()?.address"/>
       } @else if (activeComponent() === 'email'){
         <app-user-email
+          (emailUpdated)="onEmailUpdated()"
           [userEmailInput]="user.value()?.username"/>
       }
     </div>

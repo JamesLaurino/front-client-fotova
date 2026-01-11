@@ -61,6 +61,10 @@ export class UserPanel {
     this.user.reload();
   }
 
+  onEmailUpdated() {
+    this.user.reload();
+  }
+
   logout() {
     this.#loginService.logout();
     window.location.reload();
