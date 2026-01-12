@@ -13,6 +13,7 @@ import {ToasterService} from '../../service/toaster/toasterService';
     ReactiveFormsModule
   ],
   templateUrl: './admin-category-detail.html',
+  styleUrls: ['./admin-category-detail.css']
 })
 export class AdminCategoryDetail {
   readonly #route = inject(ActivatedRoute);

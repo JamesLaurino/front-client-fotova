@@ -1,36 +1,82 @@
-<div class="container d-flex justify-content-center mt-5">
-  <h1 class="h3">{{i18n.getTranslation("EDIT")}} {{i18n.getTranslation("CATEGORY")}}</h1>
-</div>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
 
-<div class="container d-flex justify-content-center mt-5" style="max-width: 600px;">
-  <form class="row g-3 w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Card -->
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
 
-    <!-- Champ ID (readonly) -->
-    <div class="col-md-6">
-      <label for="inputId" class="form-label">ID</label>
-      <input type="text" formControlName="id" class="form-control" id="inputId">
+          <!-- Title -->
+          <h1 class="h4 text-center mb-4">
+            {{ i18n.getTranslation("EDIT") }}
+            {{ i18n.getTranslation("CATEGORY") }}
+          </h1>
+
+          <!-- Form -->
+          <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <!-- ID -->
+            <div class="col-md-6">
+              <label for="inputId" class="form-label text-muted">
+                ID
+              </label>
+              <input
+                type="text"
+                formControlName="id"
+                class="form-control"
+                id="inputId"
+                readonly>
+            </div>
+
+            <!-- Name -->
+            <div class="col-md-6">
+              <label for="inputName" class="form-label">
+                {{ i18n.getTranslation("NAME") }}
+              </label>
+              <input
+                type="text"
+                formControlName="name"
+                class="form-control"
+                id="inputName">
+
+              <!-- Error slot -->
+              <div class="error-slot mt-1">
+                @if(name.hasError('required') && name.touched) {
+                  <small class="text-danger">
+                    {{ i18n.getTranslation("ENTER_CATEGORY_NAME") }}
+                  </small>
+                }
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="col-12 d-flex justify-content-end gap-2 mt-4">
+
+              <!-- Back -->
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="backToPanel()">
+                <i class="bi bi-arrow-left"></i>
+                {{ i18n.getTranslation("BACK_TO_PANEL") }}
+              </button>
+
+              <!-- Save -->
+              <button
+                [disabled]="form.invalid"
+                type="submit"
+                class="btn btn-outline-success">
+                <i class="bi bi-check-circle me-1"></i>
+                {{ i18n.getTranslation("SAVE") }}
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
     </div>
-
-    <!-- Champ Name -->
-    <div class="col-md-6">
-      <label for="inputName" class="form-label">Name</label>
-      <input type="text" formControlName="name" class="form-control" id="inputName">
-      @if(name.hasError('required') && name.touched) {
-        <div class="text-danger">{{i18n.getTranslation("ENTER_CATEGORY_NAME")}}</div>
-      }
-    </div>
-
-    <!-- Boutons -->
-    <div class="col-12 d-flex justify-content-start gap-3 mt-3">
-      <button [disabled]="form.invalid" type="submit" class="btn btn-dark">
-        {{i18n.getTranslation("SAVE")}}
-      </button>
-
-      <!-- BACK hors du form submit -->
-      <button type="button" class="btn btn-outline-info" (click)="backToPanel()">
-        {{ i18n.getTranslation("BACK_TO_PANEL") }}
-      </button>
-    </div>
-
-  </form>
+  </div>
 </div>
