@@ -90,4 +90,8 @@ export class UserPanel {
   displayUserEmail() {
     this.activeComponent.update((address) => address = "email")
   }
+
+  goToShopping() {
+    this.#router.navigate(['/products']);
+  }
 }

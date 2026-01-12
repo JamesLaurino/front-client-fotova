@@ -10,3 +10,20 @@
 .title-color {
   color: #5b5555;
 }
+
+/* Boutons */
+.btn-detail {
+  background-color: #c8b38a;
+  color: #343030;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 2px solid #c8b38a;
+  transition: all 0.3s ease;
+}
+
+.btn-detail:hover {
+  background-color: #343030;
+  color: #c8b38a;
+  transform: scale(1.05);
+}

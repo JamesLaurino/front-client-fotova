@@ -1,0 +1,14 @@
+ /* Boutons */
+.btn-detail {
+  background-color: #ab9562;
+  color: #222020;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 2px solid #c8b38a;
+  transition: all 0.3s ease;
+}
+
+.btn-detail:hover {
+  transform: scale(1.05);
+}

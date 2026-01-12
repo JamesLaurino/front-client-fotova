@@ -58,7 +58,7 @@
         </div>
       </div>
     }
-    <button (click)="goToAllProducts()" class="btn btn-secondary w-25" >
+    <button (click)="goToAllProducts()" class="btn btn-outline-secondary w-25" >
       {{ i18n.getTranslation('GO_TO_SHOPPING') }}
     </button>
   </div>
@@ -69,7 +69,7 @@
       <p class="fs-5 fw-bold text-dark">
         {{totalPrice.value() | number:'1.2-2'}} €
       </p>
-      <button  (click)="order()" class="btn btn-success w-100">{{ i18n.getTranslation('CONFIRM_ORDER') }}</button>
+      <button  (click)="order()" class="btn btn-outline-success w-100">{{ i18n.getTranslation('CONFIRM_ORDER') }}</button>
     </div>
   </div>
 </div>

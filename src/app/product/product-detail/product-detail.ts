@@ -22,7 +22,7 @@ import {I18nService} from '../../service/i18n/i18nService';
     ReactiveFormsModule
   ],
   templateUrl: './product-detail.html',
-  styles: ''
+  styleUrls: ['./product-detail.css']
 })
 export class ProductDetail {
 

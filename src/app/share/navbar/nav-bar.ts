@@ -63,4 +63,8 @@ export class NavBar {
   goToAdminPanel() {
     this.#router.navigate(['/admin']);
   }
+
+  goToContactPage() {
+    this.#router.navigate(['/contact']);
+  }
 }
