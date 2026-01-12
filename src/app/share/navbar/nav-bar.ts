@@ -28,8 +28,10 @@ export class NavBar {
       return "Français";
     } else if (this.i18n.getLanguage() == "en") {
       return "English";
+    } else if (this.i18n.getLanguage() == "ru") {
+      return "Русский"
     } else {
-      return "Anglais"
+      return "English"
     }
   }
 
