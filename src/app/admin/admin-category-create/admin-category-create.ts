@@ -2,23 +2,24 @@ import {Component, EventEmitter, inject, input, InputSignal, Output} from '@angu
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CategoryService} from '../../service/category/categoryService';
 import {I18nService} from '../../service/i18n/i18nService';
-import {LowerCasePipe} from '@angular/common';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {CategoryModel} from '../../model/category/category-model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin-category-create',
   imports: [
-    ReactiveFormsModule,
-    LowerCasePipe
+    ReactiveFormsModule
   ],
   templateUrl: './admin-category-create.html',
+  styleUrls: ['./admin-category-create.css']
 })
 export class AdminCategoryCreate {
 
   readonly #categoryService = inject(CategoryService);
   private toasterService = inject(ToasterService);
   readonly i18n = inject(I18nService);
+  readonly #router = inject(Router);
 
   @Output() displayFormUpdate = new EventEmitter<void>();
   isDisplayForm:InputSignal<boolean | undefined> = input.required<boolean | undefined>();
@@ -58,6 +59,7 @@ export class AdminCategoryCreate {
       })
     }
     this.displayFormUpdate.emit();
+    this.#router.navigate(['/admin'],{queryParams:{active:'categories'}});
   }
 
   hideForm() {
