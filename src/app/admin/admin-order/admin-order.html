@@ -8,7 +8,7 @@
       <th scope="col">{{i18n.getTranslation("USER")}}</th>
       <th scope="col">{{i18n.getTranslation("TOTAL")}}</th>
       <th scope="col">{{i18n.getTranslation("IS_DONE")}}</th>
-      <th scope="col">{{i18n.getTranslation("SHOW")}}</th>
+      <th scope="col">{{i18n.getTranslation("ACTIONS")}}</th>
     </tr>
     </thead>
     <tbody>
@@ -34,7 +34,7 @@
           </td>
           <td>
             <button (click)="goToOrderDetail(order.id,order.client.email)" class="btn btn-detail me-2">
-              {{i18n.getTranslation("EDIT")}}
+              {{i18n.getTranslation("SHOW")}}
             </button>
             @if (order.isDone) {
               <button (click)="completeOrder(order.id)" class="btn btn-uncomplete">
