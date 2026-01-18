@@ -2,11 +2,12 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChang
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import {provideHttpClient} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {ProductService} from './service/interfaces/product-service';
 import ProductFactory from './service/factory/product-factory';
 import {CartService} from './service/interfaces/cart-service';
 import CartFactory from './service/factory/cart-factory';
+import {AuthInterceptor} from './service/interceptor/AuthInterceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
     {
       provide:ProductService,
       useFactory:ProductFactory
@@ -21,6 +23,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide:CartService,
       useFactory:CartFactory
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
     }
   ]
 };
