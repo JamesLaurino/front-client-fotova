@@ -40,21 +40,13 @@
         <div class="col-md-6">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              <strong>{{ i18n.getTranslation("ID") }}:</strong> {{ clientDetail.value()?.id }}
+              <strong>{{ i18n.getTranslation("IDENTIFIER") }}:</strong> {{ clientDetail.value()?.id }}
             </li>
             <li class="list-group-item">
               <strong>{{ i18n.getTranslation("ADDRESS") }}:</strong>
               <div class="small text-muted mt-1">
                 {{ clientDetail.value()?.address?.street }} {{ clientDetail.value()?.address?.number }},
                 {{ clientDetail.value()?.address?.city }} ({{ clientDetail.value()?.address?.country }})
-              </div>
-            </li>
-             <li class="list-group-item">
-              <strong>{{ i18n.getTranslation("ROLES") }} :</strong>
-              <div>
-                @for(role of clientDetail.value()?.roles; track role) {
-                  <span class="badge bg-primary me-1">{{ role }}</span>
-                }
               </div>
             </li>
           </ul>
