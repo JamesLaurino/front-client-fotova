@@ -8,6 +8,7 @@ import {CartProduct} from '../../model/cart/cart-product';
 import {Router} from '@angular/router';
 import {CartHelper} from '../../helper/cart-helper';
 import {I18nService} from '../../service/i18n/i18nService';
+import {LoginHelper} from '../../helper/login-helper';
 
 @Component({
   selector: 'app-cart',
@@ -23,6 +24,7 @@ export class Cart
   readonly #router = inject(Router)
   public cartHelper = inject(CartHelper)
   protected readonly urlHelper = urlHelper;
+  public loginHelper = inject(LoginHelper)
   readonly i18n = inject(I18nService);
 
   carts = rxResource({

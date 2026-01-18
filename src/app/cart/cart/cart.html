@@ -69,7 +69,12 @@
       <p class="fs-5 fw-bold text-dark">
         {{totalPrice.value() | number:'1.2-2'}} €
       </p>
-      <button  (click)="order()" class="btn btn-outline-success w-100">{{ i18n.getTranslation('CONFIRM_ORDER') }}</button>
+      @if(loginHelper.isLogged())
+      {
+        <button  (click)="order()" class="btn btn-outline-success w-100">{{ i18n.getTranslation('CONFIRM_ORDER') }}</button>
+      } @else {
+        <button disabled class="btn btn-outline-secondary w-100">{{ i18n.getTranslation('LOGIN_TO_PROCEED') }}</button>
+      }
     </div>
   </div>
 </div>
