@@ -47,6 +47,8 @@ export class AdminCategoryCreate {
             toastImageUrl: '/fotova/check.jpg',
             toastMessage: 'Création de la catégorie crée avec success'
           });
+          this.displayFormUpdate.emit();
+          this.#router.navigate(['/admin'],{queryParams:{active:'categories'}});
         },
         error: (err) => {
           this.toasterService.show({
@@ -58,8 +60,6 @@ export class AdminCategoryCreate {
         },
       })
     }
-    this.displayFormUpdate.emit();
-    this.#router.navigate(['/admin'],{queryParams:{active:'categories'}});
   }
 
   hideForm() {
