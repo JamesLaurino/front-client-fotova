@@ -2,7 +2,7 @@ import {inject, Injectable, signal} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ClientResponseApi} from '../../model/client/client-response-api';
 import {environment} from '../../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {OrderApiResponse} from '../../model/order/order-api-response';
 import {ClientAddress} from '../../model/client/client-address';
 import {CommentClientResponseApi} from '../../model/comment/comment-client-response-api';
@@ -41,12 +41,7 @@ export class UserService
   }
 
   sendEmail(clientEmail: ClientEmail): Observable<ClientResponseEmailApi> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.#http.post<ClientResponseEmailApi>(this.#API_URL + '/amq/contact', clientEmail,{ headers });
+    return this.#http.post<ClientResponseEmailApi>(this.#API_URL + '/amq/contact', clientEmail);
   }
 
   getClientById(idClient: number): Observable<ClientDetailResponseApi> {
@@ -62,38 +57,18 @@ export class UserService
   }
 
   addAddressToUser(address:Omit<ClientAddress, 'id'>) {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.#http.post<ClientResponseApi>(this.#API_URL + '/client/address', address,{ headers });
+    return this.#http.post<ClientResponseApi>(this.#API_URL + '/client/address', address);
   }
 
   updateAddressInformation(address:Omit<ClientAddress, 'id'>) {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.#http.put<ClientResponseApi>(this.#API_URL + '/client/update', address,{ headers });
+    return this.#http.put<ClientResponseApi>(this.#API_URL + '/client/update', address);
   }
 
   getUserInformation():Observable<ClientResponseApi> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.#http.get<ClientResponseApi>(this.#BASE_API_URL + '/api/v1/user', { headers });
+    return this.#http.get<ClientResponseApi>(this.#BASE_API_URL + '/api/v1/user');
   }
 
   addUserComment(commentUser:CommentClient):Observable<CommentClientResponseApi> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.#http.post<CommentClientResponseApi>(this.#API_URL + '/client/comment', commentUser,{ headers });
+    return this.#http.post<CommentClientResponseApi>(this.#API_URL + '/client/comment', commentUser);
   }
 }
