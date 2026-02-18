@@ -42,6 +42,7 @@ export class AdminProductDetail {
   form = new FormGroup({
     name: new FormControl('', [Validators.required]),
     quantity: new FormControl(0, [Validators.required]),
+    description : new FormControl('', [Validators.required]),
     price: new FormControl(0, [Validators.required]),
   });
 
@@ -61,6 +62,7 @@ export class AdminProductDetail {
   get name() { return this.form.get('name') as FormControl; }
   get quantity() { return this.form.get('quantity') as FormControl; }
   get price() { return this.form.get('price') as FormControl; }
+  get description() { return this.form.get('description') as FormControl; }
 
   updateProduct() {
     if (this.form.invalid || !this.product()) return;
@@ -73,6 +75,7 @@ export class AdminProductDetail {
       name: formValue.name ?? currentProduct.name,
       price: formValue.price ?? currentProduct.price,
       quantity: formValue.quantity ?? currentProduct.quantity,
+      description: formValue.description ?? currentProduct.description,
       url: currentProduct.url,
       categoryInnerProductDto: currentProduct.categoryInnerProductDto
     };
@@ -190,6 +193,7 @@ export class AdminProductDetail {
       name: currentProduct.name,
       price: currentProduct.price,
       quantity: currentProduct.quantity,
+      description: currentProduct.description,
       url: "",
       categoryInnerProductDto: currentProduct.categoryInnerProductDto
     };

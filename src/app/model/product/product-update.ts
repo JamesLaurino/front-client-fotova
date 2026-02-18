@@ -5,6 +5,7 @@ export interface ProductUpdate {
   name:string,
   price:number,
   quantity:number,
+  description:string,
   url:string,
   categoryInnerProductDto:categoryInnerProductDto
 }

@@ -4,6 +4,7 @@ export interface ProductModel {
       id:number,
       name:string,
       quantity:number,
+      description:string,
       price:number,
       categoryInnerProductDto:categoryInnerProductDto,
       url:string,

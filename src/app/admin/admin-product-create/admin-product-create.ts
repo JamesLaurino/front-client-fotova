@@ -36,6 +36,7 @@ export class AdminProductCreate {
     name:'',
     quantity:0,
     price:0,
+    description:'',
     categoryInnerProductDto:{
       id:0,
       name:''
@@ -48,6 +49,7 @@ export class AdminProductCreate {
     name: new FormControl('', [Validators.required]),
     quantity: new FormControl(0, [Validators.required, Validators.min(0)]),
     price: new FormControl(0, [Validators.required, Validators.min(0)]),
+    description:new FormControl('', [Validators.required]),
     categoryInnerProductDto: new FormControl<string[]>([], [Validators.required]),
   });
   categories = rxResource({
@@ -65,6 +67,7 @@ export class AdminProductCreate {
 
   get name() { return this.form.get('name') as FormControl; }
   get quantity() { return this.form.get('quantity') as FormControl; }
+  get description() {return this.form.get('description') as FormControl; }
   get price() { return this.form.get('price') as FormControl; }
   get category() { return this.form.get('categoryInnerProductDto') as FormControl; }
 
@@ -127,6 +130,7 @@ export class AdminProductCreate {
         name: String(this.name.value),
         price: Number(this.price.value),
         quantity: Number(this.quantity.value),
+        description: String(this.description.value),
         url: '',
       }
       this.#productService.addProductWithCategory(productAdd, categoryId).subscribe({
@@ -136,6 +140,7 @@ export class AdminProductCreate {
             n.name = response.data.name;
             n.quantity = response.data.quantity;
             n.price = response.data.price;
+            n.description = response.data.description;
             n.categoryInnerProductDto.id = response.data.categoryInnerProductDto.id;
             n.categoryInnerProductDto.name = response.data.categoryInnerProductDto.name;
             n.url = response.data.url;

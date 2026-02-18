@@ -37,6 +37,27 @@
               </div>
 
               <div class="col-md-6">
+                <label for="inputDescription" class="form-label">
+                  {{ i18n.getTranslation("DESCRIPTION") }}
+                </label>
+
+                <textarea
+                  id="inputDescription"
+                  class="form-control"
+                  formControlName="description"
+                  rows="3"
+                  placeholder="{{ i18n.getTranslation('DESCRIPTION') }}"
+                ></textarea>
+
+                @if (description.hasError('required') && description.touched) {
+                  <div class="text-danger small mt-1">
+                    {{ i18n.getTranslation("PLEASE_ENTER_DESCRIPTION") }}
+                  </div>
+                }
+              </div>
+
+
+              <div class="col-md-6">
                 <label for="inputQuantity" class="form-label">{{i18n.getTranslation("QUANTITY")}}</label>
                 <input type="number" formControlName="quantity" class="form-control" id="inputQuantity">
                 @if(quantity.hasError('required') && quantity.touched) {
@@ -44,7 +65,7 @@
                 }
               </div>
 
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <label for="inputPrice" class="form-label">{{i18n.getTranslation("PRICE")}}</label>
                 <input type="number" formControlName="price" class="form-control" id="inputPrice" step="0.01">
                 @if(price.hasError('required') && price.touched) {

@@ -10,7 +10,7 @@
   <div class="container d-flex justify-content-center mt-5">
 
     <!-- LATERAL CARD  -->
-    <div class="d-flex flex-column mr-2">
+    <div class="d-flex flex-column me-2">
       @for (img of product.value().images; track img) {
         <img class="mx-2 shadow rounded p-2 m-1"
              style="cursor: pointer;"
@@ -26,49 +26,81 @@
            [alt]="product.value().name" width="60px" height="60px">
     </div>
 
-    <!-- MAIN CARD  -->
-    <div class="col-lg-4 col-md-6 col-sm-12 mb-3 rounded">
-      <div class="container d-flex justify-content-center flex-column" style="width:350px">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="shadow p-3 h-75 rounded" >
-
-          <p class="text-center"> <strong> {{product.value().name}} </strong> </p>
-            <img #imgSwitch class="mx-5 mb-3 mb-4"
-                 [src]="urlHelper(product.value().url)"
-                 [alt]="product.value().name" width="200px" height="200px">
-
-            <p>{{ i18n.getTranslation('AVAILABLE_IN_STOCK') }} : {{product.value().quantity}}</p>
-
-            <div class="d-flex justify-content-evenly">
-              <button type="button"
-                class="btn btn-outline-secondary"
-                (click)="decrementCartQuantity()"
-                [disabled]="cartQuantity.value <= 0">-</button>
-              <input style="max-width: 150px" type="number"
-                     formControlName="cartQuantity"
-                     class="form-control text-center"/>
-              <button type="button"
-                      (click)="incrementCartQuantity()"
-                      [disabled]="cartQuantity.value >= product.value().quantity"
-                      class="btn btn-outline-secondary">+</button>
+    <!-- MAIN PRODUCT CARD -->
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-body p-4">
+          <div class="row g-4">
+            <!-- Product Image Section -->
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+              <img #imgSwitch class="img-fluid rounded-3 product-main-image"
+                   [src]="urlHelper(product.value().url)"
+                   [alt]="product.value().name" style="max-width: 300px; max-height: 300px; object-fit: contain;">
             </div>
 
-            @if(cartQuantity.hasError('required')) {
-                <div class="text-danger">
-                      {{ i18n.getTranslation('PLEASE_ENTER_QUANTITY') }}
-                </div>
-            }
+            <!-- Product Details Section -->
+            <div class="col-md-6">
+              <h1 class="card-title text-center text-md-start mb-3"> {{product.value().name}} </h1>
+              <p class="text-muted text-center text-md-start mb-4">
+                {{ i18n.getTranslation('AVAILABLE_IN_STOCK') }} :
+                <span class="fw-bold">{{product.value().quantity}}</span>
+              </p>
 
-            @if(cartQuantity.hasError('minlength')) {
-              <div class="text-danger">
-                {{ i18n.getTranslation('MINIMUM_QUANTITY_REQUIRED') }}
+              <hr class="my-3">
+
+              <h5 class="mb-2">{{ i18n.getTranslation('DESCRIPTION') }} :</h5>
+              <div>
+                {{product.value()?.description}}
               </div>
-            }
+<!--              <div class="collapse" id="collapseDescription">-->
+<!--                <p class="card-text text-secondary">-->
+<!--                  {{product.value()?.description}}-->
+<!--                </p>-->
+<!--              </div>-->
+<!--              <button class="btn btn-link text-dark p-0 mb-3 text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription" aria-expanded="false" aria-controls="collapseDescription">-->
+<!--                {{ i18n.getTranslation('TOGGLE_DESCRIPTION') }}-->
+<!--              </button>-->
 
-            <p class="text-center mt-3"> {{ i18n.getTranslation('PRICE') }} : {{product.value().price | currency: 'EUR'}} </p>
-            <button [disabled]="form.invalid" class="btn btn-outline-success w-100">{{ i18n.getTranslation('ADD_TO_CART') }}</button>
-        </form>
-        <div class="mt-3">
-          <button (click)="goToProductList()" class="fs-6 fw-bold btn-outline-secondary btn">{{ i18n.getTranslation('PRODUCTS') }}</button>
+              <hr class="my-3">
+
+              <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="d-flex justify-content-center justify-content-md-start align-items-center my-4">
+                  <button type="button"
+                          class="btn btn-outline-secondary me-3 btn-lg"
+                          (click)="decrementCartQuantity()"
+                          [disabled]="cartQuantity.value <= 0">-</button>
+                  <input style="max-width: 120px; font-size: 1.25rem;" type="number"
+                         formControlName="cartQuantity"
+                         class="form-control text-center"/>
+                  <button type="button"
+                          (click)="incrementCartQuantity()"
+                          [disabled]="cartQuantity.value >= product.value().quantity"
+                          class="btn btn-outline-secondary ms-3 btn-lg">+</button>
+                </div>
+
+                @if(cartQuantity.hasError('required')) {
+                    <div class="text-danger mb-2">
+                          {{ i18n.getTranslation('PLEASE_ENTER_QUANTITY') }}
+                    </div>
+                }
+
+                @if(cartQuantity.hasError('minlength')) {
+                  <div class="text-danger mb-2">
+                    {{ i18n.getTranslation('MINIMUM_QUANTITY_REQUIRED') }}
+                  </div>
+                }
+
+                <h3 class="text-center text-md-start mt-4 mb-4">
+                  {{ i18n.getTranslation('PRICE') }} :
+                  <span class="fw-bold text-dark">{{product.value().price | currency: 'EUR'}}</span>
+                </h3>
+                <button [disabled]="form.invalid" class="btn btn-detail w-100 btn-lg mb-3">{{ i18n.getTranslation('ADD_TO_CART') }}</button>
+              </form>
+              <div class="d-grid">
+                <button (click)="goToProductList()" class="btn btn-outline-secondary btn-lg">{{ i18n.getTranslation('PRODUCTS') }}</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
