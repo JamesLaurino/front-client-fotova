@@ -27,15 +27,37 @@
         </div>
       }
     </div>
-      <div class="col-md-6">
-        <label for="inputCountry" class="form-label">Country</label>
-        <input type="text" formControlName="country" class="form-control" id="inputCountry">
-        @if(country.hasError('required') && country.touched) {
-          <div class="text-danger">
-            {{ i18n.getTranslation('PLEASE_ENTER_COUNTRY') }}
-          </div>
+
+    <div class="col-md-6">
+      <label for="inputCountry" class="form-label">
+        {{ i18n.getTranslation('COUNTRY') }}
+      </label>
+
+      <select
+        id="inputCountry"
+        class="form-select"
+        formControlName="country">
+
+        <option value="">
+          -- Sélectionner un pays --
+        </option>
+
+        @for (countryItem of countries; track countryItem) {
+          <option [value]="countryItem">
+            {{ countryItem }}
+          </option>
         }
-      </div>
+
+      </select>
+
+      @if (country.hasError('required') && country.touched) {
+        <div class="text-danger">
+          {{ i18n.getTranslation('PLEASE_ENTER_COUNTRY') }}
+        </div>
+      }
+    </div>
+
+
     <div class="col-12">
       <button [disabled]="form.invalid" type="submit" class="btn btn-dark">{{ i18n.getTranslation('EDIT') }}</button>
     </div>

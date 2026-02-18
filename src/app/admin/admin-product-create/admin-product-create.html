@@ -40,11 +40,21 @@
               </div>
 
               <div class="col-md-6">
-                <label for="inputDescription" class="form-label">{{i18n.getTranslation("DESCRIPTION")}}</label>
-                <input type="text" formControlName="name" class="form-control" id="inputDescription">
-                @if(description.hasError('required') && description.touched) {
+                <label for="inputDescription" class="form-label">
+                  {{ i18n.getTranslation("DESCRIPTION") }}
+                </label>
+
+                <textarea
+                  id="inputDescription"
+                  class="form-control"
+                  formControlName="description"
+                  rows="3"
+                  placeholder="{{ i18n.getTranslation('ENTER_YOUR_DESCRIPTION') }}"
+                ></textarea>
+
+                @if (description.hasError('required') && description.touched) {
                   <div class="text-danger small mt-1">
-                    {{i18n.getTranslation("PLEASE_ENTER_DESCRIPTION")}}
+                    {{ i18n.getTranslation("PLEASE_ENTER_DESCRIPTION") }}
                   </div>
                 }
               </div>

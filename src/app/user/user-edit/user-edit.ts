@@ -18,6 +18,7 @@ export class UserEdit implements OnInit
   userAddressInput:InputSignal<ClientAddress | undefined> = input.required<ClientAddress | undefined>();
   readonly #userService = inject(UserService);
   private toasterService = inject(ToasterService);
+  protected countries: string[] | undefined;
   readonly i18n = inject(I18nService);
 
   @Output() addressUpdated = new EventEmitter<void>();
@@ -46,6 +47,7 @@ export class UserEdit implements OnInit
   });
 
   ngOnInit(): void {
+    this.countries = this.#userService.getCountries();
     const address = this.userAddressInput();
     if (address) {
       this.form.patchValue({
