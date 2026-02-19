@@ -37,6 +37,11 @@ export const routes: Routes = [
     component: UserPanel
   },
   {
+    path:'success',
+    canActivate: [AuthGuard],
+    component:Landing
+  },
+  {
     path:'admin',
     canActivate: [AuthGuardAdmin],
     component: AdminPanel

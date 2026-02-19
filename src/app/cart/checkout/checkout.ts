@@ -95,7 +95,8 @@ export class Checkout implements OnInit {
           toastTitle: 'Checkout success',
           toastTime: 'il y a 1 min',
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Le processus de paiement a bien été effectué. Merci pour votre achat !'
+          toastMessage: 'Le processus de redirection a bien été effectué. ' +
+            'Dans quelques secondes vous serez redirigé vers stripe'
         });
       }),
       catchError(error => {
@@ -111,8 +112,9 @@ export class Checkout implements OnInit {
       })
     ).subscribe((checkoutResponse: CheckoutResponseApi | null) => {
       this.isProcessing = false;
-      if (checkoutResponse) {
+      if (checkoutResponse && checkoutResponse.data?.sessionUrl) {
         console.log('Réponse finale du paiement :', checkoutResponse);
+        window.location.href = checkoutResponse.data.sessionUrl;
       }
     });
   }
