@@ -48,6 +48,11 @@ export class Login
     return this.form.get('password') as FormControl;
   }
 
+  goToForgotPassword(): void {
+    //todo implement forgot password
+    //this.router.navigate(['/forgot-password']);
+  }
+
   showToast(message: string) {
     this.toasterService.show({
       toastMessage: message,

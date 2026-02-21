@@ -67,7 +67,7 @@ export class Register {
       next: (response: RegisterApiResponse) => {
         if (response.responseCode === 200) {
           this.toasterService.show({
-            toastTitle: 'Success',
+            toastTitle: this.i18n.getTranslation('LOGIN_TO_PROCEED'),
             toastTime: 'il y a 1 min',
             toastImageUrl: '/fotova/check.jpg',
             toastMessage: "Un email vous a été envoyé pour valider votre compte."

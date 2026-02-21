@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {CartHelper} from '../../helper/cart-helper';
 import {I18nService} from '../../service/i18n/i18nService';
 import {LoginHelper} from '../../helper/login-helper';
+import {UserService} from '../../service/user/user-service';
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +17,7 @@ import {LoginHelper} from '../../helper/login-helper';
     DecimalPipe,
   ],
   templateUrl: './cart.html',
-  styles: ''
+  styleUrls: ['./cart.css']
 })
 export class Cart
 {
@@ -26,6 +27,8 @@ export class Cart
   protected readonly urlHelper = urlHelper;
   public loginHelper = inject(LoginHelper)
   readonly i18n = inject(I18nService);
+  private userService = inject(UserService);
+  declare bootstrap: any;
 
   carts = rxResource({
     stream: () => {
@@ -42,7 +45,16 @@ export class Cart
     }
   })
 
-  order() {
+  clientDetail = rxResource({
+    stream: () => {
+      return this.userService.getUserInformation()
+        .pipe(
+          map(response => response.data)
+        )
+    }
+  })
+
+  goToOrder() {
     this.#router.navigate(['/checkout']);
   }
 

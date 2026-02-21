@@ -59,7 +59,13 @@
           {{ i18n.getTranslation('REGISTER') }}
         </button>
       </div>
-
+      <div class="text-end mt-4">
+        <button type="button"
+                class="btn btn-link p-0 forgot-password-link"
+                (click)="goToForgotPassword()">
+          {{ i18n.getTranslation('FORGOT_PASSWORD') }}
+        </button>
+      </div>
     </form>
   </div>
 </div>
