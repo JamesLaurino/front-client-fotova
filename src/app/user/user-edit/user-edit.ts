@@ -90,16 +90,16 @@ export class UserEdit implements OnInit
       {
         this.addressUpdated.emit();
         this.toasterService.show({
-          toastTitle: 'Succès',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
           toastMessage: 'Adresse ajoutée avec success.'
         });
       },
       error: (error) => {
         this.toasterService.show({
-          toastTitle: 'Error',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
           toastMessage: "Une erreur est survenue lors de l'ajout de l'adresse."
         });
@@ -112,16 +112,16 @@ export class UserEdit implements OnInit
       {
         this.addressUpdated.emit();
         this.toasterService.show({
-          toastTitle: 'Succès',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
           toastMessage: 'Mise à jour effectuée avec succès.'
         });
       },
       error: (error) => {
         this.toasterService.show({
-          toastTitle: 'Error',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
           toastMessage: 'La mise à jour échouée.'
         });

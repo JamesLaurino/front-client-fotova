@@ -57,16 +57,16 @@ export class UserEmail {
         if (response.responseCode === 200) {
           this.emailUpdated.emit();
           this.toasterService.show({
-            toastTitle: 'Mail success',
-            toastTime: 'il y a 1 min',
+            toastTitle: this.i18n.getTranslation('SUCCESS'),
+            toastTime: this.i18n.getTranslation('JUST_NOW'),
             toastImageUrl: '/fotova/check.jpg',
             toastMessage: 'Email send with success'
           })
           this.resetForm();
         } else {
           this.toasterService.show({
-            toastTitle: 'Mail error',
-            toastTime: 'il y a 1 min',
+            toastTitle: this.i18n.getTranslation('ERROR'),
+            toastTime: this.i18n.getTranslation('JUST_NOW'),
             toastImageUrl: '/fotova/error.png',
             toastMessage: 'Une erreur est survenue lors de l\'envoie du mail veuillez tenter plus tard'
           })
@@ -75,8 +75,8 @@ export class UserEmail {
       error: (error: any) => {
         const message = error.error.errorList[0]
         this.toasterService.show({
-          toastTitle: 'Mail error',
-          toastTime: 'il y a 1 min',
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
           toastMessage: message
         })

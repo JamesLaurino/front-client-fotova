@@ -52,9 +52,9 @@ export class ResetPassword {
   showToast(message: string) {
     this.toasterService.show({
       toastMessage: message,
-      toastTitle:"Une erreur est survenue",
+      toastTitle:this.i18n.getTranslation("ERROR"),
       toastImageUrl :'/fotova/error.png',
-      toastTime : 'il y a 1 min'
+      toastTime : this.i18n.getTranslation("JUST_NOW"),
     });
   }
 
@@ -70,9 +70,9 @@ export class ResetPassword {
         if (response.responseCode === 200) {
           this.toasterService.show({
             toastMessage: "Un email vient de vous être envoyé en vue de la modification de votre mot de passe",
-            toastTitle:"Succès",
+            toastTitle:this.i18n.getTranslation("SUCCESS"),
             toastImageUrl :'/fotova/check.jpg',
-            toastTime : 'il y a 1 min'
+            toastTime : this.i18n.getTranslation("JUST_NOW"),
           });
         } else {
           this.showToast(response.responseMessage || 'Erreur survenue');

@@ -44,8 +44,8 @@ export class AdminOrder {
     this.#orderService.toggleCompleted(orderId).subscribe({
       next:() =>{
         this.#toasterService.show({
-          toastTitle: 'Client',
-          toastTime: 'il y a 1 min',
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
           toastMessage: "Order updated with success"
         })
@@ -53,8 +53,8 @@ export class AdminOrder {
       },
       error:(err) => {
         this.#toasterService.show({
-          toastTitle: 'Client',
-          toastTime: 'il y a 1 min',
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
           toastMessage: "Order not updated with success : " + err.error.errorList[0]
         })

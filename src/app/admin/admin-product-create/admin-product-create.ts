@@ -113,8 +113,8 @@ export class AdminProductCreate {
   finish() {
     if(confirm('Attention les images non uploadées seront perdues. Voulez-vous continuer ?')) {
       this.toasterService.show({
-        toastTitle: 'Succès',
-        toastTime: 'Just now',
+        toastTitle: this.i18n.getTranslation("SUCCESS"),
+        toastTime: this.i18n.getTranslation("JUST_NOW"),
         toastImageUrl: '/fotova/check.jpg',
         toastMessage: 'Produit créé et images téléversées avec succès.'
       });
@@ -150,8 +150,8 @@ export class AdminProductCreate {
         },
         error: () => {
           this.toasterService.show({
-            toastTitle: 'Erreur',
-            toastTime: 'Just now',
+            toastTitle: this.i18n.getTranslation("ERROR"),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/error.png',
             toastMessage: "Produit et images n'ont pas pu être téléversée"
           });
@@ -231,8 +231,8 @@ export class AdminProductCreate {
     ).subscribe({
       next: () => {
         this.toasterService.show({
-          toastTitle: 'Succès',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation("SUCCESS"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/check.jpg',
           toastMessage: 'Image uploadée et produit mis à jour.'
         });
@@ -241,8 +241,8 @@ export class AdminProductCreate {
       error: (error) => {
         console.error('Erreur détaillée reçue dans la chaîne RxJS :', error);
         this.toasterService.show({
-          toastTitle: 'Échec',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation("ERROR"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/error.png',
           toastMessage: `Erreur : ${error.error?.errorList?.[0] || 'Une erreur inconnue est survenue.'}`
         });

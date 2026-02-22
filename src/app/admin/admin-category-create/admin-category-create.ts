@@ -42,8 +42,8 @@ export class AdminCategoryCreate {
       this.#categoryService.createCategory(categoryCreated).subscribe({
         next: () => {
           this.toasterService.show({
-            toastTitle: 'Succès',
-            toastTime: 'Just now',
+            toastTitle: this.i18n.getTranslation("SUCCESS"),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/check.jpg',
             toastMessage: 'Création de la catégorie crée avec success'
           });
@@ -52,8 +52,8 @@ export class AdminCategoryCreate {
         },
         error: (err) => {
           this.toasterService.show({
-            toastTitle: 'Error',
-            toastTime: 'Just now',
+            toastTitle: this.i18n.getTranslation("ERROR"),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/error.gng',
             toastMessage: 'Echec de création de la catégorie : ' + err.error.errorList[0]
           });

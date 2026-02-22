@@ -67,16 +67,16 @@ export class Register {
       next: (response: RegisterApiResponse) => {
         if (response.responseCode === 200) {
           this.toasterService.show({
-            toastTitle: this.i18n.getTranslation('LOGIN_TO_PROCEED'),
-            toastTime: 'il y a 1 min',
+            toastTitle: this.i18n.getTranslation('SUCCESS'),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/check.jpg',
             toastMessage: "Un email vous a été envoyé pour valider votre compte."
           });
             this.#router.navigate(['/login']);
         } else {
           this.toasterService.show({
-            toastTitle: 'Error',
-            toastTime: 'il y a 1 min',
+            toastTitle: this.i18n.getTranslation("ERROR"),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/error.png',
             toastMessage: "Une erreur s'est produite lors de l'inscription."
           });
@@ -85,8 +85,8 @@ export class Register {
       error: (error: any) => {
         const message = error.error.errorList[0]
         this.toasterService.show({
-          toastTitle: 'Error',
-          toastTime: 'il y a 1 min',
+          toastTitle: this.i18n.getTranslation("ERROR"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/error.png',
           toastMessage: "Une erreur s'est produite lors de l'inscription : " + message
         });

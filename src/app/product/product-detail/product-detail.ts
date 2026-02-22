@@ -77,9 +77,9 @@ export class ProductDetail {
 
     this.toasterService.show({
       toastMessage: "Produit ajouté au panier !",
-      toastTitle:"Pannier mis à jours",
+      toastTitle:this.i18n.getTranslation('SUCCESS'),
       toastImageUrl :'/fotova/check.jpg',
-      toastTime : 'il y a 1 min'
+      toastTime : this.i18n.getTranslation('JUST_NOW'),
     });
   }
 

@@ -37,8 +37,8 @@ export class AdminProduct {
     this.#productService.deleteProduct(id).subscribe({
       next: () => {
         this.toasterService.show({
-          toastTitle: 'Succès',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
           toastMessage: 'Produit supprimé avec success.'
         });
@@ -46,8 +46,8 @@ export class AdminProduct {
       },
       error: () => {
         this.toasterService.show({
-          toastTitle: 'Echec',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.jpg',
           toastMessage: "Le produit n'a pas pu être supprimé."
         });

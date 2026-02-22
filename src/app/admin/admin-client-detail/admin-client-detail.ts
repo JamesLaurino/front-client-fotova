@@ -39,8 +39,8 @@ export class AdminClientDetail {
     if (confirm("Are you sure to delete the comment ?")) {
       this.commentService.deleteCommentById(id).subscribe(() => {
         this.toasterService.show({
-          toastTitle: 'Comments',
-          toastTime: 'il y a 1 min',
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
           toastMessage: "Commentaire supprimé avec success"
         })
@@ -54,8 +54,8 @@ export class AdminClientDetail {
     if (confirm("Are you sure to delete the client ?")) {
       this.#userService.deleteClientById(this.idClient).subscribe(() => {
         this.toasterService.show({
-          toastTitle: 'Client',
-          toastTime: 'il y a 1 min',
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
           toastMessage: "Client supprimé avec success"
         })

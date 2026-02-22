@@ -58,16 +58,16 @@ export class AdminCategoryDetail {
       this.#categoryService.updateCategory(updatedCategory).subscribe({
         next: () => {
           this.toasterService.show({
-            toastTitle: 'Succès',
-            toastTime: 'Just now',
+            toastTitle: this.i18n.getTranslation("SUCCESS"),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/check.jpg',
             toastMessage: 'Mise à jour de la catégorie effectuée avec succès.'
           });
         },
         error: (err) => {
           this.toasterService.show({
-            toastTitle: 'Error',
-            toastTime: 'Just now',
+            toastTitle: this.i18n.getTranslation("ERROR"),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/error.png',
             toastMessage: 'Echec de la mise à jour de la catégorie : ' + err.error.errorList[0]
           });

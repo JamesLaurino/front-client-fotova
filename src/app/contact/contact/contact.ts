@@ -68,15 +68,15 @@ export class Contact {
           this.isLoading.set(false);
           if (response.responseCode === 200) {
             this.toasterService.show({
-              toastTitle: 'Mail send with success',
-              toastTime: 'il y a 1 min',
+              toastTitle: this.i18n.getTranslation('SUCCESS'),
+              toastTime: this.i18n.getTranslation('JUST_NOW'),
               toastImageUrl: '/fotova/check.jpg',
               toastMessage: 'Votre mail a été ajouté avec success'
             })
           } else {
             this.toasterService.show({
-              toastTitle: 'Error during mail sending',
-              toastTime: 'il y a 1 min',
+              toastTitle: this.i18n.getTranslation('ERROR'),
+              toastTime: this.i18n.getTranslation('JUST_NOW'),
               toastImageUrl: '/fotova/error.png',
               toastMessage: 'Une erreur est survenue lors de l\'envoie de du mail'
             })
@@ -85,8 +85,8 @@ export class Contact {
         error: (error: any) => {
           const message = error.error.errorList[0]
           this.toasterService.show({
-            toastTitle: 'Comments error',
-            toastTime: 'il y a 1 min',
+            toastTitle: this.i18n.getTranslation('ERROR'),
+            toastTime: this.i18n.getTranslation('JUST_NOW'),
             toastImageUrl: '/fotova/error.png',
             toastMessage: message
           })

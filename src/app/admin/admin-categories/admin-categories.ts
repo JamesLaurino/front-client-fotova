@@ -60,8 +60,8 @@ export class AdminCategories {
         this.#categoryService.deleteCategory(id).subscribe({
           next: () => {
             this.toasterService.show({
-              toastTitle: 'Succès',
-              toastTime: 'Just now',
+              toastTitle: this.i18n.getTranslation("SUCCESS"),
+              toastTime: this.i18n.getTranslation("JUST_NOW"),
               toastImageUrl: '/fotova/check.jpg',
               toastMessage: 'Catégorie supprimée avec success.'
             });
@@ -69,8 +69,8 @@ export class AdminCategories {
           },
           error: (err) => {
             this.toasterService.show({
-              toastTitle: 'Error',
-              toastTime: 'Just now',
+              toastTitle: this.i18n.getTranslation("ERROR"),
+              toastTime: this.i18n.getTranslation("JUST_NOW"),
               toastImageUrl: '/fotova/error.png',
               toastMessage: 'Echec de la suppression de la catégorie : ' + err.error.errorList[0]
             });

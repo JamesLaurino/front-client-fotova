@@ -55,9 +55,9 @@ export class Login
   showToast(message: string) {
     this.toasterService.show({
       toastMessage: message,
-      toastTitle:"Une erreur est survenue",
+      toastTitle:this.i18n.getTranslation('ERROR'),
       toastImageUrl :'/fotova/error.png',
-      toastTime : 'il y a 1 min'
+      toastTime :this.i18n.getTranslation('JUST_NOW'),
     });
   }
 

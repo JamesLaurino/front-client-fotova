@@ -60,15 +60,15 @@ export class UserComment {
         if (response.responseCode === 200) {
           this.commentsUpdated.emit();
           this.toasterService.show({
-            toastTitle: 'Comments success',
-            toastTime: 'il y a 1 min',
+            toastTitle: this.i18n.getTranslation("SUCCESS"),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/check.jpg',
             toastMessage: 'Commentaire ajouté avec success'
           })
         } else {
           this.toasterService.show({
-            toastTitle: 'Comments error',
-            toastTime: 'il y a 1 min',
+            toastTitle: this.i18n.getTranslation("ERROR"),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/error.png',
             toastMessage: 'Une erreur est survenue lors de l\'ajout du commentaire'
           })
@@ -77,8 +77,8 @@ export class UserComment {
       error: (error: any) => {
         const message = error.error.errorList[0]
         this.toasterService.show({
-          toastTitle: 'Comments error',
-          toastTime: 'il y a 1 min',
+          toastTitle: this.i18n.getTranslation("ERROR"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/error.png',
           toastMessage: message
         })
@@ -90,8 +90,8 @@ export class UserComment {
   deleteComment(CommentId: number) {
     this.commentService.deleteCommentById(CommentId).subscribe(() => {
       this.toasterService.show({
-        toastTitle: 'Comments',
-        toastTime: 'il y a 1 min',
+        toastTitle: this.i18n.getTranslation("SUCCESS"),
+        toastTime: this.i18n.getTranslation("JUST_NOW"),
         toastImageUrl: '/fotova/check.jpg',
         toastMessage: "Commentaire supprimé avec success"
       })

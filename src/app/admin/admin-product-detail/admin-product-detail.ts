@@ -83,8 +83,8 @@ export class AdminProductDetail {
     this.productService.updateProduct(productUpdate).subscribe({
       next: () => {
         this.toasterService.show({
-          toastTitle: 'Succès',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
           toastMessage: 'Produit mis à jour avec succès.'
         });
@@ -92,8 +92,8 @@ export class AdminProductDetail {
       },
       error: (err) => {
         this.toasterService.show({
-          toastTitle: 'Échec',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
           toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
         });
@@ -153,8 +153,8 @@ export class AdminProductDetail {
     ).subscribe({
       next: () => {
         this.toasterService.show({
-          toastTitle: 'Succès',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
           toastMessage: 'Image téléversée avec succès.'
         });
@@ -163,8 +163,8 @@ export class AdminProductDetail {
       },
       error: (err) => {
         this.toasterService.show({
-          toastTitle: 'Échec',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
           toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
         });
@@ -201,8 +201,8 @@ export class AdminProductDetail {
     this.productService.updateProduct(productUpdateImages).subscribe({
       next: () => {
         this.toasterService.show({
-          toastTitle: 'Succès',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
           toastMessage: 'Image du produit mise à jour avec succès.'
         });
@@ -210,8 +210,8 @@ export class AdminProductDetail {
       },
       error: (err) => {
         this.toasterService.show({
-          toastTitle: 'Échec',
-          toastTime: 'Just now',
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
           toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
         });
@@ -225,8 +225,8 @@ export class AdminProductDetail {
       .subscribe({
         next:() => {
           this.toasterService.show({
-            toastTitle: 'Succès',
-            toastTime: 'Just now',
+            toastTitle: this.i18n.getTranslation('SUCCESS'),
+            toastTime: this.i18n.getTranslation('JUST_NOW'),
             toastImageUrl: '/fotova/check.jpg',
             toastMessage: 'Image du produit mise à jour avec succès.'
           });
@@ -234,8 +234,8 @@ export class AdminProductDetail {
         },
         error: (err) => {
           this.toasterService.show({
-            toastTitle: 'Échec',
-            toastTime: 'Just now',
+            toastTitle: this.i18n.getTranslation('ERROR'),
+            toastTime: this.i18n.getTranslation('JUST_NOW'),
             toastImageUrl: '/fotova/error.png',
             toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
           });
