@@ -20,6 +20,7 @@ import {AdminCategoryCreate} from './admin/admin-category-create/admin-category-
 import {AdminCategoryDetail} from './admin/admin-category-detail/admin-category-detail';
 import {AdminProductCreate} from './admin/admin-product-create/admin-product-create';
 import {AdminOrderDetail} from './admin/admin-order-detail/admin-order-detail';
+import {ResetPassword} from './connection/reset-password/reset-password';
 
 export const routes: Routes = [
   {path:'', component:Landing},
@@ -31,6 +32,7 @@ export const routes: Routes = [
   {path:'category/:id', component: CategoryDetail},
   {path:'contact', component: Contact},
   {path:'login', component: Login},
+  {path:'reset/password', component: ResetPassword},
   {
     path:'user',
     canActivate: [AuthGuard],

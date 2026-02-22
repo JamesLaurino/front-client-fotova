@@ -49,8 +49,7 @@ export class Login
   }
 
   goToForgotPassword(): void {
-    //todo implement forgot password
-    //this.router.navigate(['/forgot-password']);
+    this.#router.navigate(['/reset/password']);
   }
 
   showToast(message: string) {
