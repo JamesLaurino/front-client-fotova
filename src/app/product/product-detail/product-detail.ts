@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, ViewChild} from '@angular/core';
+import {Component, computed, ElementRef, inject, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../../service/interfaces/product-service';
 import {rxResource} from '@angular/core/rxjs-interop';
@@ -13,6 +13,8 @@ import {CartHelper} from '../../helper/cart-helper';
 import cartProductHelper from '../../helper/cart-product-helper';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {I18nService} from '../../service/i18n/i18nService';
+import {LabelModel} from '../../model/label/label-model';
+import {LabelService} from '../../service/label/label-service';
 
 @Component({
   selector: 'app-product-detail',
@@ -33,6 +35,7 @@ export class ProductDetail {
   toasterService = inject(ToasterService)
   cartHelper = inject(CartHelper)
   readonly i18n = inject(I18nService);
+  readonly #labelService = inject(LabelService);
 
   private productId = this.#route.snapshot.params['id'];
   protected readonly urlHelper = urlHelper;
@@ -46,6 +49,22 @@ export class ProductDetail {
         Validators.min(CART_RULES.MIN_QUANTITY)
       ]
     )
+  });
+
+  labels = rxResource({
+    stream: () => {
+      return this.#labelService.getAllLabels()
+        .pipe(
+          map(response => response.data)
+        )
+    }
+  })
+
+  label = computed(() => {
+    const labels = this.labels.value();
+    if (!labels) return undefined;
+
+    return labels.find(label => label.productId === Number(this.productId));
   });
 
   get cartQuantity() : FormControl {

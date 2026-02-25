@@ -40,7 +40,14 @@
 
             <!-- Product Details Section -->
             <div class="col-md-6">
-              <h1 class="card-title text-center text-md-start mb-3"> {{product.value().name}} </h1>
+              @if(i18n.getLanguage() === 'fr') {
+                <h1 class="card-title text-center text-md-start mb-3"> {{ label()?.titleFr ?? product.value().name }}</h1>
+              }
+              @else if(i18n.getLanguage() === 'en') {
+                <h1 class="card-title text-center text-md-start mb-3"> {{ label()?.titleEn ?? product.value().name }}</h1>
+              } @else {
+                <h1 class="card-title text-center text-md-start mb-3"> {{ label()?.titleRu ?? product.value().name }}</h1>
+              }
               <p class="text-muted text-center text-md-start mb-4">
                 {{ i18n.getTranslation('AVAILABLE_IN_STOCK') }} :
                 <span class="fw-bold">{{product.value().quantity}}</span>
@@ -50,7 +57,16 @@
 
               <h5 class="mb-2">{{ i18n.getTranslation('DESCRIPTION') }} :</h5>
               <div>
-                {{product.value()?.description}}
+                @if (i18n.getLanguage() === 'fr') {
+                  {{ label()?.descriptionFr ?? product.value()?.description }}
+                }
+                @else if (i18n.getLanguage() === 'en') {
+                  {{ label()?.descriptionEn ?? product.value()?.description }}
+                }
+                @else {
+                  {{ label()?.descriptionRu ?? product.value()?.description }}
+                }
+
               </div>
 <!--              <div class="collapse" id="collapseDescription">-->
 <!--                <p class="card-text text-secondary">-->
