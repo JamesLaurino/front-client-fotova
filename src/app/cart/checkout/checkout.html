@@ -63,12 +63,24 @@
 
           <div class="summary-line">
             <span>{{ i18n.getTranslation('DELIVERY') }}</span>
-            <span class="free">{{ i18n.getTranslation('FREE') }}</span>
+            @if (clientDetail.value(); as client) {
+              @if (client.address.country === 'RUSSIE') {
+                <span class="free">{{ i18n.getTranslation('FREE') }}</span>
+              } @else {
+                <span class="free">{{ i18n.getTranslation('FEES') | currency:'EUR':'symbol':'1.2-2' }}</span>
+              }
+            }
           </div>
 
           <div class="summary-line summary-total">
             <span>{{ i18n.getTranslation('TOTAL') }}</span>
-            <span class="total-amount">{{ totalPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+            @if (clientDetail.value(); as client) {
+              @if (client.address.country === getConstant().ORDER_FREE_FEES_COUNTRY) {
+                <span class="total-amount">{{ totalPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+              } @else {
+                <span class="total-amount">{{ (totalPrice + getConstant().ORDER_FEES) | currency:'EUR':'symbol':'1.2-2' }}</span>
+              }
+            }
           </div>
 
           <button class="btn-checkout" (click)="processPayment()" [disabled]="isProcessing">

@@ -15,6 +15,7 @@ import {CheckoutService} from '../../service/checkout/checkoutService';
 import {I18nService} from '../../service/i18n/i18nService';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {LabelService} from '../../service/label/label-service';
+import {CheckoutConstant} from '../../service/checkout/checkoutConstant';
 
 @Component({
   selector: 'app-checkout',
@@ -32,6 +33,7 @@ export class Checkout implements OnInit {
   private checkoutService = inject(CheckoutService);
   readonly i18n = inject(I18nService);
   readonly #labelService = inject(LabelService);
+  readonly #checkoutConstant = inject(CheckoutConstant);
 
   cartProducts: CartProduct[] = [];
   totalPrice: number = 0;
@@ -62,6 +64,29 @@ export class Checkout implements OnInit {
   labels = rxResource({
     stream: () => {
       return this.#labelService.getAllLabels()
+        .pipe(
+          map(response => response.data)
+        )
+    }
+  })
+
+  getConstant() {
+    return {
+      ...this.#checkoutConstant
+    }
+  }
+
+  getFees() {
+    if(this.clientDetail.value()?.address.country === this.getConstant().ORDER_FREE_FEES_COUNTRY) {
+      return this.getConstant().ORDER_FREE_FEES;
+    } else {
+      return this.getConstant().ORDER_FEES;
+    }
+  }
+
+  clientDetail = rxResource({
+    stream: () => {
+      return this.userService.getUserInformation()
         .pipe(
           map(response => response.data)
         )
@@ -108,9 +133,11 @@ export class Checkout implements OnInit {
 
     this.isProcessing = true;
 
+    console.log(this.totalPrice + this.getFees());
+
     this.userService.getUserInformation().pipe(
       map((user: ClientResponseApi) => {
-        this.checkoutData.amount = Math.round(this.totalPrice * 100);
+        this.checkoutData.amount = this.totalPrice + this.getFees();
         this.checkoutData.quantity = this.getTotalItems();
         this.checkoutData.currency = 'EUR';
         this.checkoutData.name = user.data.username;
