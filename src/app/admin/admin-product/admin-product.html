@@ -10,6 +10,7 @@
       <th scope="col">{{i18n.getTranslation("CATEGORY")}}</th>
       <th scope="col">{{i18n.getTranslation("IMAGE")}}</th>
       <th scope="col">{{i18n.getTranslation("DETAIL")}}</th>
+      <th scope="col">{{i18n.getTranslation("LABELS")}}</th>
       <th scope="col">{{i18n.getTranslation("DELETE")}}</th>
     </tr>
     </thead>
@@ -29,6 +30,11 @@
           <td>
             <button (click)="goToProductDetail(product.id)" class="btn btn-detail">
               {{i18n.getTranslation("DETAIL")}}
+            </button>
+          </td>
+          <td>
+            <button (click)="goToLabels(product.id)" class="btn btn-detail">
+              {{i18n.getTranslation("LABELS")}}
             </button>
           </td>
           <td>

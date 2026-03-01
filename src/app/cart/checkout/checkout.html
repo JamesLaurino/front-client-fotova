@@ -27,7 +27,17 @@
             </div>
 
             <div class="product-details">
-              <h3 class="product-name">{{ product.name }}</h3>
+              @if (getLabelForCheckout(product.id) != undefined) {
+                @if(i18n.getLanguage() === 'fr') {
+                  <h3 class="product-name">{{ getLabelForCheckout(product.id)?.titleFr }} </h3>
+                } @else if (i18n.getLanguage() === 'en') {
+                  <h3 class="product-name">{{ getLabelForCheckout(product.id)?.titleEn }}</h3>
+                } @else {
+                  <h3 class="product-name">{{ getLabelForCheckout(product.id)?.titleRu }}</h3>
+                }
+              } @else {
+                <h3 class="product-name">{{ product.name }}</h3>
+              }
               <div class="product-info">
                 <span class="product-price">{{ product.price | currency:'EUR':'symbol':'1.2-2' }}</span>
                 <span class="product-quantity">x {{ product.quantity }}</span>

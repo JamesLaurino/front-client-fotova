@@ -1,0 +1,90 @@
+.admin-label-container {
+  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+  background: #ffffff;
+}
+
+h2 {
+  font-weight: 500;
+  color: #343030;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #8c857a;
+  display: block;
+  margin-bottom: 4px;
+}
+
+p {
+  font-size: 0.9rem;
+  color: #343030;
+  margin-bottom: 1rem;
+}
+
+.mat-input-field {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #b8b2a7;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  background: transparent;
+  outline: none;
+  transition: 0.3s;
+  margin-bottom: 1.5rem;
+}
+
+.mat-input-field:focus {
+  border-bottom: 2px solid #c8b38a;
+}
+
+.btn-login-primary {
+  background: #343030;
+  color: #ffffff;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-login-primary:hover {
+  background: #1f1c1c;
+}
+
+.btn-login-secondary {
+  background: transparent;
+  border: 1px solid #343030;
+  color: #343030;
+  padding: 8px 24px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-login-secondary:hover {
+  background: #343030;
+  color: #ffffff;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loading {
+  padding: 2rem;
+  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+  color: #8c857a;
+}

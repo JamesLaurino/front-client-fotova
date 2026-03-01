@@ -21,6 +21,7 @@ import {AdminCategoryDetail} from './admin/admin-category-detail/admin-category-
 import {AdminProductCreate} from './admin/admin-product-create/admin-product-create';
 import {AdminOrderDetail} from './admin/admin-order-detail/admin-order-detail';
 import {ResetPassword} from './connection/reset-password/reset-password';
+import {AdminProductLabel} from './admin/admin-product-label/admin-product-label';
 
 export const routes: Routes = [
   {path:'', component:Landing},
@@ -52,6 +53,11 @@ export const routes: Routes = [
     path:'admin/client/:id',
     canActivate: [AuthGuardAdmin],
     component: AdminClientDetail
+  },
+  {
+    path:'admin/detail/label/:id',
+    canActivate: [AuthGuardAdmin],
+    component: AdminProductLabel
   },
   {
     path:'admin/product/:id',

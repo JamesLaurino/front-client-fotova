@@ -6,6 +6,7 @@ import urlHelper from '../../helper/url-helper';
 import {LowerCasePipe} from "@angular/common";
 import {ProductService} from '../../service/interfaces/product-service';
 import {ToasterService} from '../../service/toaster/toasterService';
+import {LabelService} from '../../service/label/label-service';
 
 @Component({
   selector: 'app-admin-product',
@@ -53,5 +54,9 @@ export class AdminProduct {
         });
       },
     })
+  }
+
+  goToLabels(id: number) {
+    this.#router.navigate(['/admin/detail/label',id]);
   }
 }

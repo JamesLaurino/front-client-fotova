@@ -23,7 +23,17 @@
             style="width: 100px; height: 100px; object-fit: cover;"
           />
         <div class="ms-3">
-          <span class="mb-1 my-1 h4">{{ cart.name }}</span>
+          @if (getLabelForCart(cart.id) != undefined) {
+            @if(i18n.getLanguage() === 'fr') {
+              <span class="mb-1 my-1 h4">{{ getLabelForCart(cart.id)?.titleFr }}</span>
+            } @else if (i18n.getLanguage() === 'en') {
+              <span class="mb-1 my-1 h4">{{ getLabelForCart(cart.id)?.titleEn }}</span>
+            } @else {
+              <span class="mb-1 my-1 h4">{{ getLabelForCart(cart.id)?.titleRu }}</span>
+            }
+          } @else {
+            <span class="mb-1 my-1 h4">{{ cart.name }}</span>
+          }
           <div class="text-muted">{{ i18n.getTranslation('PRICE') }} : {{ cart.price | number:'1.2-2' }} €</div>
           <div class="text-muted">{{ i18n.getTranslation('QUANTITY') }} : {{ cart.quantity }}</div>
 

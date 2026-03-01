@@ -1,0 +1,107 @@
+@if (isLoading()) {
+  <div class="loading">Loading...</div>
+}
+@else {
+
+  @if (label(); as labelData) {
+
+    <div class="admin-label-container">
+
+      <div class="header">
+        <h2>Product Label</h2>
+
+        @if (!isEditMode()) {
+          <button class="btn-login-primary"
+                  (click)="enableEdit()">
+            Edit
+          </button>
+        }
+      </div>
+
+      <!-- VIEW MODE -->
+      @if (!isEditMode()) {
+
+        <div class="label-view">
+          <div class="field">
+            <span class="subtitle">{{ i18n.getTranslation("TITLE_EN") }}</span>
+            <p>{{ labelData.titleEn }}</p>
+          </div>
+
+          <div class="field">
+            <span class="subtitle">{{ i18n.getTranslation("TITLE_FR") }}</span>
+            <p>{{ labelData.titleFr }}</p>
+          </div>
+
+          <div class="field">
+            <span class="subtitle">{{ i18n.getTranslation("TITLE_RU") }}</span>
+            <p>{{ labelData.titleRu }}</p>
+          </div>
+
+          <div class="field">
+            <span class="subtitle">{{ i18n.getTranslation("DESCRIPTION_EN") }}</span>
+            <p>{{ labelData.descriptionEn }}</p>
+          </div>
+
+          <div class="field">
+            <span class="subtitle">{{ i18n.getTranslation("DESCRIPTION_FR") }}</span>
+            <p>{{ labelData.descriptionFr }}</p>
+          </div>
+
+          <div class="field">
+            <span class="subtitle">{{ i18n.getTranslation("DESCRIPTION_RU") }}</span>
+            <p>{{ labelData.descriptionRu }}</p>
+          </div>
+        </div>
+
+      }
+      @else {
+
+        <form [formGroup]="form"
+              (ngSubmit)="submit()"
+              class="label-form">
+
+          <input class="mat-input-field"
+                 formControlName="titleEn"
+                 placeholder="Title EN">
+
+          <input class="mat-input-field"
+                 formControlName="titleFr"
+                 placeholder="Title FR">
+
+          <input class="mat-input-field"
+                 formControlName="titleRu"
+                 placeholder="Title RU">
+
+          <textarea class="mat-input-field"
+                    formControlName="descriptionEn"
+                    placeholder="Description EN"></textarea>
+
+          <textarea class="mat-input-field"
+                    formControlName="descriptionFr"
+                    placeholder="Description FR"></textarea>
+
+          <textarea class="mat-input-field"
+                    formControlName="descriptionRu"
+                    placeholder="Description RU"></textarea>
+
+          <div class="buttons">
+            <button type="submit"
+                    class="btn-login-primary"
+                    [disabled]="form.invalid || isSaving()">
+              @if (isSaving()) { Saving... } @else { Save }
+            </button>
+
+            <button type="button"
+                    class="btn-login-secondary"
+                    (click)="cancelEdit()">
+              Cancel
+            </button>
+          </div>
+
+        </form>
+      }
+
+    </div>
+
+  }
+}

@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {CartService} from '../../service/interfaces/cart-service';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {map, tap} from 'rxjs';
@@ -10,6 +10,7 @@ import {CartHelper} from '../../helper/cart-helper';
 import {I18nService} from '../../service/i18n/i18nService';
 import {LoginHelper} from '../../helper/login-helper';
 import {UserService} from '../../service/user/user-service';
+import {LabelService} from '../../service/label/label-service';
 
 @Component({
   selector: 'app-cart',
@@ -28,6 +29,7 @@ export class Cart
   public loginHelper = inject(LoginHelper)
   readonly i18n = inject(I18nService);
   private userService = inject(UserService);
+  readonly #labelService = inject(LabelService);
   declare bootstrap: any;
 
   carts = rxResource({
@@ -44,6 +46,38 @@ export class Cart
         )
     }
   })
+
+  labels = rxResource({
+    stream: () => {
+      return this.#labelService.getAllLabels()
+        .pipe(
+          map(response => response.data)
+        )
+    }
+  })
+
+  readonly cartsWithLabels = computed(() => {
+    const carts = this.carts.value();
+    const labels = this.labels.value();
+
+    if (!carts || !labels) return [];
+
+    const labelsMap = new Map(
+      labels.map(label => [label.productId, label])
+    );
+
+    return carts.map(cart => ({
+      ...cart,
+      label: labelsMap.get(cart.id)
+    }));
+  });
+
+  getLabelForCart(productId: number) {
+    const labels = this.labels.value();
+    if (!labels) return undefined;
+
+    return labels.find(label => label.productId === productId);
+  }
 
   clientDetail = rxResource({
     stream: () => {

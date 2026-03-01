@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Router} from '@angular/router';
 import {CartService} from '../../service/interfaces/cart-service';
@@ -13,6 +13,8 @@ import {ToasterService} from '../../service/toaster/toasterService';
 import {CheckoutResponseApi} from '../../model/checkout/checkout-response-api';
 import {CheckoutService} from '../../service/checkout/checkoutService';
 import {I18nService} from '../../service/i18n/i18nService';
+import {rxResource} from '@angular/core/rxjs-interop';
+import {LabelService} from '../../service/label/label-service';
 
 @Component({
   selector: 'app-checkout',
@@ -29,6 +31,7 @@ export class Checkout implements OnInit {
   private userService = inject(UserService);
   private checkoutService = inject(CheckoutService);
   readonly i18n = inject(I18nService);
+  readonly #labelService = inject(LabelService);
 
   cartProducts: CartProduct[] = [];
   totalPrice: number = 0;
@@ -54,6 +57,38 @@ export class Checkout implements OnInit {
     this.cartService.getCartTotalPrice().subscribe(total => {
       this.totalPrice = total;
     });
+  }
+
+  labels = rxResource({
+    stream: () => {
+      return this.#labelService.getAllLabels()
+        .pipe(
+          map(response => response.data)
+        )
+    }
+  })
+
+  readonly checkoutWithLabels = computed(() => {
+    const carts = this.cartProducts;
+    const labels = this.labels.value();
+
+    if (!carts || !labels) return [];
+
+    const labelsMap = new Map(
+      labels.map(label => [label.productId, label])
+    );
+
+    return carts.map(cart => ({
+      ...cart,
+      label: labelsMap.get(cart.id)
+    }));
+  });
+
+  getLabelForCheckout(productId: number) {
+    const labels = this.labels.value();
+    if (!labels) return undefined;
+
+    return labels.find(label => label.productId === productId);
   }
 
   getItemTotal(product: CartProduct): number {
@@ -113,7 +148,6 @@ export class Checkout implements OnInit {
     ).subscribe((checkoutResponse: CheckoutResponseApi | null) => {
       this.isProcessing = false;
       if (checkoutResponse && checkoutResponse.data?.sessionUrl) {
-        console.log('Réponse finale du paiement :', checkoutResponse);
         window.location.href = checkoutResponse.data.sessionUrl;
       }
     });
