@@ -64,7 +64,7 @@
           <div class="summary-line">
             <span>{{ i18n.getTranslation('DELIVERY') }}</span>
             @if (clientDetail.value(); as client) {
-              @if (client.address.country === 'RUSSIE') {
+              @if (client.address.country === getConstant().ORDER_FREE_FEES_COUNTRY) {
                 <span class="free">{{ i18n.getTranslation('FREE') }}</span>
               } @else {
                 <span class="free">{{ i18n.getTranslation('FEES') | currency:'EUR':'symbol':'1.2-2' }}</span>

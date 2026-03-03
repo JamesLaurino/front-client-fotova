@@ -44,7 +44,7 @@
 
         @for (countryItem of countries; track countryItem) {
           <option [value]="countryItem">
-            {{ countryItem }}
+            {{ i18n.getTranslation(countryItem) }}
           </option>
         }
 
