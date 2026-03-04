@@ -71,14 +71,14 @@ export class Contact {
               toastTitle: this.i18n.getTranslation('SUCCESS'),
               toastTime: this.i18n.getTranslation('JUST_NOW'),
               toastImageUrl: '/fotova/check.jpg',
-              toastMessage: 'Votre mail a été ajouté avec success'
+              toastMessage: this.i18n.getTranslation('EMAIL_SENT_SUCCESS'),
             })
           } else {
             this.toasterService.show({
               toastTitle: this.i18n.getTranslation('ERROR'),
               toastTime: this.i18n.getTranslation('JUST_NOW'),
               toastImageUrl: '/fotova/error.png',
-              toastMessage: 'Une erreur est survenue lors de l\'envoie de du mail'
+              toastMessage: this.i18n.getTranslation('EMAIL_SENT_ERROR')
             })
           }
         },

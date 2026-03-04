@@ -47,7 +47,7 @@ export class AdminOrder {
           toastTitle: this.i18n.getTranslation('SUCCESS'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: "Order updated with success"
+          toastMessage: this.i18n.getTranslation('ORDER_UPDATED_SUCCESS'),
         })
         this.orderCompleteUpdate.emit();
       },
@@ -56,7 +56,7 @@ export class AdminOrder {
           toastTitle: this.i18n.getTranslation('ERROR'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
-          toastMessage: "Order not updated with success : " + err.error.errorList[0]
+          toastMessage: this.i18n.getTranslation('ORDER_UPDATE_FAILED'),
         })
       }
     })

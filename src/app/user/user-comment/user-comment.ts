@@ -63,14 +63,14 @@ export class UserComment {
             toastTitle: this.i18n.getTranslation("SUCCESS"),
             toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/check.jpg',
-            toastMessage: 'Commentaire ajouté avec success'
+            toastMessage: this.i18n.getTranslation("COMMENT_ADDED_SUCCESS"),
           })
         } else {
           this.toasterService.show({
             toastTitle: this.i18n.getTranslation("ERROR"),
             toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/error.png',
-            toastMessage: 'Une erreur est survenue lors de l\'ajout du commentaire'
+            toastMessage: this.i18n.getTranslation("COMMENT_ADDED_ERROR"),
           })
         }
       },
@@ -80,7 +80,7 @@ export class UserComment {
           toastTitle: this.i18n.getTranslation("ERROR"),
           toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/error.png',
-          toastMessage: message
+          toastMessage: this.i18n.getTranslation("PROCESS_ERROR"),
         })
       }
     });
@@ -93,7 +93,7 @@ export class UserComment {
         toastTitle: this.i18n.getTranslation("SUCCESS"),
         toastTime: this.i18n.getTranslation("JUST_NOW"),
         toastImageUrl: '/fotova/check.jpg',
-        toastMessage: "Commentaire supprimé avec success"
+        toastMessage: this.i18n.getTranslation("COMMENT_DELETED_SUCCESS"),
       })
       this.commentsUpdated.emit();
     })

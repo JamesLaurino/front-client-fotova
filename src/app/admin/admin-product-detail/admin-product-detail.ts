@@ -86,7 +86,7 @@ export class AdminProductDetail {
           toastTitle: this.i18n.getTranslation('SUCCESS'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Produit mis à jour avec succès.'
+          toastMessage: this.i18n.getTranslation('PRODUCT_UPDATED_SUCCESS'),
         });
         this.step = 'images';
       },
@@ -95,7 +95,7 @@ export class AdminProductDetail {
           toastTitle: this.i18n.getTranslation('ERROR'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
-          toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
+          toastMessage: this.i18n.getTranslation('UNKNOWN_ERROR')
         });
       }
     });
@@ -156,7 +156,7 @@ export class AdminProductDetail {
           toastTitle: this.i18n.getTranslation('SUCCESS'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Image téléversée avec succès.'
+          toastMessage: this.i18n.getTranslation('IMAGE_UPLOADED_SUCCESS')
         });
         this.productResource.reload();
         this.removeFileBox(index);
@@ -166,7 +166,7 @@ export class AdminProductDetail {
           toastTitle: this.i18n.getTranslation('ERROR'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
-          toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
+          toastMessage:  this.i18n.getTranslation('UNKNOWN_ERROR')
         });
       }
     });
@@ -204,7 +204,7 @@ export class AdminProductDetail {
           toastTitle: this.i18n.getTranslation('SUCCESS'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Image du produit mise à jour avec succès.'
+          toastMessage: this.i18n.getTranslation('PRODUCT_IMAGE_UPDATED_SUCCESS')
         });
         this.productResource.reload();
       },
@@ -213,7 +213,7 @@ export class AdminProductDetail {
           toastTitle: this.i18n.getTranslation('ERROR'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
-          toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
+          toastMessage: this.i18n.getTranslation('UNKNOWN_ERROR')
         });
       }
     });
@@ -228,7 +228,7 @@ export class AdminProductDetail {
             toastTitle: this.i18n.getTranslation('SUCCESS'),
             toastTime: this.i18n.getTranslation('JUST_NOW'),
             toastImageUrl: '/fotova/check.jpg',
-            toastMessage: 'Image du produit mise à jour avec succès.'
+            toastMessage: this.i18n.getTranslation('PRODUCT_IMAGE_UPDATED_SUCCESS'),
           });
           this.productResource.reload();
         },
@@ -237,7 +237,7 @@ export class AdminProductDetail {
             toastTitle: this.i18n.getTranslation('ERROR'),
             toastTime: this.i18n.getTranslation('JUST_NOW'),
             toastImageUrl: '/fotova/error.png',
-            toastMessage: `Erreur: ${err.error?.errorList?.[0] || 'inconnue'}`
+            toastMessage:  this.i18n.getTranslation('UNKNOWN_ERROR')
           });
         }
       })

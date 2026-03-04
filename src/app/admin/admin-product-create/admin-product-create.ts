@@ -116,7 +116,7 @@ export class AdminProductCreate {
         toastTitle: this.i18n.getTranslation("SUCCESS"),
         toastTime: this.i18n.getTranslation("JUST_NOW"),
         toastImageUrl: '/fotova/check.jpg',
-        toastMessage: 'Produit créé et images téléversées avec succès.'
+        toastMessage:  this.i18n.getTranslation("PRODUCT_CREATED_WITH_IMAGES_SUCCESS"),
       });
       this.#router.navigate(['/admin']);
     }
@@ -153,7 +153,7 @@ export class AdminProductCreate {
             toastTitle: this.i18n.getTranslation("ERROR"),
             toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/error.png',
-            toastMessage: "Produit et images n'ont pas pu être téléversée"
+            toastMessage: this.i18n.getTranslation("PRODUCT_CREATION_FAILED")
           });
         }
       })
@@ -234,7 +234,7 @@ export class AdminProductCreate {
           toastTitle: this.i18n.getTranslation("SUCCESS"),
           toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Image uploadée et produit mis à jour.'
+          toastMessage: this.i18n.getTranslation("PRODUCT_IMAGE_UPDATED_SUCCESS")
         });
         this.removeFileBox(index);
       },
@@ -244,7 +244,7 @@ export class AdminProductCreate {
           toastTitle: this.i18n.getTranslation("ERROR"),
           toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/error.png',
-          toastMessage: `Erreur : ${error.error?.errorList?.[0] || 'Une erreur inconnue est survenue.'}`
+          toastMessage: this.i18n.getTranslation("UNKNOWN_ERROR")
         });
       }
     });

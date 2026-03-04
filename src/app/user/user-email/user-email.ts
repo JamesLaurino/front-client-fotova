@@ -60,7 +60,7 @@ export class UserEmail {
             toastTitle: this.i18n.getTranslation('SUCCESS'),
             toastTime: this.i18n.getTranslation('JUST_NOW'),
             toastImageUrl: '/fotova/check.jpg',
-            toastMessage: 'Email send with success'
+            toastMessage: this.i18n.getTranslation('EMAIL_SENT_SUCCESS'),
           })
           this.resetForm();
         } else {
@@ -68,7 +68,7 @@ export class UserEmail {
             toastTitle: this.i18n.getTranslation('ERROR'),
             toastTime: this.i18n.getTranslation('JUST_NOW'),
             toastImageUrl: '/fotova/error.png',
-            toastMessage: 'Une erreur est survenue lors de l\'envoie du mail veuillez tenter plus tard'
+            toastMessage: this.i18n.getTranslation('EMAIL_SENT_ERROR')
           })
         }
       },

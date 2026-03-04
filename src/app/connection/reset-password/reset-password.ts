@@ -69,13 +69,13 @@ export class ResetPassword {
       next: (response: ResetApiResponse) => {
         if (response.responseCode === 200) {
           this.toasterService.show({
-            toastMessage: "Un email vient de vous être envoyé en vue de la modification de votre mot de passe",
+            toastMessage: this.i18n.getTranslation("PASSWORD_RESET_EMAIL_SENT"),
             toastTitle:this.i18n.getTranslation("SUCCESS"),
             toastImageUrl :'/fotova/check.jpg',
             toastTime : this.i18n.getTranslation("JUST_NOW"),
           });
         } else {
-          this.showToast(response.responseMessage || 'Erreur survenue');
+          this.showToast(this.i18n.getTranslation("UNKNOWN_ERROR"));
         }
       },
       error: (error: any) => {

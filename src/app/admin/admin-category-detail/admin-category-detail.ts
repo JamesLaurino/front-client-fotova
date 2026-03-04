@@ -61,7 +61,7 @@ export class AdminCategoryDetail {
             toastTitle: this.i18n.getTranslation("SUCCESS"),
             toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/check.jpg',
-            toastMessage: 'Mise à jour de la catégorie effectuée avec succès.'
+            toastMessage: this.i18n.getTranslation("CATEGORY_UPDATED_SUCCESS"),
           });
         },
         error: (err) => {
@@ -69,7 +69,7 @@ export class AdminCategoryDetail {
             toastTitle: this.i18n.getTranslation("ERROR"),
             toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/error.png',
-            toastMessage: 'Echec de la mise à jour de la catégorie : ' + err.error.errorList[0]
+            toastMessage: this.i18n.getTranslation("CATEGORY_UPDATE_FAILED")
           });
         },
       });

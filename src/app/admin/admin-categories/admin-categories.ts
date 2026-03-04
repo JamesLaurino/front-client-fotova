@@ -63,7 +63,7 @@ export class AdminCategories {
               toastTitle: this.i18n.getTranslation("SUCCESS"),
               toastTime: this.i18n.getTranslation("JUST_NOW"),
               toastImageUrl: '/fotova/check.jpg',
-              toastMessage: 'Catégorie supprimée avec success.'
+              toastMessage: this.i18n.getTranslation("CATEGORY_DELETED_SUCCESS"),
             });
             this.categoryDeleted.emit();
           },
@@ -72,7 +72,7 @@ export class AdminCategories {
               toastTitle: this.i18n.getTranslation("ERROR"),
               toastTime: this.i18n.getTranslation("JUST_NOW"),
               toastImageUrl: '/fotova/error.png',
-              toastMessage: 'Echec de la suppression de la catégorie : ' + err.error.errorList[0]
+              toastMessage: this.i18n.getTranslation("CATEGORY_DELETION_FAILED"),
             });
           },
         })

@@ -42,7 +42,7 @@ export class AdminClientDetail {
           toastTitle: this.i18n.getTranslation('SUCCESS'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: "Commentaire supprimé avec success"
+          toastMessage: this.i18n.getTranslation('COMMENT_DELETED_SUCCESS'),
         })
         this.clientDetail.reload();
       })
@@ -57,7 +57,7 @@ export class AdminClientDetail {
           toastTitle: this.i18n.getTranslation('SUCCESS'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: "Client supprimé avec success"
+          toastMessage: this.i18n.getTranslation('CATEGORY_DELETION_FAILED'),
         })
         this.router.navigate(['/admin']);
       })

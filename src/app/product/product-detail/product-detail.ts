@@ -95,7 +95,7 @@ export class ProductDetail {
     this.cartHelper.cartsQuantity.update((n:number) => n + Number(this.cartQuantity.value));
 
     this.toasterService.show({
-      toastMessage: "Produit ajouté au panier !",
+      toastMessage: this.i18n.getTranslation('PRODUCT_ADDED_TO_CART'),
       toastTitle:this.i18n.getTranslation('SUCCESS'),
       toastImageUrl :'/fotova/check.jpg',
       toastTime : this.i18n.getTranslation('JUST_NOW'),

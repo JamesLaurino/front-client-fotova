@@ -70,7 +70,7 @@ export class Register {
             toastTitle: this.i18n.getTranslation('SUCCESS'),
             toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/check.jpg',
-            toastMessage: "Un email vous a été envoyé pour valider votre compte."
+            toastMessage: this.i18n.getTranslation('ACCOUNT_VALIDATION_EMAIL_SENT'),
           });
             this.#router.navigate(['/login']);
         } else {
@@ -78,7 +78,7 @@ export class Register {
             toastTitle: this.i18n.getTranslation("ERROR"),
             toastTime: this.i18n.getTranslation("JUST_NOW"),
             toastImageUrl: '/fotova/error.png',
-            toastMessage: "Une erreur s'est produite lors de l'inscription."
+            toastMessage: this.i18n.getTranslation('REGISTRATION_ERROR'),
           });
         }
       },
@@ -88,7 +88,7 @@ export class Register {
           toastTitle: this.i18n.getTranslation("ERROR"),
           toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/error.png',
-          toastMessage: "Une erreur s'est produite lors de l'inscription : " + message
+          toastMessage: this.i18n.getTranslation('REGISTRATION_ERROR'),
         });
       }
     });

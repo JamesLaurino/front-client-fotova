@@ -41,7 +41,7 @@ export class AdminProduct {
           toastTitle: this.i18n.getTranslation('SUCCESS'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Produit supprimé avec success.'
+          toastMessage: this.i18n.getTranslation('PRODUCT_DELETED_SUCCESS')
         });
         this.productDeleted.emit(id);
       },
@@ -50,7 +50,7 @@ export class AdminProduct {
           toastTitle: this.i18n.getTranslation('ERROR'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.jpg',
-          toastMessage: "Le produit n'a pas pu être supprimé."
+          toastMessage: this.i18n.getTranslation('PRODUCT_DELETION_FAILED')
         });
       },
     })

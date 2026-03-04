@@ -86,7 +86,7 @@ export class AdminProductLabel {
           toastTitle: this.i18n.getTranslation('SUCCESS'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Labels updated successfully'
+          toastMessage: this.i18n.getTranslation('LABELS_UPDATE_SUCCESS')
         });
       },
       error: () => {
@@ -96,7 +96,7 @@ export class AdminProductLabel {
           toastTitle: this.i18n.getTranslation('ERROR'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.jpg',
-          toastMessage: 'Labels update has failed'
+          toastMessage: this.i18n.getTranslation('LABELS_UPDATE_FAILED')
         });
       }
     });

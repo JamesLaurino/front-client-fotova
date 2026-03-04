@@ -93,7 +93,7 @@ export class UserEdit implements OnInit
           toastTitle: this.i18n.getTranslation('SUCCESS'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Adresse ajoutée avec success.'
+          toastMessage: this.i18n.getTranslation('ADDRESS_ADDED_SUCCESS'),
         });
       },
       error: (error) => {
@@ -101,7 +101,7 @@ export class UserEdit implements OnInit
           toastTitle: this.i18n.getTranslation('ERROR'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
-          toastMessage: "Une erreur est survenue lors de l'ajout de l'adresse."
+          toastMessage: this.i18n.getTranslation('ADDRESS_ADDED_ERROR'),
         });
       }
       })
@@ -115,7 +115,7 @@ export class UserEdit implements OnInit
           toastTitle: this.i18n.getTranslation('SUCCESS'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Mise à jour effectuée avec succès.'
+          toastMessage: this.i18n.getTranslation('UPDATE_SUCCESS'),
         });
       },
       error: (error) => {
@@ -123,7 +123,7 @@ export class UserEdit implements OnInit
           toastTitle: this.i18n.getTranslation('ERROR'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
           toastImageUrl: '/fotova/error.png',
-          toastMessage: 'La mise à jour échouée.'
+          toastMessage: this.i18n.getTranslation('UPDATE_FAILED'),
         });
       }
     });

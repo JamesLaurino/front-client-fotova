@@ -55,7 +55,7 @@ export class Login
   showToast(message: string) {
     this.toasterService.show({
       toastMessage: message,
-      toastTitle:this.i18n.getTranslation('ERROR'),
+      toastTitle: this.i18n.getTranslation('ERROR'),
       toastImageUrl :'/fotova/error.png',
       toastTime :this.i18n.getTranslation('JUST_NOW'),
     });
@@ -75,12 +75,12 @@ export class Login
           this.loginService.isLogged();
           this.#router.navigate(['/products']);
         } else {
-          this.showToast(response.responseMessage || 'Erreur survenue');
+          this.showToast(this.i18n.getTranslation('UNKNOWN_ERROR'));
         }
       },
       error: (error: any) => {
-        const message = error.error.errorList[0]
-        this.showToast(message);
+        //const message = error.error.errorList[0]
+        this.showToast(this.i18n.getTranslation('UNKNOWN_ERROR'));
       }
     });
   }

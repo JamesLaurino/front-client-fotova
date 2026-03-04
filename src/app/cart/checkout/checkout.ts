@@ -154,21 +154,20 @@ export class Checkout implements OnInit {
       ),
       tap((checkoutResponse: CheckoutResponseApi) => {
         this.toasterService.show({
-          toastTitle: 'Checkout success',
-          toastTime: 'il y a 1 min',
+          toastTitle: this.i18n.getTranslation("SUCCESS"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/check.jpg',
-          toastMessage: 'Le processus de redirection a bien été effectué. ' +
-            'Dans quelques secondes vous serez redirigé vers stripe'
+          toastMessage: this.i18n.getTranslation("STRIPE_REDIRECTION_SUCCESS"),
         });
       }),
       catchError(error => {
         console.error('Erreur lors du paiement', error);
         this.isProcessing = false;
         this.toasterService.show({
-          toastTitle: 'Checkout Error',
-          toastTime: 'il y a 1 min',
+          toastTitle: this.i18n.getTranslation("SUCCESS"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/error.png',
-          toastMessage: 'Une erreur est survenue pendant le processus'
+          toastMessage: this.i18n.getTranslation("PROCESS_ERROR"),
         });
         return of(null);
       })
