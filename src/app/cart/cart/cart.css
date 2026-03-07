@@ -56,3 +56,131 @@
   font-size: 36px;
   color: #dc3545;
 }
+
+/* BTN STYLE */
+
+.btn-confirm-order {
+  background: transparent;
+  border: 1px solid #343030;
+  color: #343030;
+
+  border-radius: 30px;
+  padding: 10px 20px;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+
+  transition: all 0.25s ease;
+}
+
+/* hover */
+
+.btn-confirm-order:hover {
+  background: #343030;
+  color: #ffffff;
+  border-color: #343030;
+}
+
+/* click */
+
+.btn-confirm-order:active {
+  transform: scale(0.98);
+}
+
+/* focus accessibility */
+
+.btn-confirm-order:focus {
+  box-shadow: 0 0 0 0.2rem rgba(52,48,48,0.25);
+}
+
+.btn-go-shopping {
+  background: transparent;
+  border: 1px solid rgba(52,48,48,0.25);
+  color: #343030;
+
+  border-radius: 30px;
+  padding: 10px 20px;
+
+  font-size: 0.9rem;
+  font-weight: 400;
+
+  transition: all 0.25s ease;
+}
+
+/* hover */
+
+.btn-go-shopping:hover {
+  background: rgba(52,48,48,0.05);
+  border-color: #343030;
+  color: #343030;
+}
+
+/* click */
+
+.btn-go-shopping:active {
+  transform: scale(0.98);
+}
+
+/* focus */
+
+.btn-go-shopping:focus {
+  box-shadow: 0 0 0 0.2rem rgba(52,48,48,0.2);
+}
+
+
+/* CANCEL */
+
+.btn-light {
+  background: transparent;
+  border: 1px solid rgba(52,48,48,0.2);
+  color: #343030;
+
+  border-radius: 30px;
+  font-weight: 400;
+
+  transition: all 0.25s ease;
+}
+
+.btn-light:hover {
+  background: rgba(52,48,48,0.05);
+  border-color: rgba(52,48,48,0.35);
+  color: #343030;
+}
+
+/* CONFIRM ORDER */
+
+.btn-confirm-modern {
+  background: #343030;
+  border: 1px solid #343030;
+  color: white;
+
+  border-radius: 30px;
+  font-weight: 500;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  letter-spacing: 0.4px;
+
+  transition: all 0.25s ease;
+}
+
+.btn-confirm-modern:hover {
+  background: #2a2626;
+  border-color: #2a2626;
+  transform: translateY(-1px);
+}
+
+.btn-confirm-modern:active {
+  transform: scale(0.98);
+}
+
+/* disabled (important pour Angular) */
+
+.btn-confirm-modern:disabled {
+  background: #e6e3e3;
+  border-color: #e6e3e3;
+  color: #9a9696;
+  cursor: not-allowed;
+}

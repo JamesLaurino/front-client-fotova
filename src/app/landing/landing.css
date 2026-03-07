@@ -12,18 +12,34 @@
 }
 
 /* Boutons */
-.btn-detail {
-  background-color: #c8b38a;
-  color: #343030;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 2px solid #c8b38a;
-  transition: all 0.3s ease;
+
+.btn-login-primary {
+  background: #343030;
+  color: #ffffff;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.btn-detail:hover {
-  background-color: #343030;
-  color: #c8b38a;
-  transform: scale(1.05);
+.btn-login-primary:hover {
+  background: #1f1c1c;
 }
+
+/*.btn-detail {*/
+/*  background-color: #c8b38a;*/
+/*  color: #343030;*/
+/*  font-weight: 600;*/
+/*  padding: 6px 12px;*/
+/*  border-radius: 8px;*/
+/*  border: 2px solid #c8b38a;*/
+/*  transition: all 0.3s ease;*/
+/*}*/
+
+/*.btn-detail:hover {*/
+/*  background-color: #343030;*/
+/*  color: #c8b38a;*/
+/*  transform: scale(1.05);*/
+/*}*/

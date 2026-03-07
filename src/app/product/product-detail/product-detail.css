@@ -1,11 +1,11 @@
  /* Boutons */
 .btn-detail {
-  background-color: #ab9562;
-  color: #222020;
+  background: #423c32;
+  color: #ffffff;
   font-weight: 600;
   padding: 6px 12px;
   border-radius: 8px;
-  border: 2px solid #c8b38a;
+  /*border: 2px solid #c8b38a;*/
   transition: all 0.3s ease;
 }
 
