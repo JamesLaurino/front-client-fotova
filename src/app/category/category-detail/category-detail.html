@@ -6,18 +6,44 @@
   </div>
 }
 
-<div class="container mt-5 mb-5">
-  <div class="row">
+<div class="container products-luxury-container">
+  <div class="row justify-content-center">
+
     @for (product of products.value(); track product.id)
     {
-      <div (click)="goToProductDetail(product.id)" class="col-lg-4 col-md-6 col-sm-12 mb-3" style="cursor: pointer;">
-        <div class="container d-flex justify-content-center flex-column" style="width:350px">
-          <span appProductBorder class="shadow p-3 h-75">
-            <p class="text-center"> <strong> {{product.name}} </strong> </p>
-            <img class="mx-5 mb-3" [src]="urlHelper(product.url)" [alt]="product.name" width="200px" height="200px">
+      <div
+        (click)="goToProductDetail(product.id)"
+        class="col-xl-4 col-lg-4 col-md-6 col-sm-12 product-wrapper"
+      >
+
+        <div class="product-card">
+
+          <span appProductBorder class="product-border">
+            <div class="product-image-wrapper">
+              <img
+                class="product-image"
+                [src]="urlHelper(product.url)"
+                [alt]="product.name">
+            </div>
+            <p class="product-title">
+              @if (i18n.getLanguage() === 'fr') {
+                <strong>
+                  {{ labelsByProductId().get(product.id)?.titleFr ?? product.name }}
+                </strong>
+              } @else if (i18n.getLanguage() === 'en') {
+                <strong>
+                  {{ labelsByProductId().get(product.id)?.titleEn ?? product.name }}
+                </strong>
+              } @else {
+                <strong>
+                  {{ labelsByProductId().get(product.id)?.titleRu ?? product.name }}
+                </strong>
+              }
+            </p>
           </span>
         </div>
       </div>
     }
+
   </div>
 </div>

@@ -132,7 +132,7 @@
 
 .product-price {
   font-weight: 600;
-  color: #007bff;
+  color: #402d2b;
 }
 
 .product-quantity {
@@ -183,7 +183,7 @@
 }
 
 .total-amount {
-  color: #007bff;
+  color: #666144;
   font-size: 1.4rem;
   font-weight: bold;
 }

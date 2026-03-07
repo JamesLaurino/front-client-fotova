@@ -12,7 +12,7 @@ import {I18nService} from '../../service/i18n/i18nService';
     ProductBorderDirective
   ],
   templateUrl: './category-list.html',
-  styleUrls: []
+  styleUrls: ['./category-list.css']
 })
 export class CategoryList {
   readonly #categoryService = inject(CategoryService)

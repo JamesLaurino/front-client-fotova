@@ -2,52 +2,107 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
 }
 
 a {
   cursor: pointer;
+  text-decoration: none;
 }
 
-.sidebar {
-  position: fixed;
-  margin-top: 62px;
+/* USER NAVBAR */
+
+.user-navbar {
+  position: sticky;
   top: 0;
-  left: 0;
-  height: 100vh;
-  width: 150px;
-  background-color: #f8f9fa;
-  border-right: 1px solid #dee2e6;
-  padding: 1rem;
+  z-index: 100;
+
+  height: 70px;
+
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 2rem;
+
+  background: #ffffff;
+  border-bottom: 1px solid #dee2e6;
 }
 
-.sidebar h5 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
+/* welcome */
+
+.welcome {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #343030;
 }
 
-.sidebar .nav-link {
-  color: #333;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.375rem;
-  transition: background-color 0.2s;
+/* navigation */
+
+.user-nav {
+  display: flex;
+  gap: 1.2rem;
 }
 
-.sidebar .nav-link:hover {
-  background-color: #e9ecef;
+.nav-item {
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+
+  color: #343030;
+
+  padding: 8px 14px;
+  border-radius: 20px;
+
+  transition: all 0.2s ease;
 }
 
-.sidebar-footer {
-  margin-bottom: 100px;
-  margin-top: auto;
-  border-top: 1px solid #dee2e6;
-  padding-top: 1rem;
-  font-size: 0.875rem;
+.nav-item.active {
+  background: #343030;
+  color: white;
 }
+
+.nav-item:hover {
+  background: #f1f1f1;
+  color: #000;
+}
+
+/* underline hover (subtle UX) */
+
+.nav-item::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 0%;
+  margin-top: 4px;
+  background: #343030;
+  transition: width 0.2s ease;
+}
+
+.nav-item:hover::after {
+  width: 100%;
+}
+
+/* logout */
+
+.logout {
+  font-size: 0.85rem;
+  color: #343030;
+
+  border: 1px solid #343030;
+  padding: 6px 16px;
+  border-radius: 20px;
+
+  transition: 0.2s;
+}
+
+.logout:hover {
+  background: #343030;
+  color: #ffffff;
+}
+
+/* main content */
 
 .main-content {
-  margin-left: 260px;
   padding: 2rem;
 }

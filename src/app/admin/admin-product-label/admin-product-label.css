@@ -1,27 +1,79 @@
 .admin-label-container {
   font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-  padding: 2rem;
+  padding: 3rem;
   background: #ffffff;
+  display: flex;
+  justify-content: center;
+}
+
+.label-card {
+  width: 100%;
+  max-width: 900px;
+  border: 1px solid #ece8e1;
+  border-radius: 12px;
+  padding: 2.5rem;
+  background: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
 }
 
 h2 {
   font-weight: 500;
   color: #343030;
+  margin-bottom: 4px;
+}
+
+h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #343030;
 }
 
 .subtitle {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #8c857a;
-  display: block;
-  margin-bottom: 4px;
+}
+
+.label-view {
+  display: grid;
+  gap: 2rem;
+}
+
+.language-block {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee9e2;
+}
+
+.field {
+  margin-bottom: 1rem;
 }
 
 p {
   font-size: 0.9rem;
   color: #343030;
-  margin-bottom: 1rem;
+  margin-top: 4px;
+}
+
+.label-form {
+  margin-top: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
 }
 
 .mat-input-field {
@@ -36,8 +88,19 @@ p {
   margin-bottom: 1.5rem;
 }
 
+textarea.mat-input-field {
+  min-height: 80px;
+  resize: vertical;
+}
+
 .mat-input-field:focus {
   border-bottom: 2px solid #c8b38a;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .btn-login-primary {
@@ -71,20 +134,8 @@ p {
   color: #ffffff;
 }
 
-.buttons {
+.loading-container {
   display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.loading {
-  padding: 2rem;
-  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-  color: #8c857a;
+  justify-content: center;
+  padding: 3rem;
 }

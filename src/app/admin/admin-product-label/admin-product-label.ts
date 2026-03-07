@@ -1,27 +1,26 @@
 import {Component, computed, effect, inject, signal} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {I18nService} from '../../service/i18n/i18nService';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
 import {LabelService} from '../../service/label/label-service';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'app-admin-product-label',
   imports: [
     ReactiveFormsModule,
-    JsonPipe
   ],
   templateUrl: './admin-product-label.html',
-  styleUrl: './admin-product-label.css'
+  styleUrls: ['admin-product-label.css']
 })
 export class AdminProductLabel {
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
   private readonly labelService = inject(LabelService);
   private readonly toaster = inject(ToasterService);
+  readonly #router = inject(Router);
   protected readonly i18n = inject(I18nService);
 
   private readonly productId = Number(this.route.snapshot.paramMap.get('id'));
@@ -100,5 +99,9 @@ export class AdminProductLabel {
         });
       }
     });
+  }
+
+  backToLabel() {
+    this.#router.navigate(['/admin'],{queryParams:{active:'products'}});
   }
 }

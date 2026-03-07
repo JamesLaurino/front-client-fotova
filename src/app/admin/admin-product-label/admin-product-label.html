@@ -1,5 +1,9 @@
 @if (isLoading()) {
-  <div class="loading">Loading...</div>
+  <div class="loading-container">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">{{ i18n.getTranslation('LOADING') }}</span>
+    </div>
+  </div>
 }
 @else {
 
@@ -7,101 +11,150 @@
 
     <div class="admin-label-container">
 
-      <div class="header">
-        <h2>Product Label</h2>
+      <div class="label-card">
 
-        @if (!isEditMode()) {
-          <button class="btn-login-primary"
-                  (click)="enableEdit()">
-            Edit
-          </button>
-        }
-      </div>
-
-      <!-- VIEW MODE -->
-      @if (!isEditMode()) {
-
-        <div class="label-view">
-          <div class="field">
-            <span class="subtitle">{{ i18n.getTranslation("TITLE_EN") }}</span>
-            <p>{{ labelData.titleEn }}</p>
+        <div class="header">
+          <div>
+            <h2>{{ i18n.getTranslation("PRODUCT_LABEL") }}</h2>
+            <span class="subtitle">{{ i18n.getTranslation("PRODUCT_INFORMATION") }}</span>
           </div>
 
-          <div class="field">
-            <span class="subtitle">{{ i18n.getTranslation("TITLE_FR") }}</span>
-            <p>{{ labelData.titleFr }}</p>
-          </div>
+          <div class="header-actions">
+            @if (!isEditMode()) {
+              <button class="btn-login-primary"
+                      (click)="enableEdit()">
+                {{ i18n.getTranslation("EDIT") }}
+              </button>
+            }
 
-          <div class="field">
-            <span class="subtitle">{{ i18n.getTranslation("TITLE_RU") }}</span>
-            <p>{{ labelData.titleRu }}</p>
-          </div>
-
-          <div class="field">
-            <span class="subtitle">{{ i18n.getTranslation("DESCRIPTION_EN") }}</span>
-            <p>{{ labelData.descriptionEn }}</p>
-          </div>
-
-          <div class="field">
-            <span class="subtitle">{{ i18n.getTranslation("DESCRIPTION_FR") }}</span>
-            <p>{{ labelData.descriptionFr }}</p>
-          </div>
-
-          <div class="field">
-            <span class="subtitle">{{ i18n.getTranslation("DESCRIPTION_RU") }}</span>
-            <p>{{ labelData.descriptionRu }}</p>
+            <button class="btn-login-secondary"
+                    (click)="backToLabel()">
+              {{ i18n.getTranslation("BACK_TO_PANEL") }}
+            </button>
           </div>
         </div>
 
-      }
-      @else {
 
-        <form [formGroup]="form"
-              (ngSubmit)="submit()"
-              class="label-form">
+        <!-- VIEW MODE -->
+        @if (!isEditMode()) {
 
-          <input class="mat-input-field"
-                 formControlName="titleEn"
-                 placeholder="Title EN">
+          <div class="label-view">
 
-          <input class="mat-input-field"
-                 formControlName="titleFr"
-                 placeholder="Title FR">
+            <div class="language-block">
+              <h3>English</h3>
 
-          <input class="mat-input-field"
-                 formControlName="titleRu"
-                 placeholder="Title RU">
+              <div class="field">
+                <span class="subtitle">{{ i18n.getTranslation("TITLE_EN") }}</span>
+                <p>{{ labelData.titleEn }}</p>
+              </div>
 
-          <textarea class="mat-input-field"
-                    formControlName="descriptionEn"
-                    placeholder="Description EN"></textarea>
+              <div class="field">
+                <span class="subtitle">{{ i18n.getTranslation("DESCRIPTION_EN") }}</span>
+                <p>{{ labelData.descriptionEn }}</p>
+              </div>
+            </div>
 
-          <textarea class="mat-input-field"
-                    formControlName="descriptionFr"
-                    placeholder="Description FR"></textarea>
+            <div class="language-block">
+              <h3>Français</h3>
 
-          <textarea class="mat-input-field"
-                    formControlName="descriptionRu"
-                    placeholder="Description RU"></textarea>
+              <div class="field">
+                <span class="subtitle">{{ i18n.getTranslation("TITLE_FR") }}</span>
+                <p>{{ labelData.titleFr }}</p>
+              </div>
 
-          <div class="buttons">
-            <button type="submit"
-                    class="btn-login-primary"
-                    [disabled]="form.invalid || isSaving()">
-              @if (isSaving()) { Saving... } @else { Save }
-            </button>
+              <div class="field">
+                <span class="subtitle">{{ i18n.getTranslation("DESCRIPTION_FR") }}</span>
+                <p>{{ labelData.descriptionFr }}</p>
+              </div>
+            </div>
 
-            <button type="button"
-                    class="btn-login-secondary"
-                    (click)="cancelEdit()">
-              Cancel
-            </button>
+            <div class="language-block">
+              <h3>Русский</h3>
+
+              <div class="field">
+                <span class="subtitle">{{ i18n.getTranslation("TITLE_RU") }}</span>
+                <p>{{ labelData.titleRu }}</p>
+              </div>
+
+              <div class="field">
+                <span class="subtitle">{{ i18n.getTranslation("DESCRIPTION_RU") }}</span>
+                <p>{{ labelData.descriptionRu }}</p>
+              </div>
+            </div>
+
           </div>
 
-        </form>
-      }
+        }
+        @else {
 
+          <form [formGroup]="form"
+                (ngSubmit)="submit()"
+                class="label-form">
+
+            <div class="form-grid">
+
+              <div class="language-block">
+                <h3>English</h3>
+
+                <input class="mat-input-field"
+                       formControlName="titleEn"
+                       placeholder="Title EN">
+
+                <textarea class="mat-input-field"
+                          formControlName="descriptionEn"
+                          placeholder="Description EN"></textarea>
+              </div>
+
+
+              <div class="language-block">
+                <h3>Français</h3>
+
+                <input class="mat-input-field"
+                       formControlName="titleFr"
+                       placeholder="Title FR">
+
+                <textarea class="mat-input-field"
+                          formControlName="descriptionFr"
+                          placeholder="Description FR"></textarea>
+              </div>
+
+
+              <div class="language-block">
+                <h3>Русский</h3>
+
+                <input class="mat-input-field"
+                       formControlName="titleRu"
+                       placeholder="Title RU">
+
+                <textarea class="mat-input-field"
+                          formControlName="descriptionRu"
+                          placeholder="Description RU"></textarea>
+              </div>
+
+            </div>
+
+            <div class="buttons">
+              <button type="submit"
+                      class="btn-login-primary"
+                      [disabled]="form.invalid || isSaving()">
+                @if (isSaving()) {
+                  <div class="loading-container">
+                    <div class="spinner-border text-success" role="status">
+                      <span class="visually-hidden">{{ i18n.getTranslation('LOADING') }}</span>
+                    </div>
+                  </div>
+                } @else { {{ i18n.getTranslation("SAVE") }} }
+              </button>
+
+              <button type="button"
+                      class="btn-login-secondary"
+                      (click)="cancelEdit()">
+                {{ i18n.getTranslation("CANCEL") }}
+              </button>
+            </div>
+          </form>
+        }
+      </div>
     </div>
-
   }
 }
