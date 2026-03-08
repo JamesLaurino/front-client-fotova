@@ -1,7 +1,7 @@
 import {Component, computed, inject} from '@angular/core';
 import {CartService} from '../../service/interfaces/cart-service';
 import {rxResource} from '@angular/core/rxjs-interop';
-import {map, tap} from 'rxjs';
+import {catchError, map, of, tap} from 'rxjs';
 import {DecimalPipe} from '@angular/common';
 import urlHelper from '../../helper/url-helper';
 import {CartProduct} from '../../model/cart/cart-product';
@@ -83,7 +83,11 @@ export class Cart
     stream: () => {
       return this.userService.getUserInformation()
         .pipe(
-          map(response => response.data)
+          map(response => response.data),
+          catchError(error => {
+            console.error('Error while loading user information', error);
+            return of(null);
+          })
         )
     }
   })
