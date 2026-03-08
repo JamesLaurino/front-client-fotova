@@ -94,7 +94,7 @@ export class AdminProductLabel {
         this.toaster.show({
           toastTitle: this.i18n.getTranslation('ERROR'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
-          toastImageUrl: '/fotova/error.jpg',
+          toastImageUrl: '/fotova/error.png',
           toastMessage: this.i18n.getTranslation('LABELS_UPDATE_FAILED')
         });
       }

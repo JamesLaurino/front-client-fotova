@@ -49,7 +49,7 @@ export class AdminProduct {
         this.toasterService.show({
           toastTitle: this.i18n.getTranslation('ERROR'),
           toastTime: this.i18n.getTranslation('JUST_NOW'),
-          toastImageUrl: '/fotova/error.jpg',
+          toastImageUrl: '/fotova/error.png',
           toastMessage: this.i18n.getTranslation('PRODUCT_DELETION_FAILED')
         });
       },
