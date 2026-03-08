@@ -1,31 +1,46 @@
 import {CartService} from '../interfaces/cart-service';
 import {CartProduct} from '../../model/cart/cart-product';
-import {Observable, of} from 'rxjs';
+import {map, Observable, of} from 'rxjs';
+import {inject} from '@angular/core';
+import {ProductService} from '../interfaces/product-service';
+import {ProductModel} from '../../model/product/product-model';
 
 export class CartServiceStorageImpl implements CartService
 {
 
+  readonly #productService = inject(ProductService)
+
   getCarts(): Observable<CartProduct[]> {
 
-    const result:CartProduct[] = [];
+    return this.#productService.getAllProducts().pipe(
+      map(response => response.data),
+      map(products => {
 
-    for (let i = 0; i < localStorage.length; i++)
-    {
-      const key = localStorage.key(i);
-      if (!key || key === "token") continue;
+        const result: CartProduct[] = [];
 
-      const data = localStorage.getItem(key);
-      try {
-        if (data) {
-          const parsed = JSON.parse(data);
-            result.push(parsed);
+        for (let i = 0; i < localStorage.length; i++) {
+
+          const key = localStorage.key(i);
+          if (!key || key === "token") continue;
+
+          const productExists = products.some(p => p.name === key);
+          if (!productExists) continue;
+
+          const data = localStorage.getItem(key);
+
+          try {
+            if (data) {
+              const parsed = JSON.parse(data);
+              result.push(parsed);
+            }
+          } catch {
+            continue;
+          }
         }
-      } catch (e) {
-        continue;
-      }
-    }
 
-    return of(result);
+        return result;
+      })
+    );
   }
 
   clearCart(key:string):void{
