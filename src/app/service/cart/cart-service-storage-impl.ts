@@ -3,7 +3,6 @@ import {CartProduct} from '../../model/cart/cart-product';
 import {map, Observable, of} from 'rxjs';
 import {inject} from '@angular/core';
 import {ProductService} from '../interfaces/product-service';
-import {ProductModel} from '../../model/product/product-model';
 
 export class CartServiceStorageImpl implements CartService
 {
