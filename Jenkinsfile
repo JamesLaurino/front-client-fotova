@@ -29,7 +29,7 @@ pipeline {
             steps {
                 sh 'rm -r /var/www/fotova-app/dist'
 
-                sh 'cp dist /var/www/fotova-app/'
+                sh 'cp -r dist /var/www/fotova-app/'
             }
         }
 
