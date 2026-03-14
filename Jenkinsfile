@@ -27,9 +27,9 @@ pipeline {
 
         stage('Deploy to Nginx') {
             steps {
-                sh 'rm -r /var/www/angular-app/dist'
+                sh 'rm -r /var/www/fotova-app/dist'
 
-                sh 'cp dist /var/www/angular-app/'
+                sh 'cp dist /var/www/fotova-app/'
             }
         }
 
