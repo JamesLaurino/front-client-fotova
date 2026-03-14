@@ -21,7 +21,7 @@ pipeline {
 
         stage('Build Angular') {
             steps {
-                sh 'ng build'
+                sh 'npx ng build'
             }
         }
 
