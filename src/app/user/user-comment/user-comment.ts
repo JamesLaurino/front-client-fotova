@@ -14,6 +14,7 @@ import {I18nService} from '../../service/i18n/i18nService';
     DatePipe,
     ReactiveFormsModule
   ],
+  styleUrls: ['./user-comment.css'],
   templateUrl: './user-comment.html'
 })
 export class UserComment {

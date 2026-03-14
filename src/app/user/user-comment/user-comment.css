@@ -1,0 +1,14 @@
+.btn-login-primary {
+  background: #343030;
+  color: #ffffff;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-login-primary:hover {
+  background: #1f1c1c;
+}
