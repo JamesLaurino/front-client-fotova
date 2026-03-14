@@ -1,5 +1,5 @@
-<div class="container my-5">
-  <table class="table table-orders">
+<div class="container my-4 shadow p-2 rounded">
+  <table class="table table-products">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -33,7 +33,7 @@
             }
           </td>
           <td>
-            <button (click)="goToOrderDetail(order.id,order.client.email)" class="btn btn-detail me-2">
+            <button (click)="goToOrderDetail(order.id,order.client.email)" class="btn btn-view me-2">
               {{i18n.getTranslation("SHOW")}}
             </button>
             @if (order.isDone) {

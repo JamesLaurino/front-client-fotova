@@ -1,5 +1,5 @@
-<div class="container my-5">
-  <table class="table table-categories">
+<div class="container my-4 shadow p-2 rounded">
+  <table class="table table-products">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -17,7 +17,7 @@
           <td>{{ category.id }}</td>
           <td>{{ category.name }}</td>
           <td>
-            <button (click)="goToCategoryDetail(category.id)" class="btn btn-detail">
+            <button (click)="goToCategoryDetail(category.id)" class="btn btn-view">
               {{i18n.getTranslation("EDIT")}}
             </button>
           </td>
@@ -33,8 +33,8 @@
 </div>
 
 @if(!isDisplayForm()) {
-  <div class="container d-flex mt-3 justify-content-start">
-    <button (click)="displayCategoryForm()" class="btn btn-create">
+  <div class="container d-flex mt-4 justify-content-start">
+    <button (click)="displayCategoryForm()" class="btn-create">
       {{i18n.getTranslation("CREATE")}}
       {{i18n.getTranslation("CATEGORY") | lowercase}}
     </button>

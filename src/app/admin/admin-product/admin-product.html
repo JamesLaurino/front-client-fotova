@@ -1,4 +1,4 @@
-<div class="container my-5">
+<div class="container my-4 shadow p-2 rounded">
   <table class="table table-products">
     <thead>
     <tr>
@@ -9,9 +9,7 @@
       <th scope="col">{{i18n.getTranslation("QUANTITY")}}</th>
       <th scope="col">{{i18n.getTranslation("CATEGORY")}}</th>
       <th scope="col">{{i18n.getTranslation("IMAGE")}}</th>
-      <th scope="col">{{i18n.getTranslation("DETAIL")}}</th>
-      <th scope="col">{{i18n.getTranslation("LABELS")}}</th>
-      <th scope="col">{{i18n.getTranslation("DELETE")}}</th>
+      <th scope="col">{{i18n.getTranslation("ACTIONS")}}</th>
     </tr>
     </thead>
     <tbody>
@@ -28,12 +26,12 @@
             <img [src]="urlHelper(product.url)" [alt]="product.name" class="product-img">
           </td>
           <td>
-            <button (click)="goToProductDetail(product.id)" class="btn btn-detail">
+            <button (click)="goToProductDetail(product.id)" class="btn btn-view">
               {{i18n.getTranslation("DETAIL")}}
             </button>
           </td>
           <td>
-            <button (click)="goToLabels(product.id)" class="btn btn-detail">
+            <button (click)="goToLabels(product.id)" class="btn btn-labels">
               {{i18n.getTranslation("LABELS")}}
             </button>
           </td>
@@ -48,8 +46,8 @@
   </table>
 </div>
 
-<div class="container d-flex mt-3 justify-content-start">
-  <button (click)="createProduct()" class="btn btn-create">
+<div class="container d-flex mt-4 justify-content-start">
+  <button (click)="createProduct()" class="btn-create">
     {{i18n.getTranslation("CREATE")}}
     {{i18n.getTranslation("PRODUCT") | lowercase}}
   </button>

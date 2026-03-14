@@ -1,5 +1,5 @@
-<div class="container my-5">
-  <table class="table table-custom">
+<div class="container my-4 shadow p-2 rounded">
+  <table class="table table-products">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -21,7 +21,7 @@
             <td>{{ client.address.city }}</td>
             <td>{{ client.commentEntities.length }}</td>
             <td>
-              <button (click)="goToClientDetail(client.id)" class="btn btn-detail">
+              <button (click)="goToClientDetail(client.id)" class="btn btn-view">
                 {{i18n.getTranslation("DETAIL")}}
               </button>
             </td>

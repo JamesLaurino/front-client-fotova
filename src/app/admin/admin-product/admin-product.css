@@ -1,101 +1,132 @@
-.table-products {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background-color: #f7f5f2; /* fond beige cashmere */
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+/* colonne actions */
+.table-products tbody tr:hover td {
+  background-color: #e6dece;
+  transition: background-color 0.2s ease;
 }
 
-/* En-têtes */
-.table-products thead th {
-  background-color: #222221; /* cashmere */
-  color: #ffffff;
-  font-weight: 600;
-  text-align: center;
-  padding: 12px 15px;
+/* boutons actions */
+
+.btn-action{
+  display:inline-block;
+  margin:0 4px;
+  border:none;
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.25s ease;
+}
+/* boutons actions */
+
+.btn-action{
+  border:none;
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:600;
+  transition:all 0.25s ease;
 }
 
-/* Lignes */
-.table-products tbody tr {
-  background-color: #fff;
-  transition: background-color 0.3s ease;
+/* view */
+
+.btn-view{
+  background:#e8e3d7;
+  color:#343030;
 }
 
-.table-products tbody tr:nth-child(even) {
-  background-color: #f5f0e8;
+.btn-view:hover{
+  background:#d6c9a6;
 }
 
-.table-products tbody tr:hover {
-  background-color: #e6d9b8;
-  cursor: pointer;
+/* labels */
+
+.btn-labels{
+  background:#c8b38a;
+  color:#343030;
 }
 
-/* Cellules */
-.table-products td, .table-products th {
-  padding: 10px 12px;
-  text-align: center;
-  vertical-align: middle;
-  border: none;
+.btn-labels:hover{
+  background:#b59c6f;
 }
 
-/* Images produits */
+/* delete */
+
+.btn-delete{
+  background:#343030;
+  color:#fff;
+}
+
+.btn-delete:hover{
+  background:#8b2d2d;
+}
+
+/* nom produit plus visible */
+
+.product-name{
+  font-weight:600;
+}
+
+/* prix */
+
+.price{
+  font-weight:600;
+  color:#8b6d3b;
+}
+
 .product-img {
   width: 50px;
   height: 50px;
+  min-width: 50px;
+  min-height: 50px;
+
   object-fit: cover;
   border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+  display: block;
+  margin: auto;
+
+  border: 1px solid #e0e0e0;
+  background: #fafafa;
 }
 
-/* Boutons détail */
-.btn-detail {
-  background-color: #c8b38a;
-  color: #343030;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 2px solid #c8b38a;
-  transition: all 0.3s ease;
+.table-products td:nth-child(7) {
+  width: 70px;
 }
 
-.btn-detail:hover {
-  background-color: #343030;
-  color: #c8b38a;
-  transform: scale(1.05);
-}
+/* Bouton e-commerce premium */
 
-/* Boutons delete */
-.btn-delete {
-  background-color: #343030;
-  color: #c8b38a;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 2px solid #c8b38a;
-  transition: all 0.3s ease;
-}
-
-.btn-delete:hover {
-  background-color: #c8b38a;
-  color: #343030;
-  transform: scale(1.05);
-}
-
-/* Bouton create */
 .btn-create {
-  background-color: transparent;
-  border: 2px solid #c8b38a;
-  color: #c8b38a;
+  display: inline-block;
+  cursor: pointer;
   font-weight: 600;
-  padding: 10px 20px;
-  border-radius: 10px;
+  font-size: 15px;
+  color: #fff;
+
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: none;
+
+  /* Dégradé type e-commerce */
+  background: linear-gradient(135deg, #493112, #4b4133);
+
+  /* Ombre pour donner du relief */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+
+  /* Transition pour hover */
   transition: all 0.3s ease;
 }
 
-.btn-create:hover {
-  background-color: #c8b38a;
-  color: #343030;
-  transform: scale(1.05);
+/* Hover et focus */
+.btn-create:hover,
+.btn-create:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, #463013, #34312a);
+}
+
+/* Optionnel : effet active (clic) */
+.btn-create:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }

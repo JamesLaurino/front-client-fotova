@@ -1,44 +1,12 @@
-/* Table style premium */
-.table-orders {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background-color: #f7f5f2; /* beige cashmere */
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+/* hover ligne table */
+
+.table-products tbody tr:hover td {
+  background-color: #e6dece;
+  transition: background-color 0.2s ease;
 }
 
-.table-orders thead th {
-  background-color: #222221; /* cashmere */
-  color: #ffffff;
-  font-weight: 600;
-  text-align: center;
-  padding: 12px 15px;
-}
+/* status icons */
 
-.table-orders tbody tr {
-  background-color: #fff;
-  transition: background-color 0.3s ease;
-}
-
-.table-orders tbody tr:nth-child(even) {
-  background-color: #f5f0e8;
-}
-
-.table-orders tbody tr:hover {
-  background-color: #e6d9b8;
-  cursor: pointer;
-}
-
-.table-orders td, .table-orders th {
-  padding: 10px 12px;
-  text-align: center;
-  vertical-align: middle;
-  border: none;
-}
-
-/* Status icons */
 .status-icon {
   width: 40px;
   height: 40px;
@@ -49,50 +17,49 @@
   height: 25px;
 }
 
-/* Boutons */
-.btn-detail {
-  background-color: #c8b38a;
-  color: #343030;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 2px solid #c8b38a;
-  transition: all 0.3s ease;
+/* boutons admin */
+
+.btn-action{
+  display:inline-block;
+  margin:0 4px;
+  border:none;
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.25s ease;
 }
 
-.btn-detail:hover {
-  background-color: #343030;
-  color: #c8b38a;
-  transform: scale(1.05);
+/* bouton view */
+
+.btn-view{
+  background:#e8e3d7;
+  color:#343030;
 }
 
-.btn-complete {
-  background-color: #26a69a; /* vert stylé */
-  color: #fff;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 2px solid #26a69a;
-  transition: all 0.3s ease;
+.btn-view:hover{
+  background:#d6c9a6;
 }
 
-.btn-complete:hover {
-  background-color: #1e8573;
-  transform: scale(1.05);
+/* bouton complete */
+
+.btn-complete{
+  background:#c8b38a;
+  color:#343030;
 }
 
-.btn-uncomplete {
-  background-color: #343030;
-  color: #c8b38a;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 2px solid #c8b38a;
-  transition: all 0.3s ease;
+.btn-complete:hover{
+  background:#b59c6f;
 }
 
-.btn-uncomplete:hover {
-  background-color: #c8b38a;
-  color: #343030;
-  transform: scale(1.05);
+/* bouton uncomplete */
+
+.btn-uncomplete{
+  background:#343030;
+  color:#fff;
+}
+
+.btn-uncomplete:hover{
+  background:#8b2d2d;
 }

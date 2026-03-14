@@ -1,88 +1,74 @@
-/* Table style premium */
-.table-categories {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background-color: #f7f5f2; /* beige cashmere */
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+/* hover ligne table */
+
+.table-products tbody tr:hover td {
+  background-color: #e6dece;
+  transition: background-color 0.2s ease;
 }
 
-.table-categories thead th {
-  background-color: #222221; /* cashmere */
-  color: #ffffff;
-  font-weight: 600;
-  text-align: center;
-  padding: 12px 15px;
+/* boutons actions */
+
+.btn-action{
+  display:inline-block;
+  margin:0 4px;
+  border:none;
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.25s ease;
 }
 
-.table-categories tbody tr {
-  background-color: #fff;
-  transition: background-color 0.3s ease;
+/* bouton view */
+
+.btn-view{
+  background:#e8e3d7;
+  color:#343030;
 }
 
-.table-categories tbody tr:nth-child(even) {
-  background-color: #f5f0e8;
+.btn-view:hover{
+  background:#d6c9a6;
 }
 
-.table-categories tbody tr:hover {
-  background-color: #e6d9b8;
-  cursor: pointer;
+/* bouton delete */
+
+.btn-delete{
+  background:#343030;
+  color:#fff;
 }
 
-.table-categories td, .table-categories th {
-  padding: 10px 12px;
-  text-align: center;
-  vertical-align: middle;
-  border: none;
+.btn-delete:hover{
+  background:#8b2d2d;
 }
 
-/* Boutons */
-.btn-detail {
-  background-color: #c8b38a;
-  color: #343030;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 2px solid #c8b38a;
-  transition: all 0.3s ease;
-}
-
-.btn-detail:hover {
-  background-color: #343030;
-  color: #c8b38a;
-  transform: scale(1.05);
-}
-
-.btn-delete {
-  background-color: #343030;
-  color: #c8b38a;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 2px solid #c8b38a;
-  transition: all 0.3s ease;
-}
-
-.btn-delete:hover {
-  background-color: #c8b38a;
-  color: #343030;
-  transform: scale(1.05);
-}
+/* bouton create admin */
 
 .btn-create {
-  background-color: transparent;
-  border: 2px solid #c8b38a;
-  color: #c8b38a;
+  display: inline-block;
+  cursor: pointer;
   font-weight: 600;
-  padding: 10px 20px;
-  border-radius: 10px;
+  font-size: 15px;
+  color: #fff;
+
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: none;
+
+  background: linear-gradient(135deg, #493112, #4b4133);
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+
   transition: all 0.3s ease;
 }
 
-.btn-create:hover {
-  background-color: #c8b38a;
-  color: #343030;
-  transform: scale(1.05);
+.btn-create:hover,
+.btn-create:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, #463013, #34312a);
+}
+
+.btn-create:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
