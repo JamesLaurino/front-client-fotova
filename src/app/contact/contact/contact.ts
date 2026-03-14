@@ -9,7 +9,8 @@ import {I18nService} from '../../service/i18n/i18nService';
 @Component({
   selector: 'app-contact',
   imports: [ReactiveFormsModule],
-  templateUrl: './contact.html'
+  templateUrl: './contact.html',
+  styleUrls: ['./contact.css']
 })
 export class Contact {
 

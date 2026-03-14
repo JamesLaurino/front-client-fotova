@@ -1,6 +1,6 @@
 @if (isLoading()) {
   <div class="loading-container">
-    <div class="spinner-border text-success" role="status">
+    <div class="spinner-border big-spinner me-2 my-4" role="status">
       <span class="visually-hidden">{{ i18n.getTranslation('LOADING') }}</span>
     </div>
   </div>
@@ -139,7 +139,7 @@
                       [disabled]="form.invalid || isSaving()">
                 @if (isSaving()) {
                   <div class="loading-container">
-                    <div class="spinner-border text-success" role="status">
+                    <div class="spinner-border big-spinner me-2 my-4" role="status">
                       <span class="visually-hidden">{{ i18n.getTranslation('LOADING') }}</span>
                     </div>
                   </div>

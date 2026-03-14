@@ -97,6 +97,14 @@ textarea.mat-input-field {
   border-bottom: 2px solid #c8b38a;
 }
 
+/* SPINNER */
+.big-spinner {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3rem;
+  color: #2a2626;
+}
+
 .buttons {
   display: flex;
   gap: 1rem;

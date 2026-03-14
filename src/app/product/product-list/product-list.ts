@@ -15,7 +15,7 @@ import {LabelModel} from '../../model/label/label-model';
     ProductBorderDirective
   ],
   templateUrl: './product-list.html',
-  styles: ''
+  styleUrls: ['./product-list.css']
 })
 export class ProductList
 {

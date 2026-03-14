@@ -14,6 +14,7 @@ import {CommentService} from '../../service/comment/commentService';
     NgClass,
     DatePipe
   ],
+  styleUrls: ['./admin-client-detail.css'],
   templateUrl: './admin-client-detail.html'
 })
 export class AdminClientDetail {

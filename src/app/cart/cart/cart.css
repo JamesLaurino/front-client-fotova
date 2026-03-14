@@ -7,6 +7,14 @@
   padding: 10px;
 }
 
+/* SPINNER */
+.big-spinner {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3rem;
+  color: #2a2626;
+}
+
 .address-card-modern {
   display: flex;
   align-items: center;
