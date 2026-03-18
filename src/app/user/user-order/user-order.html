@@ -59,7 +59,13 @@
             <tbody>
               @for (item of selectedOrder; track item) {
                 <tr class="order-row">
-                  <td>{{ item.name }}</td>
+                  @if(i18n.getLanguage() === 'fr') {
+                    <td>{{ getLabelForOrder(item.name)?.titleFr }} </td>
+                  } @else if (i18n.getLanguage() === 'en') {
+                    <td>{{ getLabelForOrder(item.name)?.titleEn }}</td>
+                  } @else {
+                    <td>{{ getLabelForOrder(item.name)?.titleRu }}</td>
+                  }
                   <td class="text-center">{{ item.quantity }}</td>
                   <td class="text-end">
                     {{ item.price | currency:'EUR' }}
