@@ -16,6 +16,20 @@ export class UserOrder {
   userOrdersInput:InputSignal<OrderModel[] | undefined> = input.required<OrderModel[] | undefined>();
   readonly i18n = inject(I18nService);
 
+  getOrderTotal(order: any[]): number {
+    return order.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  }
+
+  selectedOrder: any[] | null = null;
+
+  openOrder(order: any[]) {
+    this.selectedOrder = order;
+  }
+
+  closeModal() {
+    this.selectedOrder = null;
+  }
+
   ordersOrdered = computed(() => {
     let myMap = new Map<number, OrderModel[]>();
     this.userOrdersInput()?.forEach(order => {

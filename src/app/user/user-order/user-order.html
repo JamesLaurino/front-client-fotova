@@ -1,35 +1,83 @@
 <div class="container my-5">
-  <div class="row">
+  <div class="row g-4">
     @for (order of ordersOrdered(); track order) {
-      <div class="col-12 col-md-6 col-lg-4 mb-4" style="min-width: 300px">
-        <div class="card h-100 shadow-sm">
-          <div class="card-header bg-secondary text-white d-flex justify-content-between">
-            <strong>Commande #{{ order[0].orderId }}</strong>
-            <span>{{ order[0].creationDate | date: 'dd/mm/yyyy' }}</span>
+      <div class="col-12 col-md-6 col-xl-4">
+
+        <div class="card order-card cursor-pointer"
+             (click)="openOrder(order)">
+
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <strong>{{ i18n.getTranslation('ORDERS') }} #{{ order[0].orderId }}</strong>
+              <span>{{ order[0].creationDate | date:'dd/MM/yyyy' }}</span>
+            </div>
+
+            <div class="mt-2 text-muted small">
+              {{ order.length }} {{ i18n.getTranslation('PRODUCTS') }}
+            </div>
           </div>
 
-          <div class="card-body p-0">
-            <table class="table mb-0">
-              <thead class="table-light">
-              <tr>
-                <th>{{ i18n.getTranslation('NAME') }}</th>
-                <th>{{ i18n.getTranslation('QTY') }}</th>
-                <th>{{ i18n.getTranslation('PRICE') }}</th>
-              </tr>
-              </thead>
-              <tbody>
-                @for (item of order; track item) {
-                  <tr>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.price | currency:'EUR' }}</td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
         </div>
+
       </div>
     }
   </div>
 </div>
+
+@if (selectedOrder) {
+  <div class="custom-modal-backdrop" (click)="closeModal()">
+
+    <div class="custom-modal" (click)="$event.stopPropagation()">
+      <!-- CLOSE -->
+      <button class="close-btn" (click)="closeModal()">×</button>
+
+      <!-- CARD PREMIUM -->
+      <div class="card order-card">
+
+        <div class="card-header order-header d-flex justify-content-between">
+          <div>
+            <div class="order-id">
+              {{ i18n.getTranslation('ORDERS') }} #{{ selectedOrder[0].orderId }}
+            </div>
+            <div class="order-date">
+              {{ selectedOrder[0].creationDate | date:'dd/MM/yyyy' }}
+            </div>
+          </div>
+          <span class="badge status-badge">{{ i18n.getTranslation('CONFIRM_ORDER') }}</span>
+        </div>
+
+        <div class="card-body p-0">
+          <table class="table order-table mb-0">
+            <thead>
+            <tr>
+              <th>{{ i18n.getTranslation('NAME') }}</th>
+              <th class="text-center">{{ i18n.getTranslation('QTY') }}</th>
+              <th class="text-end">{{ i18n.getTranslation('PRICE') }}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+              @for (item of selectedOrder; track item) {
+                <tr class="order-row">
+                  <td>{{ item.name }}</td>
+                  <td class="text-center">{{ item.quantity }}</td>
+                  <td class="text-end">
+                    {{ item.price | currency:'EUR' }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card-footer text-end">
+          {{ i18n.getTranslation('TOTAL') }} :
+          <strong>
+            {{ getOrderTotal(selectedOrder) | currency:'EUR' }}
+          </strong>
+        </div>
+      </div>
+
+    </div>
+  </div>
+}
