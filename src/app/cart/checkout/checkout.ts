@@ -16,6 +16,7 @@ import {I18nService} from '../../service/i18n/i18nService';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {LabelService} from '../../service/label/label-service';
 import {CheckoutConstant} from '../../service/checkout/checkoutConstant';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -34,6 +35,9 @@ export class Checkout implements OnInit {
   readonly i18n = inject(I18nService);
   readonly #labelService = inject(LabelService);
   readonly #checkoutConstant = inject(CheckoutConstant);
+  public isProduction = environment.production;
+
+  protected readonly environment = environment;
 
   cartProducts: CartProduct[] = [];
   totalPrice: number = 0;
@@ -128,6 +132,58 @@ export class Checkout implements OnInit {
     this.router.navigate(['/products']);
   }
 
+  processPaymentMock(): void {
+    if (this.cartProducts.length === 0) return;
+
+    this.isProcessing = true;
+
+    console.log(this.totalPrice + this.getFees());
+
+    this.userService.getUserInformation().pipe(
+      map((user: ClientResponseApi) => {
+        this.checkoutData.amount = this.totalPrice + this.getFees();
+        this.checkoutData.quantity = this.getTotalItems();
+        this.checkoutData.currency = 'EUR';
+        this.checkoutData.name = user.data.username;
+        this.checkoutData.email = user.data.email;
+        this.checkoutData.productBasket = this.cartProducts.map(product => ({
+          productId: product.id,
+          quantity: product.quantity
+        } as ProductBasket));
+
+        return this.checkoutData; // on passe checkoutData au switchMap
+      }),
+      switchMap((checkoutData: CheckoutModel) =>
+        this.checkoutService.processCheckout(checkoutData)
+      ),
+      tap((checkoutResponse: CheckoutResponseApi) => {
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation("SUCCESS"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: this.i18n.getTranslation("STRIPE_REDIRECTION_SUCCESS"),
+        });
+          this.cartService.clearAllStorage();
+          window.location.reload();
+      }),
+      catchError(error => {
+        this.isProcessing = false;
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation("SUCCESS"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: this.i18n.getTranslation("STRIPE_REDIRECTION_SUCCESS"),
+        });
+          this.cartService.clearAllStorage();
+          window.location.reload();
+        return of(null);
+      })
+    ).subscribe((checkoutResponse: CheckoutResponseApi | null) => {
+        this.cartService.clearAllStorage();
+      window.location.reload();
+    });
+  }
+
   processPayment(): void {
     if (this.cartProducts.length === 0) return;
 
@@ -164,7 +220,7 @@ export class Checkout implements OnInit {
         console.error('Erreur lors du paiement', error);
         this.isProcessing = false;
         this.toasterService.show({
-          toastTitle: this.i18n.getTranslation("SUCCESS"),
+          toastTitle: this.i18n.getTranslation("ERROR"),
           toastTime: this.i18n.getTranslation("JUST_NOW"),
           toastImageUrl: '/fotova/error.png',
           toastMessage: this.i18n.getTranslation("PROCESS_ERROR"),

@@ -9,6 +9,16 @@ export class CartServiceStorageImpl implements CartService
 
   readonly #productService = inject(ProductService)
 
+  clearAllStorage(): void {
+    const token = localStorage.getItem('token');
+
+    localStorage.clear();
+
+    if (token !== null) {
+      localStorage.setItem('token', token);
+    }
+  }
+
   getCarts(): Observable<CartProduct[]> {
 
     return this.#productService.getAllProducts().pipe(
