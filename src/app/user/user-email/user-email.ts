@@ -42,7 +42,6 @@ export class UserEmail {
   }
 
   onSubmit(): void {
-    if (this.form.invalid) return;
 
     const emailPayload: ClientEmail = {
       nom: this.form.value.nom!,
