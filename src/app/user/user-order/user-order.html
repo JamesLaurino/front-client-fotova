@@ -1,28 +1,37 @@
-<div class="container my-5">
-  <div class="row g-4">
-    @for (order of ordersOrdered(); track order) {
-      <div class="col-12 col-md-6 col-xl-4">
+@if (ordersOrdered().length === 0) {
+  <div class="container my-5">
+    <div class="alert alert-secondary custom text-center" role="alert">
+      {{ i18n.getTranslation('NO_ORDERS_FOUND') }}
+    </div>
+  </div>
+}
+@else {
+  <div class="container my-5">
+    <div class="row g-4">
+      @for (order of ordersOrdered(); track order) {
+        <div class="col-12 col-md-6 col-xl-4">
 
-        <div class="card order-card cursor-pointer"
-             (click)="openOrder(order)">
+          <div class="card order-card cursor-pointer"
+               (click)="openOrder(order)">
 
-          <div class="card-body">
-            <div class="d-flex justify-content-between">
-              <strong>{{ i18n.getTranslation('ORDERS') }} #{{ order[0].orderId }}</strong>
-              <span>{{ order[0].creationDate | date:'dd/MM/yyyy' }}</span>
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <strong>{{ i18n.getTranslation('ORDERS') }} #{{ order[0].orderId }}</strong>
+                <span>{{ order[0].creationDate | date:'dd/MM/yyyy' }}</span>
+              </div>
+
+              <div class="mt-2 text-muted small">
+                {{ order.length }} {{ i18n.getTranslation('PRODUCTS') }}
+              </div>
             </div>
 
-            <div class="mt-2 text-muted small">
-              {{ order.length }} {{ i18n.getTranslation('PRODUCTS') }}
-            </div>
           </div>
 
         </div>
-
-      </div>
-    }
+      }
+    </div>
   </div>
-</div>
+}
 
 @if (selectedOrder) {
   <div class="custom-modal-backdrop" (click)="closeModal()">
