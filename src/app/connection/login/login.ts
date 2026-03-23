@@ -75,12 +75,11 @@ export class Login
           this.loginService.isLogged();
           this.#router.navigate(['/products']);
         } else {
-          this.showToast(this.i18n.getTranslation('UNKNOWN_ERROR'));
+          this.showToast(this.i18n.getTranslation('LOGIN_PASSWORD_ERROR'));
         }
       },
       error: (error: any) => {
-        //const message = error.error.errorList[0]
-        this.showToast(this.i18n.getTranslation('UNKNOWN_ERROR'));
+        this.showToast(this.i18n.getTranslation('LOGIN_PASSWORD_ERROR'));
       }
     });
   }
