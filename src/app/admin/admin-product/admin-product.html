@@ -31,6 +31,11 @@
             </button>
           </td>
           <td>
+            <button (click)="goToProductUpdate(product.id)" class="btn btn-view">
+              {{i18n.getTranslation("UPDATE")}}
+            </button>
+          </td>
+          <td>
             <button (click)="goToLabels(product.id)" class="btn btn-labels">
               {{i18n.getTranslation("LABELS")}}
             </button>

@@ -1,0 +1,254 @@
+import {Component, computed, effect, inject} from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from '@angular/router';
+import {ProductService} from '../../service/interfaces/product-service';
+import {ToasterService} from '../../service/toaster/toasterService';
+import {FileService} from '../../service/file/fileService';
+import {I18nService} from '../../service/i18n/i18nService';
+import {rxResource} from '@angular/core/rxjs-interop';
+import {finalize, map, switchMap} from 'rxjs';
+import {ProductUpdate} from '../../model/product/product-update';
+import {ProductModel} from '../../model/product/product-model';
+import urlHelper from '../../helper/url-helper';
+import imageHelper from '../../helper/image-helper';
+
+@Component({
+  selector: 'app-admin-product-update',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule
+    ],
+  templateUrl: './admin-product-update.html',
+  styleUrl: './admin-product-update.css'
+})
+export class AdminProductUpdate {
+  private readonly route = inject(ActivatedRoute);
+  private readonly productService = inject(ProductService);
+  private readonly toasterService = inject(ToasterService);
+  private readonly fileService = inject(FileService);
+  private readonly router = inject(Router);
+  readonly i18n = inject(I18nService);
+
+  private productId = this.route.snapshot.paramMap.get('id');
+  protected readonly urlHelper = urlHelper;
+  protected readonly String = String;
+  protected readonly Number = Number;
+  protected readonly imageHelper = imageHelper;
+
+
+  productResource = rxResource({
+    stream: () => this.productService.getProductById(Number(this.productId)).pipe(
+      map(response => response.data)
+    )
+  });
+
+  product = computed(() => this.productResource.value());
+
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    quantity: new FormControl(0, [Validators.required]),
+    description : new FormControl('', [Validators.required]),
+    price: new FormControl(0, [Validators.required]),
+  });
+
+  step: 'form' | 'images' = 'form';
+  fileBoxes: FileBox[] = [{ file: undefined, uploading: false, isDragging: false }];
+
+  constructor() {
+    effect(() => {
+      const p = this.product();
+      if (p) {
+        this.form.patchValue(p);
+
+      }
+    });
+  }
+
+  get name() { return this.form.get('name') as FormControl; }
+  get quantity() { return this.form.get('quantity') as FormControl; }
+  get price() { return this.form.get('price') as FormControl; }
+  get description() { return this.form.get('description') as FormControl; }
+
+  updateProduct() {
+    if (this.form.invalid || !this.product()) return;
+
+    const currentProduct = this.product()!;
+    const formValue = this.form.value;
+
+    const productUpdate: ProductUpdate = {
+      id: currentProduct.id,
+      name: formValue.name ?? currentProduct.name,
+      price: formValue.price ?? currentProduct.price,
+      quantity: formValue.quantity ?? currentProduct.quantity,
+      description: formValue.description ?? currentProduct.description,
+      url: currentProduct.url,
+      categoryInnerProductDto: currentProduct.categoryInnerProductDto
+    };
+
+    this.productService.updateProduct(productUpdate).subscribe({
+      next: () => {
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: this.i18n.getTranslation('PRODUCT_UPDATED_SUCCESS'),
+        });
+        this.step = 'images';
+      },
+      error: (err) => {
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
+          toastImageUrl: '/fotova/error.png',
+          toastMessage: this.i18n.getTranslation('UNKNOWN_ERROR')
+        });
+      }
+    });
+  }
+
+  addFileBox() {
+    this.fileBoxes.push({ file: undefined, uploading: false, isDragging: false });
+  }
+
+  removeFileBox(index: number) {
+    this.fileBoxes.splice(index, 1);
+    if (this.fileBoxes.length === 0) {
+      this.fileBoxes.push({ file: undefined, uploading: false, isDragging: false });
+    }
+  }
+
+  onFileDrop(event: DragEvent, index: number) {
+    event.preventDefault();
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      this.fileBoxes[index].file = files[0];
+      this.fileBoxes[index].isDragging = false;
+    }
+  }
+
+  onFileSelect(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.fileBoxes[index].file = input.files[0];
+    }
+  }
+
+  uploadFile(index: number) {
+    const box = this.fileBoxes[index];
+    const currentProduct = this.product();
+    if (!box.file || !currentProduct) return;
+
+    box.uploading = true;
+
+    const formData = new FormData();
+    formData.append('file', box.file, box.file.name);
+
+    this.fileService.uploadFile(formData).pipe(
+      switchMap(() => {
+        if (index === 0) {
+          const updatedProduct: ProductModel = { ...currentProduct, url: box.file!.name };
+          return this.productService.updateProduct(updatedProduct);
+        } else {
+          return this.fileService.linkImageToProduct(currentProduct.id, box.file!.name);
+        }
+      }),
+      finalize(() => {
+        box.uploading = false;
+      })
+    ).subscribe({
+      next: () => {
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: this.i18n.getTranslation('IMAGE_UPLOADED_SUCCESS')
+        });
+        this.productResource.reload();
+        this.removeFileBox(index);
+      },
+      error: (err) => {
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
+          toastImageUrl: '/fotova/error.png',
+          toastMessage:  this.i18n.getTranslation('UNKNOWN_ERROR')
+        });
+      }
+    });
+  }
+
+  finish() {
+    this.router.navigate(['/admin'],{queryParams:{active:'products'}});
+  }
+
+  onDragOver(event: DragEvent, index: number) {
+    event.preventDefault();
+    this.fileBoxes[index].isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent, index: number) {
+    event.preventDefault();
+    this.fileBoxes[index].isDragging = false;
+  }
+
+  deleteImageMain() {
+    let currentProduct = this.product()!;
+    let productUpdateImages: ProductUpdate = {
+      id: currentProduct.id,
+      name: currentProduct.name,
+      price: currentProduct.price,
+      quantity: currentProduct.quantity,
+      description: currentProduct.description,
+      url: "",
+      categoryInnerProductDto: currentProduct.categoryInnerProductDto
+    };
+
+    this.productService.updateProduct(productUpdateImages).subscribe({
+      next: () => {
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation('SUCCESS'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: this.i18n.getTranslation('PRODUCT_IMAGE_UPDATED_SUCCESS')
+        });
+        this.productResource.reload();
+      },
+      error: (err) => {
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation('ERROR'),
+          toastTime: this.i18n.getTranslation('JUST_NOW'),
+          toastImageUrl: '/fotova/error.png',
+          toastMessage: this.i18n.getTranslation('UNKNOWN_ERROR')
+        });
+      }
+    });
+  }
+
+  deleteImageGallery(productId:number,imageName:string) {
+    console.log(productId,imageName)
+    this.fileService.removeImageGallery(imageName, productId)
+      .subscribe({
+        next:() => {
+          this.toasterService.show({
+            toastTitle: this.i18n.getTranslation('SUCCESS'),
+            toastTime: this.i18n.getTranslation('JUST_NOW'),
+            toastImageUrl: '/fotova/check.jpg',
+            toastMessage: this.i18n.getTranslation('PRODUCT_IMAGE_UPDATED_SUCCESS'),
+          });
+          this.productResource.reload();
+        },
+        error: (err) => {
+          this.toasterService.show({
+            toastTitle: this.i18n.getTranslation('ERROR'),
+            toastTime: this.i18n.getTranslation('JUST_NOW'),
+            toastImageUrl: '/fotova/error.png',
+            toastMessage:  this.i18n.getTranslation('UNKNOWN_ERROR')
+          });
+        }
+      })
+  }
+
+  backToPanel() {
+    this.router.navigate(['/admin'],{queryParams:{active:'products'}});
+  }
+}

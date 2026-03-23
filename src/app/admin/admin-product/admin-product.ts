@@ -25,8 +25,12 @@ export class AdminProduct {
   productsInput:InputSignal<ProductModel[] | undefined> = input.required<ProductModel[] | undefined>();
   @Output() productDeleted = new EventEmitter<unknown>();
 
-  goToProductDetail(id: number) {
-    this.#router.navigate(['/admin/product', id]);
+  goToProductUpdate(id: number) {
+    this.#router.navigate(['/admin/update/product', id]);
+  }
+
+  goToProductDetail(id:number) {
+    this.#router.navigate(['/admin/detail/product', id]);
   }
 
   createProduct() {

@@ -1,0 +1,126 @@
+/* Stepper Styles */
+.stepper {
+  width: 100%;
+  max-width: 400px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.step-label {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.step.active .step-icon {
+  background-color: #fff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.step.active .step-label {
+  color: #0d6efd;
+  font-weight: bold;
+}
+
+.step.completed .step-icon {
+  background-color: #198754;
+  border-color: #198754;
+  color: #fff;
+}
+
+.step.completed .step-label {
+  color: #198754;
+}
+
+.step-line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #e9ecef;
+  margin: 0 1rem;
+  position: relative;
+  top: -18px; /* Align with middle of icons */
+  transition: background-color 0.3s ease;
+}
+
+.step-line.completed {
+  background-color: #198754;
+}
+
+/* File Upload Box Styles */
+.card-file-box {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed #dee2e6;
+  transition: border-color 0.3s, background-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-file-box:hover, .card-file-box.is-dragging {
+  border-color: #0d6efd;
+  background-color: #f8f9fa;
+}
+
+.btn-add-box {
+  cursor: pointer;
+  border: 2px dashed #198754;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.btn-add-box:hover {
+  border-color: #157347;
+  background-color: #f8f9fa;
+}
+
+.text-truncate {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-file-box .btn-sm {
+  z-index: 10;
+}
+
+.image-existing-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.image-existing {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.375rem;
+}
+
+.delete-image-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
