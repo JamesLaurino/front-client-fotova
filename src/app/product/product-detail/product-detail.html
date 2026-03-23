@@ -33,9 +33,15 @@
           <div class="row g-4">
             <!-- Product Image Section -->
             <div class="col-md-6 d-flex justify-content-center align-items-center">
-              <img #imgSwitch class="img-fluid rounded-3 product-main-image"
+<!--              <img #imgSwitch class="img-fluid rounded-3 product-main-image"-->
+<!--                   [src]="urlHelper(product.value().url)"-->
+<!--                   [alt]="product.value().name" style="max-width: 300px; max-height: 300px; object-fit: contain;">-->
+              <img #imgSwitch
+                   class="img-fluid rounded-3 product-main-image"
                    [src]="urlHelper(product.value().url)"
-                   [alt]="product.value().name" style="max-width: 300px; max-height: 300px; object-fit: contain;">
+                   [alt]="product.value().name"
+                   style="max-width: 300px; max-height: 300px; object-fit: contain; cursor: zoom-in;"
+                   (click)="openImageViewer(imgSwitch.src)">
             </div>
 
             <!-- Product Details Section -->
@@ -109,6 +115,22 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+}
+
+@if (selectedImage()) {
+  <div class="image-viewer-backdrop" (click)="closeImageViewer()">
+    <div class="image-viewer-content" (click)="$event.stopPropagation()">
+      <button type="button" class="image-viewer-close" (click)="closeImageViewer()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+      <img
+        [src]="selectedImage()!"
+        [alt]="product.value()?.name"
+        class="image-viewer-img"
+      >
     </div>
   </div>
 }

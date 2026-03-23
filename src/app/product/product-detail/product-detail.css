@@ -20,3 +20,50 @@
    border-width: 0.3rem;
    color: #2a2626;
  }
+
+
+ /* MODAL*/
+
+ .image-viewer-backdrop {
+   position: fixed;
+   inset: 0;
+   background: rgba(0, 0, 0, 0.82);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 2rem;
+   z-index: 2000;
+ }
+
+ .image-viewer-content {
+   position: relative;
+   max-width: 90vw;
+   max-height: 90vh;
+ }
+
+ .image-viewer-img {
+   display: block;
+   max-width: 100%;
+   max-height: 90vh;
+   object-fit: contain;
+   border-radius: 0.75rem;
+   background: white;
+   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+ }
+
+ .image-viewer-close {
+   position: absolute;
+   top: -0.75rem;
+   right: -0.75rem;
+   width: 42px;
+   height: 42px;
+   border: none;
+   border-radius: 50%;
+   background: white;
+   color: #212529;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+ }

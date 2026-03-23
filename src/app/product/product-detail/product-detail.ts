@@ -1,4 +1,4 @@
-import {Component, computed, ElementRef, inject, ViewChild} from '@angular/core';
+import {Component, computed, ElementRef, inject, signal, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../../service/interfaces/product-service';
 import {rxResource} from '@angular/core/rxjs-interop';
@@ -41,6 +41,16 @@ export class ProductDetail {
   protected readonly urlHelper = urlHelper;
 
   @ViewChild('imgSwitch') imgSwitch!: ElementRef;
+
+  selectedImage = signal<string | null>(null);
+
+  openImageViewer(imageUrl: string) {
+    this.selectedImage.set(imageUrl);
+  }
+
+  closeImageViewer() {
+    this.selectedImage.set(null);
+  }
 
   readonly form= new FormGroup({
     cartQuantity: new FormControl(1,
