@@ -1,7 +1,73 @@
-/* Stepper Styles */
+/* Layout */
+.container {
+  max-width: 1200px;
+}
+
+/* Cards */
+.card {
+  border: 1px solid #e7ebf0;
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.card-body {
+  border-radius: 1rem;
+  background: #ffffff;
+}
+
+/* Titles */
+.card-title {
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.h5 {
+  color: #111827;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Labels */
+.form-label {
+  color: #475467;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+}
+
+/* Inputs */
+.form-control {
+  border: 1px solid #d0d5dd;
+  border-radius: 0.8rem;
+  background-color: #ffffff;
+  color: #101828;
+  padding: 0.85rem 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  box-shadow: none;
+}
+
+.form-control::placeholder {
+  color: #98a2b3;
+}
+
+.form-control:focus {
+  border-color: #344054;
+  box-shadow: 0 0 0 4px rgba(52, 64, 84, 0.08);
+  background-color: #ffffff;
+  color: #101828;
+}
+
+/* Validation */
+.text-danger {
+  color: #d92d20 !important;
+}
+
+/* Stepper */
 .stepper {
   width: 100%;
-  max-width: 400px;
+  max-width: 460px;
 }
 
 .step {
@@ -13,99 +79,185 @@
 }
 
 .step-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #e9ecef;
-  color: #495057;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background-color: #f2f4f7;
+  color: #667085;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  border: 2px solid #e9ecef;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  border: 1px solid #d0d5dd;
+  transition: all 0.25s ease;
 }
 
 .step-label {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: #6c757d;
-  transition: all 0.3s ease;
-  font-weight: 500;
+  margin-top: 0.6rem;
+  font-size: 0.84rem;
+  color: #667085;
+  transition: all 0.25s ease;
+  font-weight: 600;
 }
 
 .step.active .step-icon {
-  background-color: #fff;
-  border-color: #0d6efd;
-  color: #0d6efd;
+  background-color: #111827;
+  border-color: #111827;
+  color: #ffffff;
 }
 
 .step.active .step-label {
-  color: #0d6efd;
-  font-weight: bold;
+  color: #111827;
+  font-weight: 700;
 }
 
 .step.completed .step-icon {
-  background-color: #198754;
-  border-color: #198754;
-  color: #fff;
+  background-color: #344054;
+  border-color: #344054;
+  color: #ffffff;
 }
 
 .step.completed .step-label {
-  color: #198754;
+  color: #344054;
 }
 
 .step-line {
   flex-grow: 1;
   height: 2px;
-  background-color: #e9ecef;
+  background-color: #e4e7ec;
   margin: 0 1rem;
   position: relative;
-  top: -18px; /* Align with middle of icons */
-  transition: background-color 0.3s ease;
+  top: -18px;
+  transition: background-color 0.25s ease;
 }
 
 .step-line.completed {
-  background-color: #198754;
+  background-color: #344054;
 }
 
-/* File Upload Box Styles */
+/* Buttons */
+.btn {
+  border-radius: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #111827;
+  border-color: #111827;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(17, 24, 39, 0.14);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #0b1220;
+  border-color: #0b1220;
+  color: #ffffff;
+}
+
+.btn-primary:disabled {
+  background-color: #98a2b3;
+  border-color: #98a2b3;
+}
+
+.btn-success {
+  background-color: #101828;
+  border-color: #101828;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.14);
+}
+
+.btn-success:hover,
+.btn-success:focus {
+  background-color: #0c111d;
+  border-color: #0c111d;
+  color: #ffffff;
+}
+
+.btn-outline-info {
+  border: 1px solid #d0d5dd;
+  background: #ffffff;
+  color: #344054;
+}
+
+.btn-outline-info:hover,
+.btn-outline-info:focus {
+  border-color: #344054;
+  background: #f9fafb;
+  color: #111827;
+}
+
+.btn-outline-success {
+  border: 1px solid #d0d5dd;
+  background: #ffffff;
+  color: #344054;
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:focus {
+  border-color: #344054;
+  background: #f9fafb;
+  color: #111827;
+}
+
+.btn-danger {
+  background-color: #d92d20;
+  border-color: #d92d20;
+  color: #ffffff;
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+  background-color: #b42318;
+  border-color: #b42318;
+}
+
+/* File upload boxes */
 .card-file-box {
   width: 200px;
   height: 200px;
-  border: 2px dashed #dee2e6;
-  transition: border-color 0.3s, background-color 0.3s;
+  border: 1.5px dashed #d0d5dd;
+  border-radius: 1rem;
+  background: #fcfcfd;
+  transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 14px rgba(16, 24, 40, 0.04);
 }
 
-.card-file-box:hover, .card-file-box.is-dragging {
-  border-color: #0d6efd;
-  background-color: #f8f9fa;
+.card-file-box:hover,
+.card-file-box.is-dragging {
+  border-color: #344054;
+  background-color: #f9fafb;
+  box-shadow: 0 10px 24px rgba(16, 24, 40, 0.08);
+  transform: translateY(-2px);
 }
 
 .btn-add-box {
   cursor: pointer;
-  border: 2px dashed #198754;
-  transition: border-color 0.3s, background-color 0.3s;
+  border: 1.5px dashed #98a2b3;
 }
 
 .btn-add-box:hover {
-  border-color: #157347;
-  background-color: #f8f9fa;
+  border-color: #344054;
+  background-color: #f9fafb;
 }
 
-.text-truncate {
-  max-width: 180px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* Utility text colors remapped */
+.text-success {
+  color: #344054 !important;
 }
 
-.card-file-box .btn-sm {
-  z-index: 10;
+.text-primary {
+  color: #111827 !important;
 }
 
+.text-muted {
+  color: #667085 !important;
+}
+
+/* Existing images */
 .image-existing-container {
   position: relative;
   width: 150px;
@@ -116,11 +268,82 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 0.375rem;
+  border-radius: 0.85rem;
+  border: 1px solid #e4e7ec;
+  box-shadow: 0 8px 20px rgba(16, 24, 40, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.image-existing:hover {
+  transform: translateY(-2px);
+  border-color: #cfd4dc;
+  box-shadow: 0 12px 28px rgba(16, 24, 40, 0.12);
+}
+
+/* Small buttons inside image cards */
+.card-file-box .btn-sm {
+  z-index: 10;
+}
+
+/* Badges */
+.badge {
+  border-radius: 999px;
+  padding: 0.42rem 0.78rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge.bg-primary {
+  background-color: #111827 !important;
+  color: #ffffff;
+}
+
+.badge.bg-secondary {
+  background-color: #667085 !important;
+  color: #ffffff;
+}
+
+/* Helpers */
+.text-truncate {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .delete-image-btn {
   position: absolute;
   top: 5px;
   right: 5px;
+}
+
+.spinner-border {
+  color: #344054;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-body {
+    padding: 1.4rem !important;
+  }
+
+  .stepper {
+    max-width: 100%;
+  }
+
+  .step-label {
+    font-size: 0.76rem;
+  }
+
+  .image-existing-container {
+    width: 130px;
+    height: 130px;
+  }
+
+  .card-file-box {
+    width: 170px;
+    height: 170px;
+  }
 }
