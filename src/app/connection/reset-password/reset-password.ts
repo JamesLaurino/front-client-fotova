@@ -1,6 +1,8 @@
-import {Component, inject} from '@angular/core';
+import {Component, DestroyRef, inject} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {I18nService} from '../../service/i18n/i18nService';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {debounceTime, tap} from 'rxjs';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {Router} from '@angular/router';
 import {ResetService} from '../../service/password/reset-service';
@@ -18,6 +20,9 @@ import {ResetApiResponse} from '../../model/reset/reset-api-response';
 export class ResetPassword {
 
   readonly i18n = inject(I18nService);
+  readonly #destroyRef = inject(DestroyRef);
+  emailShowError = false;
+
   readonly form= new FormGroup({
     email: new FormControl("",
       [
@@ -32,6 +37,14 @@ export class ResetPassword {
       ]
     )
   });
+
+  constructor() {
+    this.email.valueChanges.pipe(
+      tap(() => this.emailShowError = false),
+      debounceTime(800),
+      takeUntilDestroyed(this.#destroyRef)
+    ).subscribe(() => this.emailShowError = true);
+  }
 
   protected resetService = inject(ResetService)
   toasterService = inject(ToasterService)

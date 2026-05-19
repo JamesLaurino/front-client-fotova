@@ -19,12 +19,12 @@
           <label class="mat-label" for="email">{{ i18n.getTranslation('EMAIL') }}</label>
         </div>
 
-        @if(email.hasError('required') && email.dirty) {
+        @if(email.hasError('required') && emailShowError) {
           <div class="error-text">
             {{ i18n.getTranslation('PLEASE_ENTER_EMAIL_AGAIN') }}
           </div>
         }
-        @if(email.hasError('email') && email.dirty) {
+        @if(email.hasError('email') && emailShowError) {
           <div class="error-text">
             {{ i18n.getTranslation('INVALID_EMAIL_ADDRESS') }}
           </div>

@@ -1,4 +1,5 @@
-import {Component, inject} from '@angular/core';
+import {Component, DestroyRef, inject} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LoginApiInput} from '../../model/login/login-api-input';
 import {LoginService} from '../../service/login/login-service';
@@ -6,6 +7,7 @@ import {LoginApiResponse} from '../../model/login/login-api-response';
 import {Router} from '@angular/router';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {I18nService} from '../../service/i18n/i18nService';
+import {debounceTime, tap} from 'rxjs';
 
 
 @Component({
@@ -21,6 +23,9 @@ export class Login
 {
 
   readonly i18n = inject(I18nService);
+  readonly #destroyRef = inject(DestroyRef);
+  emailShowError = false;
+
   readonly form= new FormGroup({
     email: new FormControl("",
       [
@@ -35,6 +40,14 @@ export class Login
       ]
     )
   });
+
+  constructor() {
+    this.email.valueChanges.pipe(
+      tap(() => this.emailShowError = false),
+      debounceTime(800),
+      takeUntilDestroyed(this.#destroyRef)
+    ).subscribe(() => this.emailShowError = true);
+  }
 
   protected loginService = inject(LoginService)
   toasterService = inject(ToasterService)

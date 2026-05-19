@@ -1,6 +1,8 @@
-import {Component, inject} from '@angular/core';
+import {Component, DestroyRef, inject} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {debounceTime, tap} from 'rxjs';
 import {RegisterService} from '../../service/register/RegisterService';
 import {RegisterApiInput} from '../../model/register/register-api-input';
 import {RegisterApiResponse} from '../../model/register/register-api-response';
@@ -18,6 +20,9 @@ import {I18nService} from '../../service/i18n/i18nService';
 export class Register {
 
   readonly i18n = inject(I18nService);
+  readonly #destroyRef = inject(DestroyRef);
+  emailShowError = false;
+
   readonly form= new FormGroup({
     email: new FormControl("",
       [
@@ -38,6 +43,14 @@ export class Register {
       ]
     )
   });
+
+  constructor() {
+    this.email.valueChanges.pipe(
+      tap(() => this.emailShowError = false),
+      debounceTime(800),
+      takeUntilDestroyed(this.#destroyRef)
+    ).subscribe(() => this.emailShowError = true);
+  }
 
   protected registerService = inject(RegisterService);
   protected toasterService = inject(ToasterService);
