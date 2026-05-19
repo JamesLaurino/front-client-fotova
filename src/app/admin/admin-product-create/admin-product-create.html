@@ -118,11 +118,16 @@
 
               <button
                 class="btn btn-primary"
-                [disabled]="form.invalid"
+                [disabled]="form.invalid || isSubmitting()"
                 (click)="goToImages()"
               >
-                {{ i18n.getTranslation("NEXT_STEP") }}
-                <i class="bi bi-arrow-right"></i>
+                @if (isSubmitting()) {
+                  <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                }
+                {{ isSubmitting() ? i18n.getTranslation("UPLOADING") : i18n.getTranslation("NEXT_STEP") }}
+                @if (!isSubmitting()) {
+                  <i class="bi bi-arrow-right"></i>
+                }
               </button>
             </div>
 

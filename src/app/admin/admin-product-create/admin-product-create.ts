@@ -62,6 +62,7 @@ export class AdminProductCreate {
     )
   })
   step: 'form' | 'images' = 'form';
+  isSubmitting = signal(false);
   fileBoxes: FileBox[] = [{ file: undefined, uploading: false, isDragging: false }];
   previewFiles = signal<PreviewFile[]>([]);
 
@@ -138,7 +139,9 @@ export class AdminProductCreate {
       url: '',
     };
 
+    this.isSubmitting.set(true);
     this.#productService.addProductWithCategory(productAdd, categoryId).pipe(
+      finalize(() => this.isSubmitting.set(false)),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: (response: ProductApiResponse) => {
