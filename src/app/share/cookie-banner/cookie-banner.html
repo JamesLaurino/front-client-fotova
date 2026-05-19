@@ -1,0 +1,21 @@
+@if (visible()) {
+  <div class="cookie-banner" [class.closing]="isClosing()">
+    <div class="cookie-banner__content">
+
+      <div class="cookie-banner__text">
+        <p class="cookie-banner__title">{{ i18n.getTranslation('COOKIE_TITLE') }}</p>
+        <p class="cookie-banner__description">
+          <span>{{ i18n.getTranslation('COOKIE_P1') }} </span>
+          <span>{{ i18n.getTranslation('COOKIE_P2') }} </span>
+          <span>{{ i18n.getTranslation('COOKIE_P3') }}</span>
+        </p>
+      </div>
+
+      <div class="cookie-banner__actions">
+        <button class="cookie-btn cookie-btn--accept" (click)="accept()">{{ i18n.getTranslation('COOKIE_ACCEPT') }}</button>
+        <button class="cookie-btn cookie-btn--refuse" (click)="refuse()">{{ i18n.getTranslation('COOKIE_REFUSE') }}</button>
+      </div>
+
+    </div>
+  </div>
+}

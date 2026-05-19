@@ -5,10 +5,11 @@ import {CartService} from './service/interfaces/cart-service';
 import {CartHelper} from './helper/cart-helper';
 import {LoginService} from './service/login/login-service';
 import {Toast} from './share/toast/toast';
+import {CookieBanner} from './share/cookie-banner/cookie-banner';
 
 @Component({
   selector: 'app-root',
-  imports: [NavBar, RouterOutlet, Toast],
+  imports: [NavBar, RouterOutlet, Toast, CookieBanner],
   templateUrl: './app.html',
   styles: ''
 })
