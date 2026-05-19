@@ -22,6 +22,7 @@ export class ResetPassword {
   readonly i18n = inject(I18nService);
   readonly #destroyRef = inject(DestroyRef);
   emailShowError = false;
+  newPasswordShowError = false;
 
   readonly form= new FormGroup({
     email: new FormControl("",
@@ -44,6 +45,12 @@ export class ResetPassword {
       debounceTime(800),
       takeUntilDestroyed(this.#destroyRef)
     ).subscribe(() => this.emailShowError = true);
+
+    this.newPassword.valueChanges.pipe(
+      tap(() => this.newPasswordShowError = false),
+      debounceTime(800),
+      takeUntilDestroyed(this.#destroyRef)
+    ).subscribe(() => this.newPasswordShowError = true);
   }
 
   protected resetService = inject(ResetService)

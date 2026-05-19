@@ -25,6 +25,7 @@ export class Login
   readonly i18n = inject(I18nService);
   readonly #destroyRef = inject(DestroyRef);
   emailShowError = false;
+  passwordShowError = false;
 
   readonly form= new FormGroup({
     email: new FormControl("",
@@ -47,6 +48,12 @@ export class Login
       debounceTime(800),
       takeUntilDestroyed(this.#destroyRef)
     ).subscribe(() => this.emailShowError = true);
+
+    this.password.valueChanges.pipe(
+      tap(() => this.passwordShowError = false),
+      debounceTime(800),
+      takeUntilDestroyed(this.#destroyRef)
+    ).subscribe(() => this.passwordShowError = true);
   }
 
   protected loginService = inject(LoginService)

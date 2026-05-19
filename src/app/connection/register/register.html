@@ -57,12 +57,12 @@
           <label class="mat-label" for="password">{{ i18n.getTranslation('PASSWORD') }}</label>
         </div>
 
-        @if(password.hasError('required') && password.dirty) {
+        @if(password.hasError('required') && passwordShowError) {
           <div class="error-text">
             {{ i18n.getTranslation('PLEASE_ENTER_PASSWORD') }}
           </div>
         }
-        @if(password.hasError('minlength') && password.dirty) {
+        @if(password.hasError('minlength') && passwordShowError) {
           <div class="error-text">
             {{ i18n.getTranslation('INSUFFICIENT_CHARACTERS') }}
           </div>
