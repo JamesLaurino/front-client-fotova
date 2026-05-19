@@ -94,7 +94,7 @@
                   {{ i18n.getTranslation("CATEGORY") }}
                 </label>
                 <select formControlName="categoryInnerProductDto" class="form-select" id="inputCategory">
-                  @for (category of categories.value(); track category.id) {
+                  @for (category of (categories.value() ?? []); track category.id) {
                     <option [value]="category.name">{{ category.name }}</option>
                   }
                 </select>

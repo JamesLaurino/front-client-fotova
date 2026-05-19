@@ -1,8 +1,8 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, DestroyRef, inject, signal} from '@angular/core';
 import {I18nService} from '../../service/i18n/i18nService';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {rxResource} from '@angular/core/rxjs-interop';
-import {concatMap, finalize, map, tap} from 'rxjs';
+import {rxResource, takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {concatMap, finalize, map} from 'rxjs';
 import {CategoryService} from '../../service/category/categoryService';
 import {ProductModel} from '../../model/product/product-model';
 import {ToasterService} from '../../service/toaster/toasterService';
@@ -30,6 +30,10 @@ export class AdminProductCreate {
   readonly #fileService = inject(FileService);
   readonly i18n = inject(I18nService);
   readonly #router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  private readonly maxFileSize = 10 * 1024 * 1024;
 
   productWithoutImage = signal<ProductModel>({
     id:0,
@@ -50,16 +54,12 @@ export class AdminProductCreate {
     quantity: new FormControl(0, [Validators.required, Validators.min(0)]),
     price: new FormControl(0, [Validators.required, Validators.min(0)]),
     description:new FormControl('', [Validators.required]),
-    categoryInnerProductDto: new FormControl<string[]>([], [Validators.required]),
+    categoryInnerProductDto: new FormControl<string>('', [Validators.required]),
   });
   categories = rxResource({
-    stream: () => {
-      return this.#categoryService.getAllCategories()
-        .pipe(
-          map(response => response.data),
-          tap(product => console.log(product))
-        )
-    }
+    stream: () => this.#categoryService.getAllCategories().pipe(
+      map(response => response.data)
+    )
   })
   step: 'form' | 'images' = 'form';
   fileBoxes: FileBox[] = [{ file: undefined, uploading: false, isDragging: false }];
@@ -79,13 +79,19 @@ export class AdminProductCreate {
   removeFileBox(index: number) {
     const previewToRemove = this.previewFiles().find(p => p.sourceIndex === index);
     if (previewToRemove) {
-      this.removePreview(previewToRemove);
+      URL.revokeObjectURL(previewToRemove.url);
+      this.previewFiles.update(files => files.filter(p => p.sourceIndex !== index));
+      this.fileBoxes[index].file = undefined;
     }
 
     this.fileBoxes.splice(index, 1);
     if (this.fileBoxes.length === 0) {
       this.fileBoxes.push({ file: undefined, uploading: false, isDragging: false });
     }
+
+    this.previewFiles.update(files =>
+      files.map(p => p.sourceIndex > index ? { ...p, sourceIndex: p.sourceIndex - 1 } : p)
+    );
   }
 
   removePreview(previewToRemove: PreviewFile) {
@@ -111,54 +117,43 @@ export class AdminProductCreate {
   }
 
   finish() {
-    if(confirm('Attention les images non uploadées seront perdues. Voulez-vous continuer ?')) {
-      this.toasterService.show({
-        toastTitle: this.i18n.getTranslation("SUCCESS"),
-        toastTime: this.i18n.getTranslation("JUST_NOW"),
-        toastImageUrl: '/fotova/check.jpg',
-        toastMessage:  this.i18n.getTranslation("PRODUCT_CREATED_WITH_IMAGES_SUCCESS"),
-      });
-      this.#router.navigate(['/admin']);
-    }
+    this.toasterService.show({
+      toastTitle: this.i18n.getTranslation("SUCCESS"),
+      toastTime: this.i18n.getTranslation("JUST_NOW"),
+      toastImageUrl: '/fotova/check.jpg',
+      toastMessage: this.i18n.getTranslation("PRODUCT_CREATED_WITH_IMAGES_SUCCESS"),
+    });
+    this.#router.navigate(['/admin'], { queryParams: { active: 'products' } });
   }
 
   goToImages() {
-    if (this.form.valid) {
-      this.step = 'images';
-      let categoryId = Number(this.getCategoryAndId());
-      let productAdd:ProductAdd = {
-        name: String(this.name.value),
-        price: Number(this.price.value),
-        quantity: Number(this.quantity.value),
-        description: String(this.description.value),
-        url: '',
-      }
-      this.#productService.addProductWithCategory(productAdd, categoryId).subscribe({
-        next:(response:ProductApiResponse) => {
-          this.productWithoutImage.update((n) => {
-            n.id = response.data.id;
-            n.name = response.data.name;
-            n.quantity = response.data.quantity;
-            n.price = response.data.price;
-            n.description = response.data.description;
-            n.categoryInnerProductDto.id = response.data.categoryInnerProductDto.id;
-            n.categoryInnerProductDto.name = response.data.categoryInnerProductDto.name;
-            n.url = response.data.url;
-            n.images = response.data.images;
-            return n;
-          })
-        },
-        error: () => {
-          this.toasterService.show({
-            toastTitle: this.i18n.getTranslation("ERROR"),
-            toastTime: this.i18n.getTranslation("JUST_NOW"),
-            toastImageUrl: '/fotova/error.png',
-            toastMessage: this.i18n.getTranslation("PRODUCT_CREATION_FAILED")
-          });
-        }
-      })
+    if (!this.form.valid) return;
 
-    }
+    const categoryId = Number(this.getCategoryAndId());
+    const productAdd: ProductAdd = {
+      name: String(this.name.value),
+      price: Number(this.price.value),
+      quantity: Number(this.quantity.value),
+      description: String(this.description.value),
+      url: '',
+    };
+
+    this.#productService.addProductWithCategory(productAdd, categoryId).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
+      next: (response: ProductApiResponse) => {
+        this.productWithoutImage.set({ ...response.data });
+        this.step = 'images';
+      },
+      error: () => {
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation("ERROR"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
+          toastImageUrl: '/fotova/error.png',
+          toastMessage: this.i18n.getTranslation("PRODUCT_CREATION_FAILED")
+        });
+      }
+    });
   }
 
   onDragOver(event: DragEvent, index: number) {
@@ -175,18 +170,46 @@ export class AdminProductCreate {
     event.preventDefault();
     if (event.dataTransfer?.files?.length) {
       const file = event.dataTransfer.files[0];
+      if (!this.validateFile(file)) {
+        this.fileBoxes[index].isDragging = false;
+        return;
+      }
       this.fileBoxes[index].file = file;
       this.addPreview(file, index);
     }
     this.fileBoxes[index].isDragging = false;
   }
 
-  onFileSelect(event: any, index: number) {
-    const file: File = event.target.files[0];
+  onFileSelect(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
     if (file) {
+      if (!this.validateFile(file)) return;
       this.fileBoxes[index].file = file;
       this.addPreview(file, index);
     }
+  }
+
+  private validateFile(file: File): boolean {
+    if (!this.allowedTypes.includes(file.type)) {
+      this.toasterService.show({
+        toastTitle: this.i18n.getTranslation('ERROR'),
+        toastTime: this.i18n.getTranslation('JUST_NOW'),
+        toastImageUrl: '/fotova/error.png',
+        toastMessage: this.i18n.getTranslation('INVALID_FILE_TYPE')
+      });
+      return false;
+    }
+    if (file.size > this.maxFileSize) {
+      this.toasterService.show({
+        toastTitle: this.i18n.getTranslation('ERROR'),
+        toastTime: this.i18n.getTranslation('JUST_NOW'),
+        toastImageUrl: '/fotova/error.png',
+        toastMessage: this.i18n.getTranslation('FILE_TOO_LARGE')
+      });
+      return false;
+    }
+    return true;
   }
 
   backToPanel(){
@@ -197,39 +220,29 @@ export class AdminProductCreate {
     const box = this.fileBoxes[index];
     if (!box.file) return;
 
+    const fileName = box.file.name;
+    const productId = this.productWithoutImage().id;
     const formData = new FormData();
-    formData.append('file', box.file, box.file.name);
-
-    if(index == 0) {
-      this.productWithoutImage.update((product) => {
-        product.url = String(box.file?.name);
-        return product;
-      })
-    } else {
-      this.productWithoutImage.update((product) => {
-        product.images = [];
-        product.images = [(String(box.file?.name))];
-        return product;
-      })
-    }
+    formData.append('file', box.file, fileName);
     box.uploading = true;
 
     this.#fileService.uploadFile(formData).pipe(
       concatMap(() => {
         if (index === 0) {
-          return this.#productService.updateProduct(this.productWithoutImage());
+          return this.#productService.updateProduct({ ...this.productWithoutImage(), url: fileName });
         } else {
-          return this.#fileService.linkImageToProduct(
-            this.productWithoutImage().id,
-            String(box.file!.name)
-          );
+          return this.#fileService.linkImageToProduct(productId, fileName);
         }
       }),
       finalize(() => {
         box.uploading = false;
-      })
+      }),
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: () => {
+        if (index === 0) {
+          this.productWithoutImage.update(p => ({ ...p, url: fileName }));
+        }
         this.toasterService.show({
           toastTitle: this.i18n.getTranslation("SUCCESS"),
           toastTime: this.i18n.getTranslation("JUST_NOW"),
@@ -238,8 +251,7 @@ export class AdminProductCreate {
         });
         this.removeFileBox(index);
       },
-      error: (error) => {
-        console.error('Erreur détaillée reçue dans la chaîne RxJS :', error);
+      error: () => {
         this.toasterService.show({
           toastTitle: this.i18n.getTranslation("ERROR"),
           toastTime: this.i18n.getTranslation("JUST_NOW"),

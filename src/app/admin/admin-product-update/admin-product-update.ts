@@ -1,11 +1,11 @@
-import {Component, computed, effect, inject} from '@angular/core';
+import {Component, computed, DestroyRef, effect, inject} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../../service/interfaces/product-service';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {FileService} from '../../service/file/fileService';
 import {I18nService} from '../../service/i18n/i18nService';
-import {rxResource} from '@angular/core/rxjs-interop';
+import {rxResource, takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {finalize, map, switchMap} from 'rxjs';
 import {ProductUpdate} from '../../model/product/product-update';
 import {ProductModel} from '../../model/product/product-model';
@@ -27,13 +27,16 @@ export class AdminProductUpdate {
   private readonly toasterService = inject(ToasterService);
   private readonly fileService = inject(FileService);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
   readonly i18n = inject(I18nService);
 
   private productId = this.route.snapshot.paramMap.get('id');
   protected readonly urlHelper = urlHelper;
   protected readonly String = String;
-  protected readonly Number = Number;
   protected readonly imageHelper = imageHelper;
+
+  private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  private readonly maxFileSize = 10 * 1024 * 1024;
 
 
   productResource = rxResource({
@@ -85,7 +88,9 @@ export class AdminProductUpdate {
       categoryInnerProductDto: currentProduct.categoryInnerProductDto
     };
 
-    this.productService.updateProduct(productUpdate).subscribe({
+    this.productService.updateProduct(productUpdate).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
       next: () => {
         this.toasterService.show({
           toastTitle: this.i18n.getTranslation('SUCCESS'),
@@ -121,7 +126,9 @@ export class AdminProductUpdate {
     event.preventDefault();
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
-      this.fileBoxes[index].file = files[0];
+      const file = files[0];
+      if (!this.validateFile(file)) return;
+      this.fileBoxes[index].file = file;
       this.fileBoxes[index].isDragging = false;
     }
   }
@@ -129,8 +136,32 @@ export class AdminProductUpdate {
   onFileSelect(event: Event, index: number) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.fileBoxes[index].file = input.files[0];
+      const file = input.files[0];
+      if (!this.validateFile(file)) return;
+      this.fileBoxes[index].file = file;
     }
+  }
+
+  private validateFile(file: File): boolean {
+    if (!this.allowedTypes.includes(file.type)) {
+      this.toasterService.show({
+        toastTitle: this.i18n.getTranslation('ERROR'),
+        toastTime: this.i18n.getTranslation('JUST_NOW'),
+        toastImageUrl: '/fotova/error.png',
+        toastMessage: this.i18n.getTranslation('INVALID_FILE_TYPE')
+      });
+      return false;
+    }
+    if (file.size > this.maxFileSize) {
+      this.toasterService.show({
+        toastTitle: this.i18n.getTranslation('ERROR'),
+        toastTime: this.i18n.getTranslation('JUST_NOW'),
+        toastImageUrl: '/fotova/error.png',
+        toastMessage: this.i18n.getTranslation('FILE_TOO_LARGE')
+      });
+      return false;
+    }
+    return true;
   }
 
   uploadFile(index: number) {
@@ -154,7 +185,8 @@ export class AdminProductUpdate {
       }),
       finalize(() => {
         box.uploading = false;
-      })
+      }),
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: () => {
         this.toasterService.show({
@@ -175,10 +207,6 @@ export class AdminProductUpdate {
         });
       }
     });
-  }
-
-  finish() {
-    this.router.navigate(['/admin'],{queryParams:{active:'products'}});
   }
 
   onDragOver(event: DragEvent, index: number) {
@@ -203,7 +231,9 @@ export class AdminProductUpdate {
       categoryInnerProductDto: currentProduct.categoryInnerProductDto
     };
 
-    this.productService.updateProduct(productUpdateImages).subscribe({
+    this.productService.updateProduct(productUpdateImages).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
       next: () => {
         this.toasterService.show({
           toastTitle: this.i18n.getTranslation('SUCCESS'),
@@ -224,10 +254,10 @@ export class AdminProductUpdate {
     });
   }
 
-  deleteImageGallery(productId:number,imageName:string) {
-    console.log(productId,imageName)
-    this.fileService.removeImageGallery(imageName, productId)
-      .subscribe({
+  deleteImageGallery(productId: number, imageName: string) {
+    this.fileService.removeImageGallery(imageName, productId).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
         next:() => {
           this.toasterService.show({
             toastTitle: this.i18n.getTranslation('SUCCESS'),

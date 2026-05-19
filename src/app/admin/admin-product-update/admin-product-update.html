@@ -115,7 +115,7 @@
             @for (image of product()?.images; track image) {
               <div class="image-existing-container">
                 <img [src]="urlHelper(image)" alt="Image du produit" class="image-existing shadow-sm">
-                <button type="button" class="btn btn-sm btn-danger rounded-circle shadow position-absolute top-0 end-0 m-1" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .7rem;" (click)="deleteImageGallery(Number(product()?.id), imageHelper(image))">
+                <button type="button" class="btn btn-sm btn-danger rounded-circle shadow position-absolute top-0 end-0 m-1" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .7rem;" (click)="deleteImageGallery(product()!.id, imageHelper(image))">
                   <i class="bi bi-x-lg"></i>
                 </button>
                 <div class="badge bg-secondary position-absolute bottom-0 start-50 translate-middle-x mb-1">{{ i18n.getTranslation("GALLERY_IMAGE") }}</div>
@@ -181,7 +181,7 @@
           </div>
 
           <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-success" (click)="finish()">
+            <button type="button" class="btn btn-success" (click)="backToPanel()">
               {{ i18n.getTranslation("FINISH") }} <i class="bi bi-check-lg"></i>
             </button>
           </div>
