@@ -1,8 +1,25 @@
+.chart-wrapper {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.chart-header {
+  margin-bottom: 1.5rem;
+}
+
+.chart-header h3 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #343030;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
 .chart-container {
-  height: 400px; /* fixe la hauteur pour avoir de belles barres */
+  height: 400px;
   width: 100%;
-  background-color: #f7f5f2; /* léger beige cashmere derrière */
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(37, 36, 36, 0.1);
 }

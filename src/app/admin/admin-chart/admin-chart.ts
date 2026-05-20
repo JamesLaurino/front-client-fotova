@@ -23,10 +23,8 @@ export class AdminChart {
     scales: {
       x: {
         ticks: {
-          color: '#343030',
-          font: {
-            size: 13
-          }
+          color: '#868e96',
+          font: { size: 12 }
         },
         grid: {
           display: false
@@ -35,14 +33,12 @@ export class AdminChart {
       y: {
         min: 0,
         ticks: {
-          color: '#343030',
-          font: {
-            size: 13
-          },
+          color: '#868e96',
+          font: { size: 12 },
           callback: function(value) { return `€${value}`; }
         },
         grid: {
-          color: 'rgba(200, 179, 138, 0.2)'
+          color: 'rgba(0, 0, 0, 0.06)'
         }
       }
     },
@@ -51,9 +47,20 @@ export class AdminChart {
         display: true,
         labels: {
           color: '#343030',
-          font: {
-            size: 14,
-            weight: 600
+          font: { size: 13, weight: 600 },
+          boxWidth: 12,
+          borderRadius: 4
+        }
+      },
+      tooltip: {
+        backgroundColor: '#343030',
+        titleColor: '#ffffff',
+        bodyColor: '#ffffff',
+        padding: 10,
+        cornerRadius: 8,
+        callbacks: {
+          label: function(context) {
+            return ` €${(context.parsed.y as number).toFixed(2)}`;
           }
         }
       }
@@ -64,32 +71,33 @@ export class AdminChart {
         borderSkipped: false
       }
     }
-
   };
+
   public barChartType: ChartType = 'bar';
+
   public barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
       {
         data: [],
-        label: 'Monthly Sales',
-        backgroundColor: 'rgba(200, 179, 138, 0.8)',
-        borderColor: 'rgba(200, 179, 138, 1)',
+        label: '',
+        backgroundColor: 'rgba(52, 48, 48, 0.8)',
+        borderColor: 'rgba(52, 48, 48, 1)',
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(200, 179, 138, 1)',
-        hoverBorderColor: 'rgba(150, 130, 90, 1)'
+        hoverBackgroundColor: 'rgba(52, 48, 48, 1)',
+        hoverBorderColor: 'rgba(52, 48, 48, 1)'
       }
     ]
   };
 
-
   constructor() {
     effect(() => {
       const orders = this.ordersDetailedInput();
+      this.barChartData.datasets[0].label = this.i18n.getTranslation('MONTHLY_SALES');
       if (orders) {
         this.processOrders(orders);
-        this.chart?.update();
       }
+      this.chart?.update();
     });
   }
 
@@ -102,9 +110,9 @@ export class AdminChart {
     });
 
     const sortedMonths = Array.from(monthlySales.keys()).sort((a, b) => {
-        const aDate = new Date(`01 ${a} 2000`);
-        const bDate = new Date(`01 ${b} 2000`);
-        return aDate.getMonth() - bDate.getMonth();
+      const aDate = new Date(`01 ${a} 2000`);
+      const bDate = new Date(`01 ${b} 2000`);
+      return aDate.getMonth() - bDate.getMonth();
     });
 
     this.barChartData.labels = sortedMonths;
