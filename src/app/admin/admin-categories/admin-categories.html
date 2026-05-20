@@ -1,44 +1,70 @@
-<div class="container my-4 shadow p-2 rounded">
-  <table class="table table-products">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">{{i18n.getTranslation("ID")}}</th>
-      <th scope="col">{{i18n.getTranslation("NAME")}}</th>
-      <th scope="col">{{i18n.getTranslation("DETAIL")}}</th>
-      <th scope="col">{{i18n.getTranslation("DELETE")}}</th>
-    </tr>
-    </thead>
-    <tbody>
-      @for (category of categoriesInput(); track category.id; let idx = $index)
-      {
-        <tr>
-          <th scope="row">{{idx}}</th>
-          <td>{{ category.id }}</td>
-          <td>{{ category.name }}</td>
-          <td>
-            <button (click)="goToCategoryDetail(category.id)" class="btn btn-view">
-              {{i18n.getTranslation("EDIT")}}
-            </button>
-          </td>
-          <td>
-            <button (click)="deleteCategory(category.id)" class="btn btn-delete">
-              {{i18n.getTranslation("DELETE")}}
-            </button>
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
+<div class="category-section">
+
+  <!-- Header -->
+  <div class="section-header">
+    <div class="section-title">
+      <span>{{ i18n.getTranslation("CATEGORIES") }}</span>
+      <span class="count-badge">{{ categoriesInput()?.length ?? 0 }}</span>
+    </div>
+    @if (!isDisplayForm()) {
+      <button (click)="displayCategoryForm()" class="btn-add">
+        <i class="bi bi-plus-lg"></i>
+        {{ i18n.getTranslation("CREATE") }} {{ i18n.getTranslation("CATEGORY") | lowercase }}
+      </button>
+    }
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    @if (!categoriesInput()?.length) {
+      <div class="empty-state">
+        <i class="bi bi-tags empty-icon"></i>
+        <p>{{ i18n.getTranslation("NO_CATEGORIES") }}</p>
+      </div>
+    } @else {
+      <table class="table table-categories mb-0">
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{ i18n.getTranslation("ID") }}</th>
+            <th>{{ i18n.getTranslation("NAME") }}</th>
+            <th>{{ i18n.getTranslation("DETAIL") }}</th>
+            <th>{{ i18n.getTranslation("DELETE") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (category of categoriesInput(); track category.id) {
+            <tr class="category-row">
+              <td>
+                <div class="category-avatar">
+                  {{ category.name[0].toUpperCase() }}
+                </div>
+              </td>
+              <td class="category-id">#{{ category.id }}</td>
+              <td>{{ category.name }}</td>
+              <td>
+                <button (click)="goToCategoryDetail(category.id)" class="btn-edit">
+                  <i class="bi bi-pencil"></i>
+                  {{ i18n.getTranslation("EDIT") }}
+                </button>
+              </td>
+              <td>
+                <button (click)="deleteCategory(category.id)" class="btn-delete">
+                  <i class="bi bi-trash"></i>
+                  {{ i18n.getTranslation("DELETE") }}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+
 </div>
 
-@if(!isDisplayForm()) {
-  <div class="container d-flex mt-4 justify-content-start">
-    <button (click)="displayCategoryForm()" class="btn-create">
-      {{i18n.getTranslation("CREATE")}}
-      {{i18n.getTranslation("CATEGORY") | lowercase}}
-    </button>
+@if (isDisplayForm()) {
+  <div class="create-form-wrapper">
+    <app-admin-category-create [isDisplayForm]="isDisplayForm()" (displayFormUpdate)="isDisplayFormUpdate()" />
   </div>
-} @else {
-  <app-admin-category-create [isDisplayForm]="isDisplayForm()" (displayFormUpdate)="isDisplayFormUpdate()" />
 }
