@@ -1,3 +1,185 @@
+/* ── Page centering ───────────────────────────────── */
+
+.page-center {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+/* ── Wrapper ──────────────────────────────────────── */
+
+.category-detail-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  max-width: 720px;
+  width: 100%;
+}
+
+/* ── Header ───────────────────────────────────────── */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f0ece4;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #343030;
+  letter-spacing: 0.3px;
+}
+
+.section-title i {
+  font-size: 1rem;
+  color: #8b6d3b;
+}
+
+/* ── Body ─────────────────────────────────────────── */
+
+.section-body {
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Field row ────────────────────────────────────── */
+
+.field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #888;
+}
+
+/* ── ID badge ─────────────────────────────────────── */
+
+.id-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  background: #f5f2ec;
+  color: #8b6d3b;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 8px;
+  align-self: flex-start;
+  letter-spacing: 0.5px;
+}
+
+/* ── Input ────────────────────────────────────────── */
+
+.field-input {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.875rem;
+  color: #343030;
+  background: #fff;
+  border: 1.5px solid #e8e3d7;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.field-input:focus {
+  border-color: #c8b38a;
+  box-shadow: 0 0 0 3px rgba(200, 179, 138, 0.18);
+}
+
+.field-input--error {
+  border-color: #e07070;
+}
+
+.field-input--error:focus {
+  box-shadow: 0 0 0 3px rgba(224, 112, 112, 0.15);
+}
+
+/* ── Error slot ───────────────────────────────────── */
+
 .error-slot {
-  min-height: 18px;
+  min-height: 16px;
+}
+
+.error-msg {
+  font-size: 0.75rem;
+  color: #e07070;
+}
+
+/* ── Footer ───────────────────────────────────────── */
+
+.section-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+}
+
+/* ── Buttons ──────────────────────────────────────── */
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border: 1px solid #e8e3d7;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #343030;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-back:hover {
+  background: #f5f2ec;
+}
+
+.btn-save {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #493112, #4b4133);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-save:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+  background: linear-gradient(135deg, #463013, #34312a);
+}
+
+.btn-save:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+.btn-save:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }

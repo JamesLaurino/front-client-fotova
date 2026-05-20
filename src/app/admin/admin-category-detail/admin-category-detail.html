@@ -1,82 +1,59 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-8 col-md-10">
+<div class="page-center">
+  <div class="category-detail-section">
 
-      <!-- Card -->
-      <div class="card shadow-sm border-0">
-        <div class="card-body p-4">
-
-          <!-- Title -->
-          <h1 class="h4 text-center mb-4">
-            {{ i18n.getTranslation("EDIT") }}
-            {{ i18n.getTranslation("CATEGORY") }}
-          </h1>
-
-          <!-- Form -->
-          <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit()">
-
-            <!-- ID -->
-            <div class="col-md-6">
-              <label for="inputId" class="form-label text-muted">
-                ID
-              </label>
-              <input
-                type="text"
-                formControlName="id"
-                class="form-control"
-                id="inputId"
-                readonly>
-            </div>
-
-            <!-- Name -->
-            <div class="col-md-6">
-              <label for="inputName" class="form-label">
-                {{ i18n.getTranslation("NAME") }}
-              </label>
-              <input
-                type="text"
-                formControlName="name"
-                class="form-control"
-                id="inputName">
-
-              <!-- Error slot -->
-              <div class="error-slot mt-1">
-                @if(name.hasError('required') && name.touched) {
-                  <small class="text-danger">
-                    {{ i18n.getTranslation("ENTER_CATEGORY_NAME") }}
-                  </small>
-                }
-              </div>
-            </div>
-
-            <!-- Actions -->
-            <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-
-              <!-- Back -->
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-                (click)="backToPanel()">
-                <i class="bi bi-arrow-left"></i>
-                {{ i18n.getTranslation("BACK_TO_PANEL") }}
-              </button>
-
-              <!-- Save -->
-              <button
-                [disabled]="form.invalid"
-                type="submit"
-                class="btn btn-outline-success">
-                <i class="bi bi-check-circle me-1"></i>
-                {{ i18n.getTranslation("SAVE") }}
-              </button>
-
-            </div>
-
-          </form>
-
-        </div>
+    <!-- Header -->
+    <div class="section-header">
+      <div class="section-title">
+        <i class="bi bi-tag"></i>
+        <span>{{ i18n.getTranslation("EDIT") }} {{ i18n.getTranslation("CATEGORY") }}</span>
       </div>
-
+      <button type="button" class="btn-back" (click)="backToPanel()">
+        <i class="bi bi-arrow-left"></i>
+        {{ i18n.getTranslation("BACK_TO_PANEL") }}
+      </button>
     </div>
+
+    <!-- Body -->
+    <div class="section-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <!-- ID -->
+        <div class="field-row">
+          <span class="field-label">ID</span>
+          <div class="id-badge">#{{ form.get('id')?.value }}</div>
+        </div>
+
+        <!-- Name -->
+        <div class="field-row">
+          <label for="inputName" class="field-label">
+            {{ i18n.getTranslation("NAME") }}
+          </label>
+          <input
+            type="text"
+            formControlName="name"
+            class="field-input"
+            id="inputName"
+            [class.field-input--error]="name.hasError('required') && name.touched">
+          <div class="error-slot">
+            @if (name.hasError('required') && name.touched) {
+              <small class="error-msg">{{ i18n.getTranslation("ENTER_CATEGORY_NAME") }}</small>
+            }
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="section-footer">
+          <button
+            type="submit"
+            class="btn-save"
+            [disabled]="form.invalid">
+            <i class="bi bi-check-circle"></i>
+            {{ i18n.getTranslation("SAVE") }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+
   </div>
 </div>
