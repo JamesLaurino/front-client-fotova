@@ -1,65 +1,227 @@
-/* hover ligne table */
+/* ── Wrapper ──────────────────────────────────────── */
 
-.table-products tbody tr:hover td {
-  background-color: #e6dece;
-  transition: background-color 0.2s ease;
+.order-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
 }
 
-/* status icons */
+/* ── Header ───────────────────────────────────────── */
 
-.status-icon {
-  width: 40px;
-  height: 40px;
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f0ece4;
 }
 
-.status-pending svg {
-  width: 40px;
-  height: 25px;
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #343030;
+  letter-spacing: 0.3px;
 }
 
-/* boutons admin */
-
-.btn-action{
-  display:inline-block;
-  margin:0 4px;
-  border:none;
-  padding:6px 12px;
-  border-radius:8px;
-  font-size:13px;
-  font-weight:600;
-  cursor:pointer;
-  transition:all 0.25s ease;
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 12px;
+  background: #343030;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
-/* bouton view */
+/* ── Table wrapper ────────────────────────────────── */
 
-.btn-view{
-  background:#e8e3d7;
-  color:#343030;
+.table-wrapper {
+  overflow-x: auto;
 }
 
-.btn-view:hover{
-  background:#d6c9a6;
+/* ── Table ────────────────────────────────────────── */
+
+.table-orders {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-/* bouton complete */
-
-.btn-complete{
-  background:#c8b38a;
-  color:#343030;
+.table-orders thead tr {
+  background: #343030;
 }
 
-.btn-complete:hover{
-  background:#b59c6f;
+.table-orders thead th {
+  padding: 0.85rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #423e36;
+  border: none;
+  white-space: nowrap;
 }
 
-/* bouton uncomplete */
-
-.btn-uncomplete{
-  background:#343030;
-  color:#fff;
+.table-orders tbody tr:nth-child(even) td {
+  background: #faf8f5;
 }
 
-.btn-uncomplete:hover{
-  background:#8b2d2d;
+.table-orders tbody td {
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem;
+  color: #343030;
+  border-bottom: 1px solid #f0ece4;
+  vertical-align: middle;
+  transition: background-color 0.18s ease;
+}
+
+/* ── Row hover ────────────────────────────────────── */
+
+.order-row {
+  cursor: default;
+}
+
+.order-row:hover td {
+  background-color: #e6dece !important;
+}
+
+/* ── Cell variants ────────────────────────────────── */
+
+.order-id {
+  font-weight: 600;
+  color: #8b6d3b;
+  font-size: 0.82rem;
+}
+
+.order-date,
+.order-email {
+  color: #555;
+  font-size: 0.85rem;
+}
+
+.order-total {
+  font-weight: 700;
+  color: #343030;
+  font-size: 0.88rem;
+}
+
+/* ── Status badges ────────────────────────────────── */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-badge.done {
+  background: #c8b38a;
+  color: #343030;
+}
+
+.status-badge.pending {
+  background: #f5e6e6;
+  color: #8b2d2d;
+}
+
+/* ── Actions ──────────────────────────────────────── */
+
+.actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #493112, #4b4133);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.btn-detail:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+  background: linear-gradient(135deg, #463013, #34312a);
+}
+
+.btn-detail:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+.btn-status-action {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 13px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.btn-status-action.complete {
+  background: #e8e3d7;
+  color: #343030;
+}
+
+.btn-status-action.complete:hover {
+  background: #c8b38a;
+  transform: translateY(-1px);
+}
+
+.btn-status-action.uncomplete {
+  background: #343030;
+  color: #fff;
+}
+
+.btn-status-action.uncomplete:hover {
+  background: #8b2d2d;
+  transform: translateY(-1px);
+}
+
+/* ── Empty state ──────────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #aaa;
+  gap: 0.75rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: #d0c9bb;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 0.9rem;
 }
