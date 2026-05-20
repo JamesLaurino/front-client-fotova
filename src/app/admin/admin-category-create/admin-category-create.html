@@ -1,63 +1,47 @@
-<div class="container mt-4 d-flex justify-content-center">
-  <div class="card shadow-sm w-100" style="max-width: 600px;">
-    <div class="card-body p-4">
+<div class="create-section">
 
-      <h5 class="card-title mb-4 text-center">
-        {{ i18n.getTranslation("CATEGORY") }}
-      </h5>
+  <!-- Header -->
+  <div class="section-header">
+    <div class="section-title">
+      <i class="bi bi-tag"></i>
+      <span>{{ i18n.getTranslation("CATEGORY") }}</span>
+    </div>
+  </div>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="row g-3 align-items-end">
+  <!-- Form body -->
+  <div class="form-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-          <!-- Champ Name -->
-          <div class="col-md-8">
-            <label for="inputName" class="form-label">
-              {{ i18n.getTranslation("NAME") }}
-            </label>
-            <input
-              type="text"
-              formControlName="name"
-              class="form-control"
-              id="inputName"
-              placeholder="{{ i18n.getTranslation('CATEGORY') }}"
-            />
-
-            <div class="error-slot">
-              @if(name.hasError('required') && name.touched) {
-                <div class="text-danger small">
-                  {{ i18n.getTranslation("PLEASE_ENTER_CATEGORY_NAME") }}
-                </div>
-              }
-            </div>
-
-          </div>
-
-          <!-- Save -->
-          <div class="col-md-4 saveBtn d-flex justify-content-end">
-            <button
-              [disabled]="form.invalid"
-              type="submit"
-              class="btn btn-success w-100"
-            >
-              <i class="bi bi-check-circle me-1"></i>
-              {{ i18n.getTranslation("SAVE") }}
-            </button>
-          </div>
-
+      <div class="field-group">
+        <label for="inputName" class="form-label-custom">
+          {{ i18n.getTranslation("NAME") }}
+        </label>
+        <input
+          type="text"
+          formControlName="name"
+          class="form-input"
+          id="inputName"
+          placeholder="{{ i18n.getTranslation('CATEGORY') }}"
+        />
+        <div class="error-slot">
+          @if (name.hasError('required') && name.touched) {
+            <span class="field-error">{{ i18n.getTranslation("PLEASE_ENTER_CATEGORY_NAME") }}</span>
+          }
         </div>
-      </form>
+      </div>
 
-      <!-- Actions secondaires -->
-      <div class="d-flex justify-content-start mt-4">
-        <button
-          class="btn btn-outline-secondary btn-sm"
-          (click)="hideForm()"
-        >
-          <i class="bi bi-x-circle me-1"></i>
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="hideForm()">
+          <i class="bi bi-x"></i>
           {{ i18n.getTranslation("HIDE") }}
+        </button>
+        <button type="submit" class="btn-save" [disabled]="form.invalid">
+          <i class="bi bi-check-lg"></i>
+          {{ i18n.getTranslation("SAVE") }}
         </button>
       </div>
 
-    </div>
+    </form>
   </div>
+
 </div>
