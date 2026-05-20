@@ -1,0 +1,93 @@
+<div class="dashboard">
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card" (click)="navigate.emit('orders')">
+      <span class="kpi-label">Chiffre d'affaires</span>
+      <span class="kpi-value">{{ totalRevenue() | currency:'EUR':'symbol':'1.2-2' }}</span>
+      <span class="kpi-sub">{{ ordersDetailed()?.length ?? 0 }} transactions</span>
+    </div>
+
+    <div class="kpi-card" (click)="navigate.emit('orders')">
+      <span class="kpi-label">{{ i18n.getTranslation('ORDERS') }}</span>
+      <span class="kpi-value">{{ orders()?.length ?? 0 }}</span>
+      <span class="kpi-sub" [class.warning]="pendingOrders() > 0">
+        {{ pendingOrders() }} {{ i18n.getTranslation('UN_COMPLETE') | lowercase }}
+      </span>
+    </div>
+
+    <div class="kpi-card" (click)="navigate.emit('clients')">
+      <span class="kpi-label">{{ i18n.getTranslation('CLIENTS') }}</span>
+      <span class="kpi-value">{{ clients()?.length ?? 0 }}</span>
+      <span class="kpi-sub">comptes enregistrés</span>
+    </div>
+
+    <div class="kpi-card" (click)="navigate.emit('products')">
+      <span class="kpi-label">{{ i18n.getTranslation('PRODUCTS') }}</span>
+      <span class="kpi-value">{{ products()?.length ?? 0 }}</span>
+      <span class="kpi-sub">{{ categories()?.length ?? 0 }} {{ i18n.getTranslation('CATEGORIES') | lowercase }}</span>
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="section">
+    <div class="section-header">
+      <h3>Dernières commandes</h3>
+      <a (click)="navigate.emit('orders')">Voir tout →</a>
+    </div>
+
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>{{ i18n.getTranslation('DATE') }}</th>
+          <th>{{ i18n.getTranslation('EMAIL') }}</th>
+          <th>{{ i18n.getTranslation('TOTAL') }}</th>
+          <th>{{ i18n.getTranslation('STATUS') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of recentOrders(); track order.orderId) {
+          <tr>
+            <td>{{ order.creationDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ order.email }}</td>
+            <td>{{ order.total | currency:'EUR' }}</td>
+            <td>
+              @if (getOrderStatus(order.orderId)) {
+                <span class="badge done">{{ i18n.getTranslation('COMPLETE') }}</span>
+              } @else {
+                <span class="badge pending">{{ i18n.getTranslation('UN_COMPLETE') }}</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Quick Access -->
+  <div class="section">
+    <div class="section-header">
+      <h3>Accès rapide</h3>
+    </div>
+
+    <div class="quick-grid">
+      <div class="quick-card" (click)="navigate.emit('clients')">
+        <span class="quick-count">{{ clients()?.length ?? 0 }}</span>
+        <span class="quick-label">{{ i18n.getTranslation('CLIENTS') }}</span>
+      </div>
+      <div class="quick-card" (click)="navigate.emit('products')">
+        <span class="quick-count">{{ products()?.length ?? 0 }}</span>
+        <span class="quick-label">{{ i18n.getTranslation('PRODUCTS') }}</span>
+      </div>
+      <div class="quick-card" (click)="navigate.emit('categories')">
+        <span class="quick-count">{{ categories()?.length ?? 0 }}</span>
+        <span class="quick-label">{{ i18n.getTranslation('CATEGORIES') }}</span>
+      </div>
+      <div class="quick-card" (click)="navigate.emit('statics')">
+        <span class="quick-count">→</span>
+        <span class="quick-label">{{ i18n.getTranslation('STATISTICS') }}</span>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -13,6 +13,7 @@ import {AdminCategories} from '../admin-categories/admin-categories';
 import {OrderService} from '../../service/order/orderService';
 import {AdminOrder} from '../admin-order/admin-order';
 import {AdminChart} from '../admin-chart/admin-chart';
+import {AdminDashboard} from '../admin-dashboard/admin-dashboard';
 
 @Component({
   selector: 'app-admin-panel',
@@ -21,7 +22,8 @@ import {AdminChart} from '../admin-chart/admin-chart';
     AdminProduct,
     AdminCategories,
     AdminOrder,
-    AdminChart
+    AdminChart,
+    AdminDashboard
   ],
   templateUrl: './admin-panel.html',
   styleUrl: 'admin-panel.css'
@@ -130,11 +132,19 @@ export class AdminPanel implements OnInit{
     this.activeComponent.update((orders) => orders = "orders")
   }
 
+  manageStatics() {
+    this.activeComponent.update((statics) => statics = "statics");
+  }
+
   onProductDeleted() {
     this.products.reload();
   }
 
   onOrderCompleteUpdate() {
     this.orders.reload();
+  }
+
+  onDashboardNavigate(section: string) {
+    this.activeComponent.set(section);
   }
 }

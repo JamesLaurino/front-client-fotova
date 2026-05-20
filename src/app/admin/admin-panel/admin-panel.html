@@ -33,6 +33,9 @@
       <a class="nav-item" (click)="manageOrders()">
         {{ i18n.getTranslation('ORDERS') }}
       </a>
+      <a class="nav-item" (click)="manageStatics()">
+        {{ i18n.getTranslation('STATISTICS') }}
+      </a>
     </div>
 
     <div class="admin-right">
@@ -49,7 +52,13 @@
     <div class="container-fluid mt-4">
 
       @if(activeComponent() === ""){
-        <app-admin-chart [ordersDetailedInput]="ordersDetailed.value()" />
+        <app-admin-dashboard
+          [clients]="clients.value()"
+          [products]="products.value()"
+          [categories]="categories.value()"
+          [orders]="orders.value()"
+          [ordersDetailed]="ordersDetailed.value()"
+          (navigate)="onDashboardNavigate($event)" />
       }
 
       @if (activeComponent() === 'clients') {
@@ -68,6 +77,8 @@
           [ordersDetailedInput]="ordersDetailed.value()"
           [ordersInput]="orders.value()"
           (orderCompleteUpdate)="onOrderCompleteUpdate()" />
+      } @else if (activeComponent() === 'statics') {
+        <app-admin-chart [ordersDetailedInput]="ordersDetailed.value()" />
       }
 
     </div>
