@@ -1,33 +1,65 @@
-<div class="container my-4 shadow p-2 rounded">
-  <table class="table table-products">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">{{i18n.getTranslation("ID")}}</th>
-      <th scope="col">{{i18n.getTranslation("EMAIL")}}</th>
-      <th scope="col">{{i18n.getTranslation("ADDRESS")}}</th>
-      <th scope="col">{{i18n.getTranslation("COMMENTS")}}</th>
-      <th scope="col">{{i18n.getTranslation("DETAIL")}}</th>
-    </tr>
-    </thead>
-    <tbody>
-      @for (client of clientsInput(); track client.id; let idx = $index)
-      {
-        @if(client.isActive) {
+<div class="client-section">
+
+  <!-- Header -->
+  <div class="section-header">
+    <div class="section-title">
+      <span>{{ i18n.getTranslation("CLIENTS") }}</span>
+      <span class="count-badge">{{ activeCount() }}</span>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    @if (activeCount() === 0) {
+      <div class="empty-state">
+        <i class="bi bi-people empty-icon"></i>
+        <p>{{ i18n.getTranslation("NO_CLIENTS") }}</p>
+      </div>
+    } @else {
+      <table class="table table-clients mb-0">
+        <thead>
           <tr>
-            <th scope="row">{{idx}}</th>
-            <td>{{ client.id }}</td>
-            <td>{{ client.email }}</td>
-            <td>{{ client.address.city }}</td>
-            <td>{{ client.commentEntities.length }}</td>
-            <td>
-              <button (click)="goToClientDetail(client.id)" class="btn btn-view">
-                {{i18n.getTranslation("DETAIL")}}
-              </button>
-            </td>
+            <th></th>
+            <th>{{ i18n.getTranslation("ID") }}</th>
+            <th>{{ i18n.getTranslation("EMAIL") }}</th>
+            <th>{{ i18n.getTranslation("ADDRESS") }}</th>
+            <th>{{ i18n.getTranslation("COMMENTS") }}</th>
+            <th>{{ i18n.getTranslation("DETAIL") }}</th>
           </tr>
-        }
-      }
-    </tbody>
-  </table>
+        </thead>
+        <tbody>
+          @for (client of clientsInput(); track client.id) {
+            @if (client.isActive) {
+              <tr (click)="goToClientDetail(client.id)" class="client-row">
+                <td>
+                  <div class="client-avatar">
+                    {{ client.email[0].toUpperCase() }}
+                  </div>
+                </td>
+                <td class="client-id">#{{ client.id }}</td>
+                <td class="client-email">
+                  <i class="bi bi-envelope me-1"></i>{{ client.email }}
+                </td>
+                <td>{{ client.address.city }}</td>
+                <td>
+                  @if (client.commentEntities.length > 0) {
+                    <span class="badge-comments active">{{ client.commentEntities.length }}</span>
+                  } @else {
+                    <span class="badge-comments">0</span>
+                  }
+                </td>
+                <td>
+                  <button (click)="goToClientDetail(client.id); $event.stopPropagation()" class="btn-detail">
+                    {{ i18n.getTranslation("DETAIL") }}
+                    <i class="bi bi-arrow-right ms-1"></i>
+                  </button>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+
 </div>
