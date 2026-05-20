@@ -37,12 +37,20 @@ a {
   border-bottom: 1px solid #dee2e6;
 }
 
-/* welcome */
+/* brand */
 
-.welcome {
-  font-size: 0.9rem;
+.brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   color: #343030;
-  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s ease;
+}
+
+.brand:hover {
+  opacity: 0.65;
 }
 
 /* navigation */

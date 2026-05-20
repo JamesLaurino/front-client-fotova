@@ -112,6 +112,10 @@ export class AdminPanel implements OnInit{
     this.#router.navigate(['/']);
   }
 
+  goToDashboard() {
+    this.activeComponent.set('');
+  }
+
   manageProducts() {
     this.activeComponent.update((products) => products = "products")
   }

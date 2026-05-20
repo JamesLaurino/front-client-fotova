@@ -12,28 +12,26 @@
   <div class="admin-navbar">
 
     <div class="admin-left">
-      <span class="welcome">
-        {{ i18n.getTranslation('WELCOME') }} {{ user.value()?.username }}
-      </span>
+      <span class="brand" (click)="goToDashboard()">Fotova Admin</span>
     </div>
 
     <div class="admin-nav">
-      <a class="nav-item" (click)="manageClients()">
+      <a class="nav-item" [class.active]="activeComponent() === 'clients'" (click)="manageClients()">
         {{ i18n.getTranslation('CLIENTS') }}
       </a>
 
-      <a class="nav-item" (click)="manageProducts()">
+      <a class="nav-item" [class.active]="activeComponent() === 'products'" (click)="manageProducts()">
         {{ i18n.getTranslation('PRODUCTS') }}
       </a>
 
-      <a class="nav-item" (click)="manageCategories()">
+      <a class="nav-item" [class.active]="activeComponent() === 'categories'" (click)="manageCategories()">
         {{ i18n.getTranslation('CATEGORIES') }}
       </a>
 
-      <a class="nav-item" (click)="manageOrders()">
+      <a class="nav-item" [class.active]="activeComponent() === 'orders'" (click)="manageOrders()">
         {{ i18n.getTranslation('ORDERS') }}
       </a>
-      <a class="nav-item" (click)="manageStatics()">
+      <a class="nav-item" [class.active]="activeComponent() === 'statics'" (click)="manageStatics()">
         {{ i18n.getTranslation('STATISTICS') }}
       </a>
     </div>
