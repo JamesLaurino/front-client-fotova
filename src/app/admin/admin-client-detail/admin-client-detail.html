@@ -1,88 +1,101 @@
 @if (clientDetail.isLoading()) {
-  <div class="d-flex justify-content-center">
-    <div class="spinner-border big-spinner me-2 my-4" role="status">
+  <div class="detail-spinner">
+    <div class="spinner-border detail-spinner-icon" role="status">
       <span class="visually-hidden">{{ i18n.getTranslation('LOADING') }}</span>
     </div>
   </div>
 }
 
-<div class="container mt-5 mb-5">
-  <div class="card shadow-sm border-0">
-    <div class="card-header bg-light d-flex justify-content-between align-items-center">
-      <h5 class="mb-0">{{ i18n.getTranslation("CLIENT") }} {{ i18n.getTranslation("DETAIL") }}</h5>
-      <div>
-        <button (click)="backToPanel()" class="btn btn-outline-info btn-sm m-1">
-          {{ i18n.getTranslation("BACK_TO_PANEL") }}
+<div class="detail-page">
+
+  <!-- Main card -->
+  <div class="detail-card">
+
+    <div class="detail-header">
+      <h5 class="detail-header-title">
+        <i class="bi bi-person me-2"></i>{{ i18n.getTranslation("CLIENT") }} {{ i18n.getTranslation("DETAIL") }}
+      </h5>
+      <div class="detail-header-actions">
+        <button (click)="backToPanel()" class="btn-back">
+          <i class="bi bi-arrow-left me-1"></i>{{ i18n.getTranslation("BACK_TO_PANEL") }}
         </button>
-        <button (click)="deleteClient()" class="btn btn-danger btn-sm">
-          <i class="bi bi-trash"></i>{{ i18n.getTranslation("DELETE") }} {{ i18n.getTranslation("CLIENT") }}
+        <button (click)="deleteClient()" class="btn-delete">
+          <i class="bi bi-trash me-1"></i>{{ i18n.getTranslation("DELETE") }} {{ i18n.getTranslation("CLIENT") }}
         </button>
       </div>
     </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <strong>{{ i18n.getTranslation("USERNAME") }}:</strong> {{ clientDetail.value()?.username }}
-            </li>
-            <li class="list-group-item">
-              <strong>{{ i18n.getTranslation("EMAIL") }}:</strong> {{ clientDetail.value()?.email }}
-            </li>
-            <li class="list-group-item">
-              <strong>{{ i18n.getTranslation("STATUS") }}:</strong>
-              <span class="badge" [ngClass]="clientDetail.value()?.isActive ? 'bg-success' : 'bg-secondary'">
-                {{ clientDetail.value()?.isActive ? 'Active' : 'Inactive' }}
-              </span>
-            </li>
-          </ul>
+
+    <div class="detail-body">
+      <div class="client-hero">
+
+        <div class="client-hero-avatar">
+          {{ clientDetail.value()?.email?.[0]?.toUpperCase() }}
         </div>
-        <div class="col-md-6">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <strong>{{ i18n.getTranslation("IDENTIFIER") }}:</strong> {{ clientDetail.value()?.id }}
-            </li>
-            <li class="list-group-item">
-              <strong>{{ i18n.getTranslation("ADDRESS") }}:</strong>
-              <div class="small text-muted mt-1">
-                {{ clientDetail.value()?.address?.street }} {{ clientDetail.value()?.address?.number }},
-                {{ clientDetail.value()?.address?.city }} ({{ clientDetail.value()?.address?.country }})
-              </div>
-            </li>
-          </ul>
+
+        <div class="client-hero-identity">
+          <div class="client-hero-name">{{ clientDetail.value()?.username }}</div>
+          <div class="client-hero-email"><i class="bi bi-envelope me-1"></i>{{ clientDetail.value()?.email }}</div>
+          <span class="client-status-badge" [ngClass]="clientDetail.value()?.isActive ? 'status-active' : 'status-inactive'">
+            {{ clientDetail.value()?.isActive ? 'Active' : 'Inactive' }}
+          </span>
         </div>
+
+        <div class="client-info-grid">
+          <div class="info-item">
+            <span class="info-label"><i class="bi bi-hash me-1"></i>{{ i18n.getTranslation("IDENTIFIER") }}</span>
+            <span class="info-value info-id">#{{ clientDetail.value()?.id }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label"><i class="bi bi-geo-alt me-1"></i>{{ i18n.getTranslation("ADDRESS") }}</span>
+            <span class="info-value">
+              {{ clientDetail.value()?.address?.street }} {{ clientDetail.value()?.address?.number }},
+              {{ clientDetail.value()?.address?.city }} ({{ clientDetail.value()?.address?.country }})
+            </span>
+          </div>
+        </div>
+
       </div>
     </div>
+
   </div>
 
-  <div class="card shadow-sm border-0 mt-4">
-    <div class="card-header bg-light">
-      <h6 class="fw-bold mb-0">{{ i18n.getTranslation("COMMENTS") }}</h6>
+  <!-- Comments card -->
+  <div class="detail-card mt-section">
+
+    <div class="detail-section-header">
+      <div class="detail-section-title">
+        <i class="bi bi-chat-square-text me-2"></i>{{ i18n.getTranslation("COMMENTS") }}
+        <span class="count-badge">{{ clientDetail.value()?.commentEntities?.length ?? 0 }}</span>
+      </div>
     </div>
-    <div class="card-body">
-      @if(clientDetail.value()?.commentEntities?.length === 0) {
-        <p class="text-muted">{{ i18n.getTranslation("NO_COMMENTS_FOUND") }}</p>
+
+    <div class="detail-body">
+      @if (clientDetail.value()?.commentEntities?.length === 0) {
+        <div class="empty-state">
+          <i class="bi bi-chat-square-dots empty-icon"></i>
+          <p>{{ i18n.getTranslation("NO_COMMENTS_FOUND") }}</p>
+        </div>
       }
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-        @for(comment of clientDetail.value()?.commentEntities; track comment.id) {
-          <div class="col">
-            <div class="card h-100 shadow-sm border-0">
-              <div class="card-body">
-                <div class="d-flex w-100 justify-content-between">
-                  <h6 class="mb-1">{{ comment.header }}</h6>
-                  <small class="text-muted">{{ comment.createAt | date:'short' }}</small>
-                </div>
-                <p class="card-text">{{ comment.body }}</p>
+      <div class="comments-grid">
+        @for (comment of clientDetail.value()?.commentEntities; track comment.id) {
+          <div class="comment-card">
+            <div class="comment-card-body">
+              <div class="comment-header-row">
+                <span class="comment-title">{{ comment.header }}</span>
+                <span class="comment-date">{{ comment.createAt | date:'short' }}</span>
               </div>
-              <div class="card-footer bg-white border-0">
-                 <button (click)="deleteComment(comment.id)" class="btn btn-outline-danger btn-sm w-100">
-                   <i class="bi bi-trash"></i> {{ i18n.getTranslation("DELETE") }}
-                 </button>
-              </div>
+              <p class="comment-body">{{ comment.body }}</p>
+            </div>
+            <div class="comment-card-footer">
+              <button (click)="deleteComment(comment.id)" class="btn-delete-comment">
+                <i class="bi bi-trash me-1"></i>{{ i18n.getTranslation("DELETE") }}
+              </button>
             </div>
           </div>
         }
       </div>
     </div>
+
   </div>
+
 </div>

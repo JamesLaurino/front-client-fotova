@@ -1,140 +1,253 @@
-/* colonne actions */
-.table-products tbody tr:hover td {
-  background-color: #e6dece;
-  transition: background-color 0.2s ease;
+/* ── Wrapper ──────────────────────────────────────── */
+
+.product-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
 }
 
-/* spinner size */
-.big-spinner {
-  width: 3rem;
-  height: 3rem;
-  border-width: 0.3rem;
-  color: #2a2626;
+/* ── Header ───────────────────────────────────────── */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f0ece4;
 }
 
-/* boutons actions */
-
-.btn-action{
-  display:inline-block;
-  margin:0 4px;
-  border:none;
-  padding:6px 12px;
-  border-radius:8px;
-  font-size:13px;
-  font-weight:600;
-  cursor:pointer;
-  transition:all 0.25s ease;
-}
-/* boutons actions */
-
-.btn-action{
-  border:none;
-  padding:6px 12px;
-  border-radius:8px;
-  font-size:13px;
-  font-weight:600;
-  transition:all 0.25s ease;
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #343030;
+  letter-spacing: 0.3px;
 }
 
-/* view */
-
-.btn-view{
-  background:#e8e3d7;
-  color:#343030;
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 12px;
+  background: #343030;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
-.btn-view:hover{
-  background:#d6c9a6;
+/* ── Table wrapper ────────────────────────────────── */
+
+.table-wrapper {
+  overflow-x: auto;
 }
 
-/* labels */
+/* ── Table ────────────────────────────────────────── */
 
-.btn-labels{
-  background:#c8b38a;
-  color:#343030;
+.table-products {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.btn-labels:hover{
-  background:#b59c6f;
+.table-products thead tr {
+  background: #343030;
 }
 
-/* delete */
-
-.btn-delete{
-  background:#343030;
-  color:#fff;
+.table-products thead th {
+  padding: 0.85rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #524e46;
+  border: none;
+  white-space: nowrap;
 }
 
-.btn-delete:hover{
-  background:#8b2d2d;
+.table-products tbody tr:nth-child(even) td {
+  background: #faf8f5;
 }
 
-/* nom produit plus visible */
-
-.product-name{
-  font-weight:600;
+.table-products tbody td {
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem;
+  color: #343030;
+  border-bottom: 1px solid #f0ece4;
+  vertical-align: middle;
+  transition: background-color 0.18s ease;
 }
 
-/* prix */
+/* ── Row hover ────────────────────────────────────── */
 
-.price{
-  font-weight:600;
-  color:#8b6d3b;
+.product-row:hover td {
+  background-color: #e6dece !important;
 }
+
+/* ── Image ────────────────────────────────────────── */
 
 .product-img {
-  width: 50px;
-  height: 50px;
-  min-width: 50px;
-  min-height: 50px;
-
+  width: 44px;
+  height: 44px;
   object-fit: cover;
-  border-radius: 6px;
-
-  display: block;
-  margin: auto;
-
-  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  border: 1px solid #e8e3d7;
   background: #fafafa;
+  display: block;
 }
 
-.table-products td:nth-child(7) {
-  width: 70px;
+/* ── Cell variants ────────────────────────────────── */
+
+.product-id {
+  font-weight: 600;
+  color: #8b6d3b;
+  font-size: 0.82rem;
 }
 
-/* Bouton e-commerce premium */
+.product-name {
+  font-weight: 700;
+}
+
+.price {
+  font-weight: 600;
+  color: #8b6d3b;
+}
+
+/* ── Stock badge ──────────────────────────────────── */
+
+.stock-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #eee;
+  color: #888;
+}
+
+.stock-badge.stock-ok {
+  background: #d4edda;
+  color: #2d6a4f;
+}
+
+.stock-badge.stock-low {
+  background: #ffe8cc;
+  color: #b85c00;
+}
+
+.stock-badge.stock-out {
+  background: #f8d7da;
+  color: #8b2d2d;
+}
+
+/* ── Actions cell ─────────────────────────────────── */
+
+.actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.btn-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-action:active {
+  transform: translateY(0);
+}
+
+.btn-detail {
+  background: #e8e3d7;
+  color: #343030;
+}
+
+.btn-update {
+  background: #c8b38a;
+  color: #343030;
+}
+
+.btn-labels {
+  background: #d0c9bb;
+  color: #343030;
+}
+
+.btn-delete {
+  background: #343030;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: #8b2d2d;
+}
+
+/* ── Create button ────────────────────────────────── */
 
 .btn-create {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 0.85rem;
   color: #fff;
-
-  padding: 12px 24px;
-  border-radius: 12px;
+  padding: 9px 18px;
+  border-radius: 10px;
   border: none;
-
-  /* Dégradé type e-commerce */
   background: linear-gradient(135deg, #493112, #4b4133);
-
-  /* Ombre pour donner du relief */
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-
-  /* Transition pour hover */
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+  white-space: nowrap;
 }
 
-/* Hover et focus */
-.btn-create:hover,
-.btn-create:focus {
+.btn-create:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
   background: linear-gradient(135deg, #463013, #34312a);
 }
 
-/* Optionnel : effet active (clic) */
 .btn-create:active {
   transform: translateY(0);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+/* ── Empty state ──────────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #aaa;
+  gap: 0.75rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: #d0c9bb;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 0.9rem;
 }

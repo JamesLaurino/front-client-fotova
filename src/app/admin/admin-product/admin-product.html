@@ -1,59 +1,76 @@
-<div class="container my-4 shadow p-2 rounded">
-  <table class="table table-products">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">{{i18n.getTranslation("ID")}}</th>
-      <th scope="col">{{i18n.getTranslation("NAME")}}</th>
-      <th scope="col">{{i18n.getTranslation("PRICE")}}</th>
-      <th scope="col">{{i18n.getTranslation("QUANTITY")}}</th>
-      <th scope="col">{{i18n.getTranslation("CATEGORY")}}</th>
-      <th scope="col">{{i18n.getTranslation("IMAGE")}}</th>
-      <th scope="col">{{i18n.getTranslation("ACTIONS")}}</th>
-    </tr>
-    </thead>
-    <tbody>
-      @for (product of productsInput(); track product.id; let idx = $index)
-      {
-        <tr>
-          <th scope="row">{{idx}}</th>
-          <td>{{ product.id }}</td>
-          <td>{{ product.name }}</td>
-          <td>${{ product.price }}</td>
-          <td>{{ product.quantity }}</td>
-          <td>{{ product.categoryInnerProductDto.name }}</td>
-          <td>
-            <img [src]="urlHelper(product.url)" [alt]="product.name" class="product-img">
-          </td>
-          <td>
-            <button (click)="goToProductDetail(product.id)" class="btn btn-view">
-              {{i18n.getTranslation("DETAIL")}}
-            </button>
-          </td>
-          <td>
-            <button (click)="goToProductUpdate(product.id)" class="btn btn-view">
-              {{i18n.getTranslation("UPDATE")}}
-            </button>
-          </td>
-          <td>
-            <button (click)="goToLabels(product.id)" class="btn btn-labels">
-              {{i18n.getTranslation("LABELS")}}
-            </button>
-          </td>
-          <td>
-            <button (click)="deleteProduct(product.id)" class="btn btn-delete">
-              {{i18n.getTranslation("DELETE")}}
-            </button>
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
-</div>
+<div class="product-section">
 
-<div class="container d-flex mt-4 justify-content-start">
-  <button (click)="createProduct()" class="btn-create">
-    {{i18n.getTranslation("CREATE")}}
-    {{i18n.getTranslation("PRODUCT") | lowercase}}
-  </button>
+  <!-- Header -->
+  <div class="section-header">
+    <div class="section-title">
+      <span>{{ i18n.getTranslation("PRODUCTS") }}</span>
+      <span class="count-badge">{{ productCount() }}</span>
+    </div>
+    <button (click)="createProduct()" class="btn-create">
+      <i class="bi bi-plus-lg me-1"></i>
+      {{ i18n.getTranslation("CREATE") }} {{ i18n.getTranslation("PRODUCT") | lowercase }}
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    @if (productCount() === 0) {
+      <div class="empty-state">
+        <i class="bi bi-box-seam empty-icon"></i>
+        <p>{{ i18n.getTranslation("NO_PRODUCTS") }}</p>
+      </div>
+    } @else {
+      <table class="table table-products mb-0">
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{ i18n.getTranslation("ID") }}</th>
+            <th>{{ i18n.getTranslation("NAME") }}</th>
+            <th>{{ i18n.getTranslation("PRICE") }}</th>
+            <th>{{ i18n.getTranslation("QUANTITY") }}</th>
+            <th>{{ i18n.getTranslation("CATEGORY") }}</th>
+            <th>{{ i18n.getTranslation("ACTIONS") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of productsInput(); track product.id) {
+            <tr class="product-row">
+              <td>
+                <img [src]="urlHelper(product.url)" [alt]="product.name" class="product-img">
+              </td>
+              <td class="product-id">#{{ product.id }}</td>
+              <td class="product-name">{{ product.name }}</td>
+              <td class="price">${{ product.price }}</td>
+              <td>
+                <span class="stock-badge"
+                  [class.stock-ok]="product.quantity > 10"
+                  [class.stock-low]="product.quantity > 0 && product.quantity <= 10"
+                  [class.stock-out]="product.quantity === 0">
+                  {{ product.quantity }}
+                </span>
+              </td>
+              <td>{{ product.categoryInnerProductDto.name }}</td>
+              <td>
+                <div class="actions-cell">
+                  <button (click)="goToProductDetail(product.id)" class="btn-action btn-detail" [title]="i18n.getTranslation('DETAIL')">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button (click)="goToProductUpdate(product.id)" class="btn-action btn-update" [title]="i18n.getTranslation('UPDATE')">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button (click)="goToLabels(product.id)" class="btn-action btn-labels" [title]="i18n.getTranslation('LABELS')">
+                    <i class="bi bi-tags"></i>
+                  </button>
+                  <button (click)="deleteProduct(product.id)" class="btn-action btn-delete" [title]="i18n.getTranslation('DELETE')">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+
 </div>

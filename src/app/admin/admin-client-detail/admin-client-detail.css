@@ -1,6 +1,364 @@
-.big-spinner {
+/* ── Page wrapper ─────────────────────────────────── */
+
+.detail-page {
+  padding: 2rem;
+  background: #f8f6f2;
+  min-height: 100vh;
+}
+
+/* ── Card ─────────────────────────────────────────── */
+
+.detail-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.mt-section {
+  margin-top: 1.5rem;
+}
+
+/* ── Header ───────────────────────────────────────── */
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  background: #343030;
+}
+
+.detail-header-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+.detail-header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ── Action buttons ───────────────────────────────── */
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  background: transparent;
+  color: #d8d0c4;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #8b3a3a;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-delete:hover {
+  background: #7a2f2f;
+  transform: translateY(-1px);
+}
+
+/* ── Body ─────────────────────────────────────────── */
+
+.detail-body {
+  padding: 1.75rem;
+}
+
+/* ── Client hero ──────────────────────────────────── */
+
+.client-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+}
+
+/* ── Avatar ───────────────────────────────────────── */
+
+.client-hero-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #e8e3d7;
+  color: #343030;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+/* ── Identity ─────────────────────────────────────── */
+
+.client-hero-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 180px;
+}
+
+.client-hero-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #343030;
+}
+
+.client-hero-email {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.client-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  width: fit-content;
+  margin-top: 0.25rem;
+}
+
+.status-active {
+  background: #d4edda;
+  color: #2d6a4f;
+}
+
+.status-inactive {
+  background: #eeecec;
+  color: #888;
+}
+
+/* ── Info grid ────────────────────────────────────── */
+
+.client-info-grid {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #f0ece4;
+  padding-left: 1.75rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #f0ece4;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+.info-value {
+  font-size: 0.875rem;
+  color: #343030;
+  font-weight: 500;
+}
+
+.info-id {
+  color: #8b6d3b;
+  font-weight: 700;
+}
+
+/* ── Section header (comments) ────────────────────── */
+
+.detail-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid #f0ece4;
+}
+
+.detail-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #343030;
+}
+
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 12px;
+  background: #343030;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* ── Comments grid ────────────────────────────────── */
+
+.comments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+/* ── Comment card ─────────────────────────────────── */
+
+.comment-card {
+  background: #faf8f5;
+  border: 1px solid #f0ece4;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.comment-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.09);
+}
+
+.comment-card-body {
+  padding: 1rem;
+  flex: 1;
+}
+
+.comment-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.comment-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #343030;
+}
+
+.comment-date {
+  font-size: 0.72rem;
+  color: #aaa;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.comment-body {
+  font-size: 0.825rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.comment-card-footer {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #f0ece4;
+  background: #fff;
+}
+
+/* ── Delete comment button ────────────────────────── */
+
+.btn-delete-comment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #493112, #4b4133);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-delete-comment:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+  background: linear-gradient(135deg, #463013, #34312a);
+}
+
+.btn-delete-comment:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+/* ── Empty state ──────────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #aaa;
+  gap: 0.75rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: #d0c9bb;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* ── Spinner ──────────────────────────────────────── */
+
+.detail-spinner {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.detail-spinner-icon {
   width: 3rem;
   height: 3rem;
   border-width: 0.3rem;
-  color: #2a2626;
+  color: #343030;
 }

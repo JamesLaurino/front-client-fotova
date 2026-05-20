@@ -22,8 +22,12 @@ export class AdminProduct {
   private toasterService = inject(ToasterService);
   protected readonly urlHelper = urlHelper;
 
-  productsInput:InputSignal<ProductModel[] | undefined> = input.required<ProductModel[] | undefined>();
+  productsInput: InputSignal<ProductModel[] | undefined> = input.required<ProductModel[] | undefined>();
   @Output() productDeleted = new EventEmitter<unknown>();
+
+  productCount(): number {
+    return this.productsInput()?.length ?? 0;
+  }
 
   goToProductUpdate(id: number) {
     this.#router.navigate(['/admin/update/product', id]);
