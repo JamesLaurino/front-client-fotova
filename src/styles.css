@@ -1,1 +1,95 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* ── Admin Order Detail ────────────────────────────── */
+
+.order-detail-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.order-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f0ece4;
+}
+
+.order-detail-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #343030;
+  letter-spacing: 0.3px;
+}
+
+.order-table-wrapper {
+  overflow-x: auto;
+}
+
+.table-orders {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-orders thead tr {
+  background: #343030;
+}
+
+.table-orders thead th {
+  padding: 0.85rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #f0ece4;
+  border: none;
+  white-space: nowrap;
+}
+
+.table-orders tbody tr:nth-child(even) td {
+  background: #faf8f5;
+}
+
+.table-orders tbody td {
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem;
+  color: #343030;
+  border-bottom: 1px solid #f0ece4;
+  vertical-align: middle;
+}
+
+.table-orders tbody tr:hover td {
+  background-color: #e6dece !important;
+}
+
+/* ── Shared buttons ────────────────────────────────── */
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #493112, #4b4133);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.btn-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+  background: linear-gradient(135deg, #463013, #34312a);
+}
+
+.btn-back:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
