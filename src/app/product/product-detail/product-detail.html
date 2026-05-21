@@ -9,60 +9,59 @@
 @if(product.hasValue()) {
   <div class="container d-flex justify-content-center mt-5">
 
-    <!-- LATERAL CARD  -->
-    <div class="d-flex flex-column me-2">
+    <!-- LATERAL THUMBNAILS -->
+    <div class="thumb-strip d-flex flex-column me-3">
       @for (img of product.value().images; track img) {
-        <img class="mx-2 shadow rounded p-2 m-1"
-             style="cursor: pointer;"
+        <img class="product-thumb"
              appProductBorder
              (click)="switchImage(img)"
-             [src]="urlHelper(img)" [alt]="product.value().name" width="60px" height="60px">
+             [src]="urlHelper(img)" [alt]="product.value().name">
       }
-      <img class="mx-2 shadow rounded p-2 m-1"
+      <img class="product-thumb"
            appProductBorder
-           style="cursor: pointer;"
            [src]="urlHelper(product.value().url)"
            (click)="switchImage(product.value().url)"
-           [alt]="product.value().name" width="60px" height="60px">
+           [alt]="product.value().name">
     </div>
 
     <!-- MAIN PRODUCT CARD -->
     <div class="col-lg-8 col-md-10 col-sm-12">
-      <div class="card shadow-lg border-0 rounded-3">
-        <div class="card-body p-4">
+      <div class="product-card">
+        <div class="product-card-body">
           <div class="row g-4">
-            <!-- Product Image Section -->
+
+            <!-- Image -->
             <div class="col-md-6 d-flex justify-content-center align-items-center">
-<!--              <img #imgSwitch class="img-fluid rounded-3 product-main-image"-->
-<!--                   [src]="urlHelper(product.value().url)"-->
-<!--                   [alt]="product.value().name" style="max-width: 300px; max-height: 300px; object-fit: contain;">-->
-              <img #imgSwitch
-                   class="img-fluid rounded-3 product-main-image"
-                   [src]="urlHelper(product.value().url)"
-                   [alt]="product.value().name"
-                   style="max-width: 300px; max-height: 300px; object-fit: contain; cursor: zoom-in;"
-                   (click)="openImageViewer(imgSwitch.src)">
+              <div class="product-image-area">
+                <img #imgSwitch
+                     class="img-fluid product-main-image"
+                     [src]="urlHelper(product.value().url)"
+                     [alt]="product.value().name"
+                     style="max-width: 300px; max-height: 300px; object-fit: contain; cursor: zoom-in;"
+                     (click)="openImageViewer(imgSwitch.src)">
+              </div>
             </div>
 
-            <!-- Product Details Section -->
+            <!-- Details -->
             <div class="col-md-6">
               @if(i18n.getLanguage() === 'fr') {
-                <h1 class="card-title text-center text-md-start mb-3"> {{ label()?.titleFr ?? product.value().name }}</h1>
+                <h1 class="product-title text-center text-md-start mb-2">{{ label()?.titleFr ?? product.value().name }}</h1>
               }
               @else if(i18n.getLanguage() === 'en') {
-                <h1 class="card-title text-center text-md-start mb-3"> {{ label()?.titleEn ?? product.value().name }}</h1>
+                <h1 class="product-title text-center text-md-start mb-2">{{ label()?.titleEn ?? product.value().name }}</h1>
               } @else {
-                <h1 class="card-title text-center text-md-start mb-3"> {{ label()?.titleRu ?? product.value().name }}</h1>
+                <h1 class="product-title text-center text-md-start mb-2">{{ label()?.titleRu ?? product.value().name }}</h1>
               }
-              <p class="text-muted text-center text-md-start mb-4">
+
+              <p class="product-stock text-center text-md-start mb-3">
                 {{ i18n.getTranslation('AVAILABLE_IN_STOCK') }} :
                 <span class="fw-bold">{{product.value().quantity}}</span>
               </p>
 
-              <hr class="my-3">
+              <div class="product-divider"></div>
 
-              <h5 class="mb-2">{{ i18n.getTranslation('DESCRIPTION') }} :</h5>
-              <div>
+              <p class="product-label mb-2">{{ i18n.getTranslation('DESCRIPTION') }}</p>
+              <div class="product-description mb-1">
                 @if (i18n.getLanguage() === 'fr') {
                   {{ label()?.descriptionFr ?? product.value()?.description }}
                 }
@@ -72,46 +71,46 @@
                 @else {
                   {{ label()?.descriptionRu ?? product.value()?.description }}
                 }
-
               </div>
-              <hr class="my-3">
+
+              <div class="product-divider"></div>
+
               <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="d-flex justify-content-center justify-content-md-start align-items-center my-4">
-                  <button type="button"
-                          class="btn btn-outline-secondary me-3"
+                <div class="qty-control d-flex justify-content-center justify-content-md-start align-items-center my-4">
+                  <button type="button" class="qty-btn"
                           (click)="decrementCartQuantity()"
-                          [disabled]="cartQuantity.value <= 0">-</button>
-                  <input style="max-width: 120px; font-size: 1rem;" type="number"
+                          [disabled]="cartQuantity.value <= 0">−</button>
+                  <input type="number"
                          formControlName="cartQuantity"
-                         class="form-control text-center"/>
-                  <button type="button"
+                         class="qty-input"/>
+                  <button type="button" class="qty-btn"
                           (click)="incrementCartQuantity()"
-                          [disabled]="cartQuantity.value >= product.value().quantity"
-                          class="btn btn-outline-secondary ms-3">+</button>
+                          [disabled]="cartQuantity.value >= product.value().quantity">+</button>
                 </div>
 
                 @if(cartQuantity.hasError('required')) {
-                    <div class="text-danger mb-2">
-                          {{ i18n.getTranslation('PLEASE_ENTER_QUANTITY') }}
-                    </div>
+                  <div class="text-danger mb-2">{{ i18n.getTranslation('PLEASE_ENTER_QUANTITY') }}</div>
                 }
-
                 @if(cartQuantity.hasError('minlength')) {
-                  <div class="text-danger mb-2">
-                    {{ i18n.getTranslation('MINIMUM_QUANTITY_REQUIRED') }}
-                  </div>
+                  <div class="text-danger mb-2">{{ i18n.getTranslation('MINIMUM_QUANTITY_REQUIRED') }}</div>
                 }
 
-                <h3 class="text-center text-md-start mt-4 mb-4">
-                  {{ i18n.getTranslation('PRICE') }} :
-                  <span class="fw-bold text-dark">{{product.value().price | currency: 'EUR'}}</span>
-                </h3>
-                <button [disabled]="form.invalid" class="btn btn-detail w-100 mb-3">{{ i18n.getTranslation('ADD_TO_CART') }}</button>
+                <div class="product-price text-center text-md-start mb-4">
+                  {{product.value().price | currency: 'EUR'}}
+                </div>
+
+                <button [disabled]="form.invalid" class="btn btn-detail w-100 mb-3">
+                  {{ i18n.getTranslation('ADD_TO_CART') }}
+                </button>
               </form>
+
               <div class="d-grid">
-                <button (click)="goToProductList()" class="btn btn-outline-secondary">{{ i18n.getTranslation('PRODUCTS') }}</button>
+                <button (click)="goToProductList()" class="btn btn-back">
+                  {{ i18n.getTranslation('PRODUCTS') }}
+                </button>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -125,12 +124,7 @@
       <button type="button" class="image-viewer-close" (click)="closeImageViewer()">
         <i class="bi bi-x-lg"></i>
       </button>
-
-      <img
-        [src]="selectedImage()!"
-        [alt]="product.value()?.name"
-        class="image-viewer-img"
-      >
+      <img [src]="selectedImage()!" [alt]="product.value()?.name" class="image-viewer-img">
     </div>
   </div>
 }
