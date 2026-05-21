@@ -1,0 +1,98 @@
+<div class="dashboard">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h2 class="hero-title">Bonjour, {{ userInput()?.username }}</h2>
+    <p class="hero-sub">Bienvenue dans votre espace personnel</p>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card" (click)="navigate.emit('order')">
+      <span class="kpi-label">{{ i18n.getTranslation('ORDERS') }}</span>
+      <span class="kpi-value">{{ totalOrders() }}</span>
+      <span class="kpi-sub">commandes passées</span>
+    </div>
+
+    <div class="kpi-card" (click)="navigate.emit('order')">
+      <span class="kpi-label">Total dépensé</span>
+      <span class="kpi-value">{{ totalSpent() | currency:'EUR':'symbol':'1.2-2' }}</span>
+      <span class="kpi-sub">depuis le début</span>
+    </div>
+
+    <div class="kpi-card" (click)="navigate.emit('order')">
+      <span class="kpi-label">Dernière commande</span>
+      @if (lastOrderDate()) {
+        <span class="kpi-value kpi-value--date">{{ lastOrderDate() | date:'dd/MM/yyyy' }}</span>
+        <span class="kpi-sub">date de passage</span>
+      } @else {
+        <span class="kpi-value kpi-value--empty">—</span>
+        <span class="kpi-sub">aucune commande</span>
+      }
+    </div>
+
+    <div class="kpi-card" (click)="navigate.emit('comment')">
+      <span class="kpi-label">{{ i18n.getTranslation('COMMENTS') }}</span>
+      <span class="kpi-value">{{ reviewsCount() }}</span>
+      <span class="kpi-sub">avis déposés</span>
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  @if (totalOrders() > 0) {
+    <div class="section">
+      <div class="section-header">
+        <h3>Dernières commandes</h3>
+        <a (click)="navigate.emit('order')">Voir tout →</a>
+      </div>
+
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>{{ i18n.getTranslation('DATE') }}</th>
+            <th>Produit</th>
+            <th>Qté</th>
+            <th>{{ i18n.getTranslation('TOTAL') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (order of recentOrders(); track order.orderId) {
+            <tr>
+              <td>{{ order.creationDate | date:'dd/MM/yyyy' }}</td>
+              <td>{{ order.name }}</td>
+              <td>{{ order.quantity }}</td>
+              <td>{{ order.total | currency:'EUR' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  <!-- Quick Access -->
+  <div class="section">
+    <div class="section-header">
+      <h3>Accès rapide</h3>
+    </div>
+
+    <div class="quick-grid">
+      <div class="quick-card" (click)="navigate.emit('address')">
+        <span class="quick-count">→</span>
+        <span class="quick-label">{{ i18n.getTranslation('INFORMATION') }}</span>
+      </div>
+      <div class="quick-card" (click)="navigate.emit('order')">
+        <span class="quick-count">{{ totalOrders() }}</span>
+        <span class="quick-label">{{ i18n.getTranslation('ORDERS') }}</span>
+      </div>
+      <div class="quick-card" (click)="navigate.emit('comment')">
+        <span class="quick-count">{{ reviewsCount() }}</span>
+        <span class="quick-label">{{ i18n.getTranslation('COMMENTS') }}</span>
+      </div>
+      <div class="quick-card" (click)="navigate.emit('email')">
+        <span class="quick-count">→</span>
+        <span class="quick-label">{{ i18n.getTranslation('EMAIL') }}</span>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,174 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* HERO */
+
+.hero {
+  padding: 0.5rem 0;
+}
+
+.hero-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #343030;
+  margin: 0 0 0.25rem;
+}
+
+.hero-sub {
+  font-size: 0.875rem;
+  color: #868e96;
+  margin: 0;
+}
+
+/* KPI GRID */
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+
+.kpi-card {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.kpi-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.kpi-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #868e96;
+}
+
+.kpi-value {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #343030;
+  line-height: 1.1;
+}
+
+.kpi-value--date {
+  font-size: 1.4rem;
+}
+
+.kpi-value--empty {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #dee2e6;
+  line-height: 1.1;
+}
+
+.kpi-sub {
+  font-size: 0.8rem;
+  color: #868e96;
+}
+
+/* SECTION */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-header h3 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #343030;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.section-header a {
+  font-size: 0.8rem;
+  color: #343030;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.section-header a:hover {
+  opacity: 0.5;
+}
+
+/* ORDERS TABLE */
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #868e96;
+  padding: 0 1rem 0.75rem 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.orders-table td {
+  padding: 0.85rem 1rem 0.85rem 0;
+  font-size: 0.875rem;
+  color: #343030;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* QUICK ACCESS */
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+
+.quick-card {
+  background: #343030;
+  color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.quick-card:hover {
+  opacity: 0.82;
+  transform: translateY(-2px);
+}
+
+.quick-count {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.quick-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  opacity: 0.6;
+}

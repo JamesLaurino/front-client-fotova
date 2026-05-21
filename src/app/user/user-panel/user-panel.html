@@ -20,23 +20,23 @@
 
     <div class="user-nav">
 
-      <a class="nav-item" (click)="displayUserAddress()">
+      <a class="nav-item" [class.active]="activeComponent() === 'address'" (click)="displayUserAddress()">
         {{ i18n.getTranslation('INFORMATION') }}
       </a>
 
-      <a class="nav-item" (click)="displayUserOrder()">
+      <a class="nav-item" [class.active]="activeComponent() === 'order'" (click)="displayUserOrder()">
         {{ i18n.getTranslation('ORDERS') }}
       </a>
 
-      <a class="nav-item" (click)="displayUserComment()">
+      <a class="nav-item" [class.active]="activeComponent() === 'comment'" (click)="displayUserComment()">
         {{ i18n.getTranslation('COMMENTS') }}
       </a>
 
-      <a class="nav-item" (click)="displayEditAddress()">
+      <a class="nav-item" [class.active]="activeComponent() === 'edit-address'" (click)="displayEditAddress()">
         {{ i18n.getTranslation('EDIT_ADDRESS') }}
       </a>
 
-      <a class="nav-item" (click)="displayUserEmail()">
+      <a class="nav-item" [class.active]="activeComponent() === 'email'" (click)="displayUserEmail()">
         {{ i18n.getTranslation('EMAIL') }}
       </a>
 
@@ -57,6 +57,13 @@
   <!-- MAIN CONTENT -->
   <div class="main-content">
     <div class="container-fluid mt-4">
+
+      @if (activeComponent() === '') {
+        <app-user-dashboard
+          [userInput]="user.value()"
+          [ordersInput]="orders.value()"
+          (navigate)="onDashboardNavigate($event)" />
+      }
 
       @if (activeComponent() === 'address') {
         <app-user-address [userAddressInput]="user.value()?.address"/>
