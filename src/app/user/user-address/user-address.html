@@ -1,32 +1,41 @@
-@if (userAddressInput() === null) {
-  <div class="container py-5">
-    <div class="row justify-content-start">
-      <div class="col-md-6">
-        <div class="card shadow-sm rounded-3" style="min-width: 700px;">
-          <div class="card-body">
-            <h5 class="card-title mb-3">{{ i18n.getTranslation('NO_ADDRESS_FOUND') }}</h5>
-          </div>
-        </div>
-      </div>
+@if (!userAddressInput()) {
+  <div class="address-card">
+    <div class="address-header">
+      <i class="bi bi-geo-alt header-icon"></i>
+      <span class="header-title">{{ i18n.getTranslation('SHIPPING_ADDRESS') }}</span>
+    </div>
+    <div class="empty-state">
+      <i class="bi bi-geo-alt empty-icon"></i>
+      <p>{{ i18n.getTranslation('NO_ADDRESS_FOUND') }}</p>
     </div>
   </div>
 } @else {
-  <div class="container py-5">
-    <div class="row justify-content-start">
-      <div class="col-md-6">
-        <div class="card shadow-sm rounded-3" style="min-width: 700px;">
-          <div class="card-body">
-            <h5 class="card-title mb-3">{{ i18n.getTranslation('SHIPPING_ADDRESS') }}</h5>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item"><strong>{{ i18n.getTranslation('STREET') }} :</strong> {{userAddressInput()?.street}}</li>
-              <li class="list-group-item"><strong>{{ i18n.getTranslation('NUMBER') }} :</strong> {{userAddressInput()?.number}}</li>
-              <li class="list-group-item"><strong>{{ i18n.getTranslation('CITY') }} :</strong> {{userAddressInput()?.city}}</li>
-              <li class="list-group-item"><strong>{{ i18n.getTranslation('COUNTRY') }} :</strong> {{userAddressInput()?.country}}</li>
-            </ul>
-          </div>
-        </div>
+  <div class="address-card">
+    <div class="address-header">
+      <i class="bi bi-geo-alt header-icon"></i>
+      <span class="header-title">{{ i18n.getTranslation('SHIPPING_ADDRESS') }}</span>
+    </div>
+    <div class="address-grid">
+      <div class="address-field">
+        <i class="bi bi-signpost field-icon"></i>
+        <span class="field-label">{{ i18n.getTranslation('STREET') }}</span>
+        <span class="field-value">{{ userAddressInput()?.street }}</span>
+      </div>
+      <div class="address-field">
+        <i class="bi bi-hash field-icon"></i>
+        <span class="field-label">{{ i18n.getTranslation('NUMBER') }}</span>
+        <span class="field-value">{{ userAddressInput()?.number }}</span>
+      </div>
+      <div class="address-field">
+        <i class="bi bi-buildings field-icon"></i>
+        <span class="field-label">{{ i18n.getTranslation('CITY') }}</span>
+        <span class="field-value">{{ userAddressInput()?.city }}</span>
+      </div>
+      <div class="address-field">
+        <i class="bi bi-globe field-icon"></i>
+        <span class="field-label">{{ i18n.getTranslation('COUNTRY') }}</span>
+        <span class="field-value">{{ userAddressInput()?.country }}</span>
       </div>
     </div>
   </div>
 }
-

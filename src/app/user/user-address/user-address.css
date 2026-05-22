@@ -1,0 +1,98 @@
+/* ── Card ─────────────────────────────────────────── */
+
+.address-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+/* ── Header ───────────────────────────────────────── */
+
+.address-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f0ece4;
+}
+
+.header-icon {
+  font-size: 1rem;
+  color: #8b6d3b;
+}
+
+.header-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #343030;
+  letter-spacing: 0.3px;
+}
+
+/* ── Grid ─────────────────────────────────────────── */
+
+.address-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.address-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f0ece4;
+}
+
+.address-field:nth-child(odd) {
+  border-right: 1px solid #f0ece4;
+}
+
+.address-field:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+/* ── Field content ────────────────────────────────── */
+
+.field-icon {
+  font-size: 1rem;
+  color: #c8b38a;
+  margin-bottom: 0.1rem;
+}
+
+.field-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #999;
+}
+
+.field-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #343030;
+}
+
+/* ── Empty state ──────────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #aaa;
+  gap: 0.75rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: #d0c9bb;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 0.9rem;
+}
