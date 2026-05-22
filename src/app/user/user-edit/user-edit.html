@@ -1,65 +1,199 @@
-<div class="container d-flex justify-content-center" style="max-width: 700px;" >
-  <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="col-6">
-      <label for="inputAddress" class="form-label">Street</label>
-      <input formControlName="street" type="text" class="form-control" id="inputAddress" placeholder="Avenue briart">
-      @if(street.hasError('required') && street.touched) {
-        <div class="text-danger">
-          {{ i18n.getTranslation('PLEASE_ENTER_STREET') }}
-        </div>
-      }
-    </div>
-    <div class="col-md-6">
-      <label for="inputCity" class="form-label">ZIP + City</label>
-      <input type="text" formControlName="city" class="form-control" id="inputCity">
-      @if(city.hasError('required') && city.touched) {
-        <div class="text-danger">
-          {{ i18n.getTranslation('PLEASE_ENTER_CITY') }}
-        </div>
-      }
-    </div>
-    <div class="col-md-6">
-      <label for="inputNumber" class="form-label">Number + bte</label>
-      <input type="text" formControlName="number" class="form-control" id="inputNumber">
-      @if(number.hasError('required') && number.touched) {
-        <div class="text-danger">
-          {{ i18n.getTranslation('PLEASE_ENTER_NUMBER_BOX') }}
-        </div>
-      }
-    </div>
+<style>
+  /* ── Card ─────────────────────────────────────────── */
+  .ue-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    max-width: 700px;
+    margin: 0 auto;
+  }
 
-    <div class="col-md-6">
-      <label for="inputCountry" class="form-label">
-        {{ i18n.getTranslation('COUNTRY') }}
-      </label>
+  /* ── Header ───────────────────────────────────────── */
+  .ue-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f0ece4;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #343030;
+    letter-spacing: 0.3px;
+  }
 
-      <select
-        id="inputCountry"
-        class="form-select"
-        formControlName="country">
+  .ue-header-icon {
+    font-size: 1.1rem;
+    color: #8b6d3b;
+  }
 
-        <option value="">
-          -- Sélectionner un pays --
-        </option>
+  /* ── Form body ────────────────────────────────────── */
+  .ue-body {
+    padding: 1.5rem;
+  }
 
-        @for (countryItem of countries; track countryItem) {
-          <option [value]="countryItem">
-            {{ i18n.getTranslation(countryItem) }}
-          </option>
+  /* ── Labels ───────────────────────────────────────── */
+  .ue-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #343030;
+    margin-bottom: 0.4rem;
+  }
+
+  /* ── Inputs ───────────────────────────────────────── */
+  .ue-input,
+  .ue-select {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1.5px solid #e8e3d7;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    color: #343030;
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+  }
+
+  .ue-input::placeholder {
+    color: #c4bcaf;
+  }
+
+  .ue-input:focus,
+  .ue-select:focus {
+    border-color: #c8b38a;
+    box-shadow: 0 0 0 3px rgba(200, 179, 138, 0.18);
+  }
+
+  /* ── Select ───────────────────────────────────────── */
+  .ue-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16'%3E%3Cpath fill='%238b6d3b' d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    padding-right: 2.2rem;
+    cursor: pointer;
+  }
+
+  /* ── Error ────────────────────────────────────────── */
+  .ue-error {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.35rem;
+    font-size: 0.78rem;
+    color: #c0392b;
+  }
+
+  /* ── Submit button ────────────────────────────────── */
+  .ue-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.65rem 1.75rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #493112, #4b4133);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+  }
+
+  .ue-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+    background: linear-gradient(135deg, #463013, #34312a);
+  }
+
+  .ue-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+  }
+
+  .ue-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+</style>
+
+<div class="ue-card">
+
+  <div class="ue-header">
+    <i class="bi bi-geo-alt-fill ue-header-icon"></i>
+    <span>{{ i18n.getTranslation('ADDRESS') }}</span>
+  </div>
+
+  <div class="ue-body">
+    <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <div class="col-md-6">
+        <label for="inputAddress" class="ue-label">Street</label>
+        <input formControlName="street" type="text" class="ue-input" id="inputAddress" placeholder="Avenue briart">
+        @if(street.hasError('required') && street.touched) {
+          <div class="ue-error">
+            <i class="bi bi-exclamation-circle"></i>
+            {{ i18n.getTranslation('PLEASE_ENTER_STREET') }}
+          </div>
         }
+      </div>
 
-      </select>
+      <div class="col-md-6">
+        <label for="inputCity" class="ue-label">ZIP + City</label>
+        <input type="text" formControlName="city" class="ue-input" id="inputCity">
+        @if(city.hasError('required') && city.touched) {
+          <div class="ue-error">
+            <i class="bi bi-exclamation-circle"></i>
+            {{ i18n.getTranslation('PLEASE_ENTER_CITY') }}
+          </div>
+        }
+      </div>
 
-      @if (country.hasError('required') && country.touched) {
-        <div class="text-danger">
-          {{ i18n.getTranslation('PLEASE_ENTER_COUNTRY') }}
-        </div>
-      }
-    </div>
+      <div class="col-md-6">
+        <label for="inputNumber" class="ue-label">Number + bte</label>
+        <input type="text" formControlName="number" class="ue-input" id="inputNumber">
+        @if(number.hasError('required') && number.touched) {
+          <div class="ue-error">
+            <i class="bi bi-exclamation-circle"></i>
+            {{ i18n.getTranslation('PLEASE_ENTER_NUMBER_BOX') }}
+          </div>
+        }
+      </div>
 
+      <div class="col-md-6">
+        <label for="inputCountry" class="ue-label">
+          {{ i18n.getTranslation('COUNTRY') }}
+        </label>
+        <select id="inputCountry" class="ue-select" formControlName="country">
+          <option value="">-- Sélectionner un pays --</option>
+          @for (countryItem of countries; track countryItem) {
+            <option [value]="countryItem">
+              {{ i18n.getTranslation(countryItem) }}
+            </option>
+          }
+        </select>
+        @if (country.hasError('required') && country.touched) {
+          <div class="ue-error">
+            <i class="bi bi-exclamation-circle"></i>
+            {{ i18n.getTranslation('PLEASE_ENTER_COUNTRY') }}
+          </div>
+        }
+      </div>
 
-    <div class="col-12">
-      <button [disabled]="form.invalid" type="submit" class="btn btn-dark">{{ i18n.getTranslation('EDIT') }}</button>
-    </div>
-  </form>
+      <div class="col-12">
+        <button [disabled]="form.invalid" type="submit" class="ue-btn">
+          {{ i18n.getTranslation('EDIT') }}
+          <i class="bi bi-check2"></i>
+        </button>
+      </div>
+
+    </form>
+  </div>
+
 </div>
