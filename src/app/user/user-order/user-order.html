@@ -1,96 +1,106 @@
-@if (ordersOrdered().length === 0) {
-  <div class="container my-5">
-    <div class="alert alert-secondary custom text-center" role="alert">
-      {{ i18n.getTranslation('NO_ORDERS_FOUND') }}
+<div class="orders-section">
+
+  <!-- Header -->
+  <div class="section-header">
+    <div class="section-title">
+      <span>{{ i18n.getTranslation('ORDERS') }}</span>
+      <span class="count-badge">{{ ordersOrdered().length }}</span>
     </div>
   </div>
-}
-@else {
-  <div class="container my-5">
-    <div class="row g-4">
-      @for (order of ordersOrdered(); track order) {
-        <div class="col-12 col-md-6 col-xl-4">
 
-          <div class="card order-card cursor-pointer"
-               (click)="openOrder(order)">
-
-            <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <strong>{{ i18n.getTranslation('ORDERS') }} #{{ order[0].orderId }}</strong>
-                <span>{{ order[0].creationDate | date:'dd/MM/yyyy' }}</span>
-              </div>
-
-              <div class="mt-2 text-muted small">
-                {{ order.length }} {{ i18n.getTranslation('PRODUCTS') }}
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      }
-    </div>
+  <!-- Table -->
+  <div class="table-wrapper">
+    @if (ordersOrdered().length === 0) {
+      <div class="empty-state">
+        <i class="bi bi-bag-x empty-icon"></i>
+        <p>{{ i18n.getTranslation('NO_ORDERS_FOUND') }}</p>
+      </div>
+    } @else {
+      <table class="table table-orders mb-0">
+        <thead>
+          <tr>
+            <th>{{ i18n.getTranslation('ORDERS') }}</th>
+            <th>{{ i18n.getTranslation('DATE') }}</th>
+            <th class="text-center">{{ i18n.getTranslation('PRODUCTS') }}</th>
+            <th class="text-end">{{ i18n.getTranslation('TOTAL') }}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (order of ordersOrdered(); track order) {
+            <tr class="order-row" (click)="openOrder(order)">
+              <td class="order-id">#{{ order[0].orderId }}</td>
+              <td class="order-date">{{ order[0].creationDate | date:'dd/MM/yyyy' }}</td>
+              <td class="text-center">
+                <span class="items-badge">{{ order.length }}</span>
+              </td>
+              <td class="text-end order-total">{{ getOrderTotal(order) | currency:'EUR' }}</td>
+              <td>
+                <button class="btn-detail" (click)="openOrder(order); $event.stopPropagation()">
+                  {{ i18n.getTranslation('DETAIL') }}
+                  <i class="bi bi-arrow-right ms-1"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   </div>
-}
 
+</div>
+
+<!-- Modal -->
 @if (selectedOrder) {
-  <div class="custom-modal-backdrop" (click)="closeModal()">
+  <div class="modal-backdrop" (click)="closeModal()">
+    <div class="modal-panel" (click)="$event.stopPropagation()">
 
-    <div class="custom-modal" (click)="$event.stopPropagation()">
-      <!-- CLOSE -->
-      <button class="close-btn" (click)="closeModal()">×</button>
-
-      <!-- CARD PREMIUM -->
-      <div class="card order-card">
-
-        <div class="card-header order-header d-flex justify-content-between">
-          <div>
-            <div class="order-id">
-              {{ i18n.getTranslation('ORDERS') }} #{{ selectedOrder[0].orderId }}
-            </div>
-            <div class="order-date">
-              {{ selectedOrder[0].creationDate | date:'dd/MM/yyyy' }}
-            </div>
-          </div>
-          <span class="badge status-badge">{{ i18n.getTranslation('CONFIRM_ORDER') }}</span>
+      <!-- Modal Header -->
+      <div class="modal-header-custom">
+        <div>
+          <div class="modal-order-id">{{ i18n.getTranslation('ORDERS') }} #{{ selectedOrder[0].orderId }}</div>
+          <div class="modal-order-date">{{ selectedOrder[0].creationDate | date:'dd/MM/yyyy' }}</div>
         </div>
+        <div class="modal-header-right">
+          <span class="status-badge">{{ i18n.getTranslation('CONFIRM_ORDER') }}</span>
+          <button class="close-btn" (click)="closeModal()">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      </div>
 
-        <div class="card-body p-0">
-          <table class="table order-table mb-0">
-            <thead>
+      <!-- Modal Body -->
+      <div class="modal-body-custom">
+        <table class="table modal-table mb-0">
+          <thead>
             <tr>
               <th>{{ i18n.getTranslation('NAME') }}</th>
               <th class="text-center">{{ i18n.getTranslation('QTY') }}</th>
               <th class="text-end">{{ i18n.getTranslation('PRICE') }}</th>
             </tr>
-            </thead>
+          </thead>
+          <tbody>
+            @for (item of selectedOrder; track item) {
+              <tr class="modal-row">
+                @if (i18n.getLanguage() === 'fr') {
+                  <td>{{ getLabelForOrder(item.name)?.titleFr }}</td>
+                } @else if (i18n.getLanguage() === 'en') {
+                  <td>{{ getLabelForOrder(item.name)?.titleEn }}</td>
+                } @else {
+                  <td>{{ getLabelForOrder(item.name)?.titleRu }}</td>
+                }
+                <td class="text-center qty-cell">{{ item.quantity }}</td>
+                <td class="text-end price-cell">{{ item.price | currency:'EUR' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
 
-            <tbody>
-              @for (item of selectedOrder; track item) {
-                <tr class="order-row">
-                  @if(i18n.getLanguage() === 'fr') {
-                    <td>{{ getLabelForOrder(item.name)?.titleFr }} </td>
-                  } @else if (i18n.getLanguage() === 'en') {
-                    <td>{{ getLabelForOrder(item.name)?.titleEn }}</td>
-                  } @else {
-                    <td>{{ getLabelForOrder(item.name)?.titleRu }}</td>
-                  }
-                  <td class="text-center">{{ item.quantity }}</td>
-                  <td class="text-end">
-                    {{ item.price | currency:'EUR' }}
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-
-        <div class="card-footer text-end">
-          {{ i18n.getTranslation('TOTAL') }} :
-          <strong>
-            {{ getOrderTotal(selectedOrder) | currency:'EUR' }}
-          </strong>
-        </div>
+      <!-- Modal Footer -->
+      <div class="modal-footer-custom">
+        <span class="total-label">{{ i18n.getTranslation('TOTAL') }}</span>
+        <span class="total-amount">{{ getOrderTotal(selectedOrder) | currency:'EUR' }}</span>
       </div>
 
     </div>

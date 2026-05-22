@@ -1,54 +1,351 @@
-.cursor-pointer {
+/* ── Wrapper ──────────────────────────────────────── */
+
+.orders-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+/* ── Header ───────────────────────────────────────── */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f0ece4;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #343030;
+  letter-spacing: 0.3px;
+}
+
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 12px;
+  background: #343030;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* ── Table wrapper ────────────────────────────────── */
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* ── Table ────────────────────────────────────────── */
+
+.table-orders {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-orders thead tr {
+  background: #343030;
+}
+
+.table-orders thead th {
+  padding: 0.85rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #c8b38a;
+  border: none;
+  white-space: nowrap;
+}
+
+.table-orders tbody tr:nth-child(even) td {
+  background: #faf8f5;
+}
+
+.table-orders tbody td {
+  padding: 0.9rem 1rem;
+  font-size: 0.875rem;
+  color: #343030;
+  border-bottom: 1px solid #f0ece4;
+  vertical-align: middle;
+  transition: background-color 0.18s ease;
+}
+
+/* ── Row hover ────────────────────────────────────── */
+
+.order-row {
   cursor: pointer;
 }
 
-/* BACKDROP */
-.custom-modal-backdrop {
+.order-row:hover td {
+  background-color: #e6dece !important;
+}
+
+/* ── Cell variants ────────────────────────────────── */
+
+.order-id {
+  font-weight: 700;
+  color: #8b6d3b;
+  font-size: 0.85rem;
+}
+
+.order-date {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.order-total {
+  font-weight: 700;
+  color: #343030;
+}
+
+.items-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #e8e3d7;
+  color: #343030;
+}
+
+/* ── Detail button ────────────────────────────────── */
+
+.btn-detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #493112, #4b4133);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.btn-detail:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+  background: linear-gradient(135deg, #463013, #34312a);
+}
+
+.btn-detail:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+/* ── Empty state ──────────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #aaa;
+  gap: 0.75rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: #d0c9bb;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* ── Modal backdrop ───────────────────────────────── */
+
+.modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.55);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
   animation: fadeIn 0.2s ease;
+  padding: 1rem;
 }
 
-/* MODAL */
-.custom-modal {
+/* ── Modal panel ──────────────────────────────────── */
+
+.modal-panel {
   width: 100%;
-  max-width: 700px;
+  max-width: 640px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
   animation: scaleIn 0.25s ease;
 }
 
-/* CLOSE BUTTON */
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  border: none;
-  background: transparent;
-  font-size: 24px;
-  cursor: pointer;
+/* ── Modal header ─────────────────────────────────── */
+
+.modal-header-custom {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  background: #343030;
 }
 
-/* ANIMATIONS */
+.modal-order-id {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+
+.modal-order-date {
+  font-size: 0.8rem;
+  color: #c8b38a;
+  margin-top: 3px;
+}
+
+.modal-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: #c8b38a;
+  color: #343030;
+}
+
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* ── Modal body ───────────────────────────────────── */
+
+.modal-body-custom {
+  padding: 0;
+}
+
+.modal-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.modal-table thead tr {
+  background: #faf8f5;
+  border-bottom: 2px solid #f0ece4;
+}
+
+.modal-table thead th {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #8b6d3b;
+  border: none;
+}
+
+.modal-table tbody td {
+  padding: 0.85rem 1.25rem;
+  font-size: 0.875rem;
+  color: #343030;
+  border-bottom: 1px solid #f0ece4;
+  vertical-align: middle;
+}
+
+.modal-row:last-child td {
+  border-bottom: none;
+}
+
+.qty-cell {
+  font-weight: 600;
+  color: #666;
+}
+
+.price-cell {
+  font-weight: 600;
+  color: #343030;
+}
+
+/* ── Modal footer ─────────────────────────────────── */
+
+.modal-footer-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: #faf8f5;
+  border-top: 2px solid #f0ece4;
+}
+
+.total-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #8b6d3b;
+}
+
+.total-amount {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #343030;
+}
+
+/* ── Animations ───────────────────────────────────── */
+
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 @keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+  from { transform: scale(0.92); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
 }
