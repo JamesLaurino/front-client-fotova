@@ -27,21 +27,15 @@ pipeline {
 
         stage('Deploy to Nginx') {
             steps {
-                sh 'rm -r /var/www/fotova-app/dist'
+                  sh 'rm -rf /var/www/fotova-app/dist/*'
 
-                sh 'cp -r dist /var/www/fotova-app/'
+                  sh 'cp -r dist/* /var/www/fotova-app/dist/'
             }
         }
 
-        stage('Stop Nginx') {
+        stage('Reload Nginx') {
             steps {
-                sh 'systemctl stop nginx'
-            }
-        }
-
-        stage('Start Nginx') {
-            steps {
-                sh 'systemctl start nginx'
+                sh 'systemctl reload nginx'
             }
         }
     }
