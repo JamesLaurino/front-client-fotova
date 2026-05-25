@@ -50,18 +50,16 @@
         <thead>
           <tr>
             <th>{{ i18n.getTranslation('DATE') }}</th>
-            <th>Produit</th>
-            <th>Qté</th>
+            <th>{{ i18n.getTranslation('PRODUCTS') }}</th>
             <th>{{ i18n.getTranslation('TOTAL') }}</th>
           </tr>
         </thead>
         <tbody>
-          @for (order of recentOrders(); track order.orderId) {
+          @for (order of recentOrders(); track order[0].orderId) {
             <tr>
-              <td>{{ order.creationDate | date:'dd/MM/yyyy' }}</td>
-              <td>{{ order.name }}</td>
-              <td>{{ order.quantity }}</td>
-              <td>{{ order.total | currency:'EUR' }}</td>
+              <td>{{ order[0].creationDate | date:'dd/MM/yyyy' }}</td>
+              <td>{{ order.length }} article{{ order.length > 1 ? 's' : '' }}</td>
+              <td>{{ getOrderTotal(order) | currency:'EUR' }}</td>
             </tr>
           }
         </tbody>

@@ -19,24 +19,38 @@ export class UserDashboard {
 
   navigate = output<string>();
 
-  totalOrders = computed(() => (this.ordersInput() ?? []).length);
+  readonly #groupedOrders = computed(() => {
+    const map = new Map<number, OrderModel[]>();
+    (this.ordersInput() ?? []).forEach(o => {
+      if (!map.has(o.orderId)) map.set(o.orderId, [o]);
+      else map.get(o.orderId)!.push(o);
+    });
+    return Array.from(map.values());
+  });
+
+  totalOrders = computed(() => this.#groupedOrders().length);
 
   totalSpent = computed(() =>
-    (this.ordersInput() ?? []).reduce((sum, o) => sum + o.total, 0)
+    this.#groupedOrders().reduce((sum, group) =>
+      sum + group.reduce((s, item) => s + item.price * item.quantity, 0), 0)
   );
 
   lastOrderDate = computed(() => {
-    const orders = this.ordersInput() ?? [];
-    if (!orders.length) return null;
-    return [...orders]
-      .sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())[0].creationDate;
+    const groups = this.#groupedOrders();
+    if (!groups.length) return null;
+    return [...groups]
+      .sort((a, b) => new Date(b[0].creationDate).getTime() - new Date(a[0].creationDate).getTime())[0][0].creationDate;
   });
 
   reviewsCount = computed(() => (this.userInput()?.comments ?? []).length);
 
   recentOrders = computed(() =>
-    [...(this.ordersInput() ?? [])]
-      .sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())
+    [...this.#groupedOrders()]
+      .sort((a, b) => new Date(b[0].creationDate).getTime() - new Date(a[0].creationDate).getTime())
       .slice(0, 3)
   );
+
+  getOrderTotal(group: OrderModel[]): number {
+    return group.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }
 }
