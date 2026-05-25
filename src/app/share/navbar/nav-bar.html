@@ -59,22 +59,22 @@
       @if(loginHelper.isLogged()) {
 
         @if (userService.client().roles[0] === 'ROLE_ADMIN') {
-          <span (click)="goToAdminPanel()" class="me-3" style="cursor: pointer;">
-            <img src="/fotova/admin.png" class="admin-avatar-img" alt="..." />
+          <span (click)="goToAdminPanel()" class="user-chip user-chip--round user-chip--admin me-3" style="cursor: pointer;">
+            <img src="/fotova/admin.png" class="user-chip__avatar" alt="admin" />
           </span>
 
         } @else {
-          <span (click)="goToUserPanel()" class="me-3 user-icon" style="cursor: pointer;">
-            <img src="/fotova/user.png" width="40px" height="40px" class="rounded-circle bg-white" alt="..." />
+          <span (click)="goToUserPanel()" class="user-chip user-chip--round user-chip--admin user-chip--user me-3" style="cursor: pointer;">
+            <img src="/fotova/user.png" class="user-chip__avatar" alt="account" />
           </span>
         }
       }
       @else {
         <!-- Icone du user non connecté -->
-        <div (click)="goToLogin()" class="position-relative p-2 me-2 mt-3" style="cursor: pointer;">
-        <p class="btn btn-login ms-2" (click)="goToLogin()">
-          {{ i18n.getTranslation('LOGIN') }}
-        </p>
+        <div (click)="goToLogin()" class="p-2 me-2 d-flex align-items-center" style="cursor: pointer;">
+          <span class="btn btn-login ms-2" (click)="goToLogin()">
+            {{ i18n.getTranslation('LOGIN') }}
+          </span>
         </div>
       }
       <!-- Selecteur pour la langue -->

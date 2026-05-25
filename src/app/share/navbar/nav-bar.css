@@ -56,15 +56,66 @@
   background-color: rgba(255,255,255,0.1);
 }
 
-.user-icon {
-  background-color: rgba(255,255,255,0.1);
-  padding: 6px;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 5px 12px 5px 5px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.user-icon:hover {
-  background-color: rgba(255,255,255,0.25);
+.user-chip:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
+  transform: translateY(-1px);
+}
+
+.user-chip__avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.user-chip__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #343030;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+}
+
+.user-chip--round {
+  border-radius: 50%;
+  padding: 5px;
+  gap: 0;
+}
+
+.user-chip--admin {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.user-chip--admin:hover {
+  background: transparent;
+  box-shadow: none;
+}
+
+.user-chip--admin .user-chip__avatar {
+  width: 52px;
+  height: 52px;
+}
+
+.user-chip--user .user-chip__avatar {
+  width: 42px;
+  height: 42px;
+  filter: brightness(0) invert(1);
 }
 
 /* Link in navbar */
