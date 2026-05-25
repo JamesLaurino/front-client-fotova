@@ -13,7 +13,7 @@
   <div class="user-navbar">
 
     <div class="user-left">
-      <span class="welcome">
+      <span class="welcome" [class.active]="activeComponent() === ''" (click)="activeComponent.set('')">
         {{ i18n.getTranslation('WELCOME') }} {{ user.value()?.username }}
       </span>
     </div>
