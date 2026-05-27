@@ -1,4 +1,4 @@
-import {Component, InputSignal, input, inject, Output, EventEmitter} from '@angular/core';
+import {Component, InputSignal, input, inject, Output, EventEmitter, signal, WritableSignal} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {I18nService} from '../../service/i18n/i18nService';
 import {ClientEmail} from '../../model/client/client-email';
@@ -19,6 +19,8 @@ export class UserEmail {
 
   userEmailInput: InputSignal<string | undefined> = input.required<string | undefined>();
   @Output() emailUpdated = new EventEmitter<void>();
+
+  isLoading: WritableSignal<boolean> = signal(false);
 
   readonly #userService = inject(UserService)
   private toasterService = inject(ToasterService);
@@ -50,9 +52,11 @@ export class UserEmail {
       message: this.form.value.message!
     };
 
+    this.isLoading.set(true);
     // sending email to server
     this.#userService.sendEmail(emailPayload).subscribe({
       next: (response: ClientResponseEmailApi) => {
+        this.isLoading.set(false);
         if (response.responseCode === 200) {
           this.emailUpdated.emit();
           this.toasterService.show({
@@ -72,6 +76,7 @@ export class UserEmail {
         }
       },
       error: (error: any) => {
+        this.isLoading.set(false);
         const message = error.error.errorList[0]
         this.toasterService.show({
           toastTitle: this.i18n.getTranslation('ERROR'),

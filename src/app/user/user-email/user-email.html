@@ -43,8 +43,11 @@
 
       <!-- Bouton -->
       <div class="d-grid mt-4">
-        <button class="btn btn-login-primary">
+        <button class="btn btn-login-primary" [disabled]="isLoading()">
           {{ i18n.getTranslation('SEND') }}
+          @if(isLoading()) {
+            <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
+          }
         </button>
       </div>
 
