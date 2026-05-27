@@ -6,10 +6,11 @@ import {CartHelper} from './helper/cart-helper';
 import {LoginService} from './service/login/login-service';
 import {Toast} from './share/toast/toast';
 import {CookieBanner} from './share/cookie-banner/cookie-banner';
+import {Footer} from './share/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [NavBar, RouterOutlet, Toast, CookieBanner],
+  imports: [NavBar, RouterOutlet, Toast, CookieBanner, Footer],
   templateUrl: './app.html',
   styles: ''
 })
