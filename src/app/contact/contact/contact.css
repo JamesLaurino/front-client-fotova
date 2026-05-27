@@ -46,10 +46,3 @@
   transform: scale(1.15);
 }
 
-/* SPINNER */
-.big-spinner {
-  width: 3rem;
-  height: 3rem;
-  border-width: 0.3rem;
-  color: #2a2626;
-}
