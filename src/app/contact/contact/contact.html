@@ -1,5 +1,4 @@
 <div class="container py-5">
-  <!-- Titre -->
   <div class="text-center mb-5">
     <h1 class="fw-bold">{{ i18n.getTranslation('CONTACT_US') }}</h1>
     <p class="text-muted">
@@ -19,54 +18,59 @@
   <div class="row g-4">
     <!-- Informations -->
     <div class="col-md-5">
-      <div class="card shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title mb-4">{{ i18n.getTranslation('CONTACT_DETAILS') }}</h5>
-          <p><i class="bi bi-geo-alt-fill text-dark me-2"></i>
+      <div class="contact-card h-100">
+        <div class="contact-card-body">
+          <p class="contact-card-label">{{ i18n.getTranslation('CONTACT_DETAILS') }}</p>
+          <p><i class="bi bi-geo-alt-fill contact-icon me-2"></i>
             {{ i18n.getTranslation('ADDRESS_FULL') }}
           </p>
-          <p><i class="bi bi-telephone-fill text-dark me-2"></i>
-            <a href="tel:+3221234567" class="text-decoration-none text-dark">+32 2 123 45 67</a>
-          </p>
-          <p><i class="bi bi-envelope-fill text-dark me-2"></i>
-            <a href="mailto:contact@fotova-creation.example" class="text-decoration-none text-dark">
-              contact&#64;fotova-creation.example
+          <p><i class="bi bi-telephone-fill contact-icon me-2"></i>
+            <a href="tel:+3221234567" class="text-decoration-none contact-link">
+              {{ i18n.getTranslation('INFO_FOTOVA_NUMBER') }}
             </a>
           </p>
-          <p><i class="bi bi-envelope-paper-fill text-dark me-2"></i>
-            <a href="mailto:support@fotova-creation.example" class="text-decoration-none text-dark">
-              support&#64;fotova-creation.example
+          <p><i class="bi bi-envelope-fill contact-icon me-2"></i>
+            <a href="mailto:contact@fotova-creation.example" class="text-decoration-none contact-link">
+              {{ i18n.getTranslation('INFO_FOTOVA_CONTACT') }}
             </a>
           </p>
-          <p><i class="bi bi-briefcase-fill text-dark me-2"></i>
+          <p><i class="bi bi-envelope-paper-fill contact-icon me-2"></i>
+            <a href="mailto:support@fotova-creation.example" class="text-decoration-none contact-link">
+              {{ i18n.getTranslation('INFO_FOTOVA_SUPPORT') }}
+            </a>
+          </p>
+          <p><i class="bi bi-briefcase-fill contact-icon me-2"></i>
             {{ i18n.getTranslation('VAT_NUMBER') }}
           </p>
-          <hr>
-          <h6>{{ i18n.getTranslation('OPENING_HOURS') }}</h6>
-          <ul class="list-unstyled mb-0">
-            <li>{{ i18n.getTranslation('MON_FRI_HOURS') }}</li>
-            <li>{{ i18n.getTranslation('SATURDAY_HOURS') }}</li>
-            <li>{{ i18n.getTranslation('SUNDAY_CLOSED') }}</li>
-          </ul>
+          <hr class="contact-divider">
+          <p class="contact-card-label">{{ i18n.getTranslation('SOCIAL_MEDIA') }}</p>
+          <div class="d-flex gap-3">
+            @for(social of socialLinks; track social.label) {
+              <a [href]="social.url" target="_blank" rel="noopener noreferrer"
+                 class="social-icon" [attr.aria-label]="social.label">
+                <i [class]="'bi ' + social.icon + ' fs-4'"></i>
+              </a>
+            }
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Formulaire -->
     <div class="col-md-7">
-      <div class="card shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title mb-4">{{ i18n.getTranslation('SEND_US_A_MESSAGE') }}</h5>
+      <div class="contact-card h-100">
+        <div class="contact-card-body">
+          <p class="contact-card-label">{{ i18n.getTranslation('SEND_US_A_MESSAGE') }}</p>
           <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="nom" class="form-label">{{ i18n.getTranslation('NAME') }}</label>
               <input type="text" class="form-control" id="nom" formControlName="nom" placeholder="{{ i18n.getTranslation('NAME') }}">
-              @if(nom.hasError('required') && nom.dirty) {
+              @if(nom.hasError('required') && nomShowError) {
                 <div class="text-danger mt-1">
                   {{ i18n.getTranslation('PLEASE_ENTER_NAME') }}
                 </div>
               }
-              @if(nom.hasError('minlength') && nom.dirty) {
+              @if(nom.hasError('minlength') && nomShowError) {
                 <div class="text-danger mt-1">
                   {{ i18n.getTranslation('NAME_MIN_LENGTH') }}
                 </div>
@@ -75,12 +79,12 @@
             <div class="mb-3">
               <label for="email" class="form-label">{{ i18n.getTranslation('EMAIL_ADDRESS') }}</label>
               <input type="email" class="form-control" id="email" formControlName="email" placeholder="{{ i18n.getTranslation('EMAIL_ADDRESS') }}">
-              @if(email.hasError('required') && email.dirty) {
+              @if(email.hasError('required') && emailShowError) {
                 <div class="text-danger mt-1">
                   {{ i18n.getTranslation('PLEASE_ENTER_EMAIL') }}
                 </div>
               }
-              @if(email.hasError('email') && email.dirty) {
+              @if(email.hasError('email') && emailShowError) {
                 <div class="text-danger mt-1">
                   {{ i18n.getTranslation('INVALID_EMAIL_ADDRESS') }}
                 </div>
@@ -89,12 +93,12 @@
             <div class="mb-3">
               <label for="sujet" class="form-label">{{ i18n.getTranslation('SUBJECT') }}</label>
               <input type="text" class="form-control" id="sujet" formControlName="sujet" placeholder="{{ i18n.getTranslation('SUBJECT') }}">
-              @if(sujet.hasError('required') && sujet.dirty) {
+              @if(sujet.hasError('required') && sujetShowError) {
                 <div class="text-danger mt-1">
                   {{ i18n.getTranslation('PLEASE_ENTER_SUBJECT') }}
                 </div>
               }
-              @if(sujet.hasError('minlength') && sujet.dirty) {
+              @if(sujet.hasError('minlength') && sujetShowError) {
                 <div class="text-danger mt-1">
                   {{ i18n.getTranslation('SUBJECT_MIN_LENGTH') }}
                 </div>
@@ -103,12 +107,12 @@
             <div class="mb-3">
               <label for="message" class="form-label">{{ i18n.getTranslation('MESSAGE') }}</label>
               <textarea class="form-control" id="message" formControlName="message" rows="5" placeholder="{{ i18n.getTranslation('MESSAGE') }}"></textarea>
-              @if(message.hasError('required') && message.dirty) {
+              @if(message.hasError('required') && messageShowError) {
                 <div class="text-danger mt-1">
                   {{ i18n.getTranslation('PLEASE_ENTER_MESSAGE') }}
                 </div>
               }
-              @if(message.hasError('minlength') && message.dirty) {
+              @if(message.hasError('minlength') && messageShowError) {
                 <div class="text-danger mt-1">
                   {{ i18n.getTranslation('MESSAGE_MIN_LENGTH') }}
                 </div>

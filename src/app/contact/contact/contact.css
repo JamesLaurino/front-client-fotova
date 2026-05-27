@@ -1,3 +1,51 @@
+/* CONTACT CARD */
+.contact-card {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.contact-card-body {
+  padding: 1.5rem;
+}
+
+.contact-card-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #343030;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 1rem;
+}
+
+.contact-divider {
+  border-color: #e9ecef;
+}
+
+.contact-icon {
+  color: #343030;
+}
+
+.contact-link {
+  color: #343030;
+}
+
+/* SOCIAL ICONS */
+.social-icon {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.social-icon[aria-label="Instagram"] { color: #E1306C; }
+.social-icon[aria-label="Facebook"]  { color: #1877F2; }
+.social-icon[aria-label="TikTok"]   { color: #69C9D0; }
+.social-icon[aria-label="Pinterest"] { color: #E60023; }
+
+.social-icon:hover {
+  opacity: 0.7;
+  transform: scale(1.15);
+}
+
 /* SPINNER */
 .big-spinner {
   width: 3rem;

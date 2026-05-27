@@ -1,5 +1,7 @@
-import {Component, inject, signal, WritableSignal} from '@angular/core';
+import {Component, DestroyRef, inject, signal, WritableSignal} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {debounceTime, tap} from 'rxjs';
 import {ContactService} from '../../service/contact/contactService';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {ContactResponseApi} from '../../model/contact/contact-response-api';
@@ -17,7 +19,46 @@ export class Contact {
   private contactService = inject(ContactService);
   private toasterService = inject(ToasterService);
   readonly i18n = inject(I18nService);
-  isLoading:WritableSignal<boolean> = signal(false);
+  readonly #destroyRef = inject(DestroyRef);
+  isLoading: WritableSignal<boolean> = signal(false);
+
+  nomShowError = false;
+  emailShowError = false;
+  sujetShowError = false;
+  messageShowError = false;
+
+  constructor() {
+    this.nom.valueChanges.pipe(
+      tap(() => this.nomShowError = false),
+      debounceTime(800),
+      takeUntilDestroyed(this.#destroyRef)
+    ).subscribe(() => this.nomShowError = true);
+
+    this.email.valueChanges.pipe(
+      tap(() => this.emailShowError = false),
+      debounceTime(800),
+      takeUntilDestroyed(this.#destroyRef)
+    ).subscribe(() => this.emailShowError = true);
+
+    this.sujet.valueChanges.pipe(
+      tap(() => this.sujetShowError = false),
+      debounceTime(800),
+      takeUntilDestroyed(this.#destroyRef)
+    ).subscribe(() => this.sujetShowError = true);
+
+    this.message.valueChanges.pipe(
+      tap(() => this.messageShowError = false),
+      debounceTime(800),
+      takeUntilDestroyed(this.#destroyRef)
+    ).subscribe(() => this.messageShowError = true);
+  }
+
+  readonly socialLinks = [
+    { icon: 'bi-instagram', url: 'https://www.instagram.com/fotova', label: 'Instagram' },
+    { icon: 'bi-facebook',  url: 'https://www.facebook.com/fotova',  label: 'Facebook' },
+    { icon: 'bi-tiktok',    url: 'https://www.tiktok.com/@fotova',   label: 'TikTok' },
+    { icon: 'bi-pinterest', url: 'https://www.pinterest.com/fotova', label: 'Pinterest' },
+  ];
 
   readonly form = new FormGroup({
     nom: new FormControl('', [
