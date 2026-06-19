@@ -197,12 +197,6 @@
                     <i class="bi bi-file-earmark-image text-primary" style="font-size: 3rem;"></i>
                     <p class="fw-bold small mt-2 text-truncate">{{ box.file?.name }}</p>
                     <p class="text-muted small">{{ (box.file?.size! / 1024).toFixed(1) }} Ko</p>
-                    <button class="btn btn-primary btn-sm mt-2 mb-2" (click)="uploadFile(i)" [disabled]="box.uploading">
-                      @if(box.uploading) {
-                        <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-                      }
-                      {{ box.uploading ? i18n.getTranslation("UPLOADING") : i18n.getTranslation("UPLOAD") }}
-                    </button>
                   </div>
                 }
               </div>
@@ -223,9 +217,18 @@
           </div>
         </div>
 
-        <div class="d-flex justify-content-between mt-4">
-          <button type="button" class="btn btn-success" (click)="finish()">
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <button type="button" class="btn btn-outline-info" (click)="finish()" [disabled]="uploadingAll()">
             {{ i18n.getTranslation("FINISH") }} <i class="bi bi-check-lg"></i>
+          </button>
+
+          <button type="button" class="btn btn-success" (click)="uploadAll()" [disabled]="uploadingAll() || !hasFilesToUpload">
+            @if (uploadingAll()) {
+              <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+            } @else {
+              <i class="bi bi-cloud-arrow-up me-1"></i>
+            }
+            {{ uploadingAll() ? i18n.getTranslation("UPLOADING") : i18n.getTranslation("UPLOAD_ALL") }}
           </button>
         </div>
       </div>

@@ -2,7 +2,7 @@ import {Component, DestroyRef, inject, signal} from '@angular/core';
 import {I18nService} from '../../service/i18n/i18nService';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {rxResource, takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {concatMap, finalize, map} from 'rxjs';
+import {concatMap, finalize, from, map} from 'rxjs';
 import {CategoryService} from '../../service/category/categoryService';
 import {ProductModel} from '../../model/product/product-model';
 import {ToasterService} from '../../service/toaster/toasterService';
@@ -63,6 +63,7 @@ export class AdminProductCreate {
   })
   step: 'form' | 'images' = 'form';
   isSubmitting = signal(false);
+  uploadingAll = signal(false);
   fileBoxes: FileBox[] = [{ file: undefined, uploading: false, isDragging: false }];
   previewFiles = signal<PreviewFile[]>([]);
 
@@ -71,6 +72,8 @@ export class AdminProductCreate {
   get description() {return this.form.get('description') as FormControl; }
   get price() { return this.form.get('price') as FormControl; }
   get category() { return this.form.get('categoryInnerProductDto') as FormControl; }
+
+  get hasFilesToUpload(): boolean { return this.fileBoxes.some(box => !!box.file); }
 
 
   addFileBox() {
@@ -118,12 +121,6 @@ export class AdminProductCreate {
   }
 
   finish() {
-    this.toasterService.show({
-      toastTitle: this.i18n.getTranslation("SUCCESS"),
-      toastTime: this.i18n.getTranslation("JUST_NOW"),
-      toastImageUrl: '/fotova/check.jpg',
-      toastMessage: this.i18n.getTranslation("PRODUCT_CREATED_WITH_IMAGES_SUCCESS"),
-    });
     this.#router.navigate(['/admin'], { queryParams: { active: 'products' } });
   }
 
@@ -219,41 +216,26 @@ export class AdminProductCreate {
     this.#router.navigate(['/admin'],{queryParams:{active:'products'}});
   }
 
-  uploadFile(index: number) {
-    const box = this.fileBoxes[index];
-    if (!box.file) return;
+  uploadAll() {
+    const pending = this.fileBoxes
+      .map((box, index) => ({ box, index }))
+      .filter(item => !!item.box.file);
 
-    const fileName = box.file.name;
-    const productId = this.productWithoutImage().id;
-    const formData = new FormData();
-    formData.append('file', box.file, fileName);
-    box.uploading = true;
+    if (pending.length === 0) return;
 
-    this.#fileService.uploadFile(formData).pipe(
-      concatMap(() => {
-        if (index === 0) {
-          return this.#productService.updateProduct({ ...this.productWithoutImage(), url: fileName });
-        } else {
-          return this.#fileService.linkImageToProduct(productId, fileName);
-        }
-      }),
-      finalize(() => {
-        box.uploading = false;
-      }),
+    // Galerie d'abord (index > 0), image principale (index 0) en dernier
+    const ordered = [
+      ...pending.filter(item => item.index !== 0),
+      ...pending.filter(item => item.index === 0),
+    ];
+
+    this.uploadingAll.set(true);
+
+    from(ordered).pipe(
+      concatMap(item => this.buildUploadRequest(item.box, item.index)),
+      finalize(() => this.uploadingAll.set(false)),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({
-      next: () => {
-        if (index === 0) {
-          this.productWithoutImage.update(p => ({ ...p, url: fileName }));
-        }
-        this.toasterService.show({
-          toastTitle: this.i18n.getTranslation("SUCCESS"),
-          toastTime: this.i18n.getTranslation("JUST_NOW"),
-          toastImageUrl: '/fotova/check.jpg',
-          toastMessage: this.i18n.getTranslation("PRODUCT_IMAGE_UPDATED_SUCCESS")
-        });
-        this.removeFileBox(index);
-      },
       error: () => {
         this.toasterService.show({
           toastTitle: this.i18n.getTranslation("ERROR"),
@@ -261,8 +243,30 @@ export class AdminProductCreate {
           toastImageUrl: '/fotova/error.png',
           toastMessage: this.i18n.getTranslation("UNKNOWN_ERROR")
         });
+      },
+      complete: () => {
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation("SUCCESS"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
+          toastImageUrl: '/fotova/check.jpg',
+          toastMessage: this.i18n.getTranslation("PRODUCT_CREATED_WITH_IMAGES_SUCCESS"),
+        });
+        this.#router.navigate(['/admin'], { queryParams: { active: 'products' } });
       }
     });
+  }
+
+  private buildUploadRequest(box: FileBox, index: number) {
+    const fileName = box.file!.name;
+    const productId = this.productWithoutImage().id;
+    const formData = new FormData();
+    formData.append('file', box.file!, fileName);
+
+    return this.#fileService.uploadFile(formData).pipe(
+      concatMap(() => index === 0
+        ? this.#productService.updateProduct({ ...this.productWithoutImage(), url: fileName })
+        : this.#fileService.linkImageToProduct(productId, fileName))
+    );
   }
 
   getCategoryAndId(): number | null {
