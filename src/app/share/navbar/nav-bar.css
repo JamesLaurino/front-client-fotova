@@ -174,15 +174,38 @@
     display: none;
   }
 
-  /* Tous les éléments du menu déroulé alignés à gauche */
+  /* Empilement vertical : rail gauche commun à tous les éléments */
   #navbarSupportedContent {
     align-items: flex-start;
+    row-gap: 6px;
+    padding-top: 8px;
   }
 
+  /* Gouttière gauche unique pour chaque élément de premier niveau */
   #navbarSupportedContent > * {
+    margin: 0 !important;
+    padding-left: 12px !important;
+    padding-right: 0 !important;
+  }
+
+  /* Neutralise les décalages internes des composants (nav-link, chip, ms-2)
+     pour que le contenu visible parte de la même abscisse */
+  #navbarSupportedContent .nav-link {
     margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 5px !important;
+    padding-left: 0 !important;
+  }
+
+  #navbarSupportedContent .user-chip {
+    padding-left: 0 !important;
+  }
+
+  #navbarSupportedContent .btn-login {
+    margin-left: 0 !important;
+  }
+
+  /* Tailles d'avatars homogènes en mobile (admin/user calés sur le même bord) */
+  #navbarSupportedContent .user-chip__avatar {
+    margin-left: 0;
   }
 }
 
