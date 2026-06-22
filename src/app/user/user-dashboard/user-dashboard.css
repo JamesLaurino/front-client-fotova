@@ -172,3 +172,33 @@
   letter-spacing: 0.8px;
   opacity: 0.6;
 }
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .kpi-grid,
+  .quick-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  .kpi-card,
+  .quick-card {
+    padding: 1.1rem;
+  }
+
+  .kpi-value {
+    font-size: 1.5rem;
+  }
+
+  .kpi-value--date {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .kpi-grid,
+  .quick-grid {
+    grid-template-columns: 1fr;
+  }
+}

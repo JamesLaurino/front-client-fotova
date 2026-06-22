@@ -9,36 +9,38 @@
 @if(product.hasValue()) {
   <div class="container d-flex justify-content-center mt-5">
 
-    <!-- LATERAL THUMBNAILS -->
-    <div class="thumb-strip d-flex flex-column me-3">
-      @for (img of product.value().images; track img) {
-        <img class="product-thumb"
-             appProductBorder
-             (click)="switchImage(img)"
-             [src]="urlHelper(img)" [alt]="product.value().name">
-      }
-      <img class="product-thumb"
-           appProductBorder
-           [src]="urlHelper(product.value().url)"
-           (click)="switchImage(product.value().url)"
-           [alt]="product.value().name">
-    </div>
-
     <!-- MAIN PRODUCT CARD -->
     <div class="col-lg-8 col-md-10 col-sm-12">
       <div class="product-card">
         <div class="product-card-body">
           <div class="row g-4">
 
-            <!-- Image -->
-            <div class="col-md-6 d-flex justify-content-center align-items-center">
-              <div class="product-image-area">
-                <img #imgSwitch
-                     class="img-fluid product-main-image"
-                     [src]="urlHelper(product.value().url)"
-                     [alt]="product.value().name"
-                     style="max-width: 300px; max-height: 300px; object-fit: contain; cursor: zoom-in;"
-                     (click)="openImageViewer(imgSwitch.src)">
+            <!-- Image + thumbnails -->
+            <div class="col-md-6">
+              <div class="product-media">
+
+                <!-- THUMBNAILS (left on desktop, below image on mobile) -->
+                <div class="thumb-strip">
+                  @for (img of product.value().images; track img) {
+                    <img class="product-thumb"
+                         appProductBorder
+                         (click)="switchImage(img)"
+                         [src]="urlHelper(img)" [alt]="product.value().name">
+                  }
+                  <img class="product-thumb"
+                       appProductBorder
+                       [src]="urlHelper(product.value().url)"
+                       (click)="switchImage(product.value().url)"
+                       [alt]="product.value().name">
+                </div>
+
+                <div class="product-image-area">
+                  <img #imgSwitch
+                       class="img-fluid product-main-image"
+                       [src]="urlHelper(product.value().url)"
+                       [alt]="product.value().name"
+                       (click)="openImageViewer(imgSwitch.src)">
+                </div>
               </div>
             </div>
 

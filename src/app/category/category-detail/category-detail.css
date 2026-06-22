@@ -23,7 +23,8 @@
 /* card */
 
 .product-card {
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
 
   transition: transform 0.35s ease;
 }

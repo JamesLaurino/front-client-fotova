@@ -10,49 +10,65 @@
 
   <!-- USER NAVBAR -->
 
-  <div class="user-navbar">
+  <nav class="user-navbar navbar navbar-expand-lg">
+    <div class="container-fluid px-0">
 
-    <div class="user-left">
-      <span class="welcome" [class.active]="activeComponent() === ''" (click)="activeComponent.set('')">
+      <span class="welcome navbar-brand" [class.active]="activeComponent() === ''" (click)="activeComponent.set('')">
         {{ i18n.getTranslation('WELCOME') }} {{ user.value()?.username }}
       </span>
+
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#userNavContent"
+              aria-controls="userNavContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="userNavContent">
+
+        <div class="user-nav me-auto">
+
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#userNavContent"
+             [class.active]="activeComponent() === 'address'" (click)="displayUserAddress()">
+            {{ i18n.getTranslation('INFORMATION') }}
+          </a>
+
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#userNavContent"
+             [class.active]="activeComponent() === 'order'" (click)="displayUserOrder()">
+            {{ i18n.getTranslation('ORDERS') }}
+          </a>
+
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#userNavContent"
+             [class.active]="activeComponent() === 'comment'" (click)="displayUserComment()">
+            {{ i18n.getTranslation('COMMENTS') }}
+          </a>
+
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#userNavContent"
+             [class.active]="activeComponent() === 'edit-address'" (click)="displayEditAddress()">
+            {{ i18n.getTranslation('EDIT_ADDRESS') }}
+          </a>
+
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#userNavContent"
+             [class.active]="activeComponent() === 'email'" (click)="displayUserEmail()">
+            {{ i18n.getTranslation('EMAIL') }}
+          </a>
+
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#userNavContent"
+             (click)="goToShopping()">
+            {{ i18n.getTranslation('GO_TO_SHOPPING') }}
+          </a>
+
+        </div>
+
+        <div class="user-right">
+          <a class="logout" (click)="logout()">
+            {{ i18n.getTranslation('LOGOUT') }}
+          </a>
+        </div>
+
+      </div>
     </div>
-
-    <div class="user-nav">
-
-      <a class="nav-item" [class.active]="activeComponent() === 'address'" (click)="displayUserAddress()">
-        {{ i18n.getTranslation('INFORMATION') }}
-      </a>
-
-      <a class="nav-item" [class.active]="activeComponent() === 'order'" (click)="displayUserOrder()">
-        {{ i18n.getTranslation('ORDERS') }}
-      </a>
-
-      <a class="nav-item" [class.active]="activeComponent() === 'comment'" (click)="displayUserComment()">
-        {{ i18n.getTranslation('COMMENTS') }}
-      </a>
-
-      <a class="nav-item" [class.active]="activeComponent() === 'edit-address'" (click)="displayEditAddress()">
-        {{ i18n.getTranslation('EDIT_ADDRESS') }}
-      </a>
-
-      <a class="nav-item" [class.active]="activeComponent() === 'email'" (click)="displayUserEmail()">
-        {{ i18n.getTranslation('EMAIL') }}
-      </a>
-
-      <a class="nav-item" (click)="goToShopping()">
-        {{ i18n.getTranslation('GO_TO_SHOPPING') }}
-      </a>
-
-    </div>
-
-    <div class="user-right">
-      <a class="logout" (click)="logout()">
-        {{ i18n.getTranslation('LOGOUT') }}
-      </a>
-    </div>
-
-  </div>
+  </nav>
 
   <!-- MAIN CONTENT -->
   <div class="main-content">

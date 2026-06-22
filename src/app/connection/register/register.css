@@ -3,6 +3,12 @@
   margin-top: -150px;
 }
 
+@media (max-width: 575.98px), (max-height: 760px) {
+  .register-card {
+    margin-top: 0;
+  }
+}
+
 /* MATERIAL STYLE */
 .mat-input-field {
   position: relative;

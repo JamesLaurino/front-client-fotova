@@ -11,8 +11,8 @@
     @for (product of products.value(); track product.id)
     {
       <div (click)="goToProductDetail(product.id)" class="col-lg-4 col-md-6 col-sm-12 mb-3" style="cursor: pointer;">
-        <div class="container d-flex justify-content-center flex-column" style="width:350px">
-          <span appProductBorder class="shadow p-3 h-75">
+        <div class="product-card-wrapper d-flex justify-content-center">
+          <span appProductBorder class="shadow p-3 product-card-inner">
             @if(i18n.getLanguage() === 'fr') {
               <p class="text-center"> <strong> {{ labelsByProductId().get(product.id)?.titleFr ?? product.name }}</strong> </p>
             } @else if (i18n.getLanguage() === 'en') {
@@ -20,7 +20,7 @@
             } @else if(i18n.getLanguage() === 'ru') {
               <p class="text-center"> <strong> {{ labelsByProductId().get(product.id)?.titleRu ?? product.name }}</strong> </p>
             }
-            <img class="mx-5 mb-3" [src]="urlHelper(product.url)" [alt]="product.name" width="200px" height="200px">
+            <img class="product-list-img" [src]="urlHelper(product.url)" [alt]="product.name">
           </span>
         </div>
       </div>

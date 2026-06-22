@@ -1,10 +1,3 @@
-body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-}
-
 a {
   cursor: pointer;
   text-decoration: none;
@@ -25,16 +18,17 @@ a {
   position: sticky;
   top: 0;
   z-index: 100;
-  height: 70px;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 2rem;
+  padding: 0.5rem 2rem;
 
   background: #ffffff;
   border-bottom: 1px solid #dee2e6;
+}
+
+@media (min-width: 992px) {
+  .admin-navbar {
+    min-height: 70px;
+  }
 }
 
 /* brand */
@@ -58,6 +52,34 @@ a {
 .admin-nav {
   display: flex;
   gap: 1.2rem;
+}
+
+/* brand keeps its pointer/spacing inside the bootstrap navbar */
+.brand.navbar-brand {
+  margin-right: 0;
+}
+
+/* Mobile : collapsed menu, items stacked full width */
+@media (max-width: 991.98px) {
+  .admin-nav {
+    flex-direction: column;
+    gap: 0.35rem;
+    width: 100%;
+    margin: 0.75rem 0;
+  }
+
+  .nav-item::after {
+    display: none;
+  }
+
+  .admin-right {
+    width: 100%;
+    padding-bottom: 0.5rem;
+  }
+
+  .logout {
+    display: inline-block;
+  }
 }
 
 .nav-item {

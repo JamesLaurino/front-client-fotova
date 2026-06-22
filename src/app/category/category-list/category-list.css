@@ -22,8 +22,9 @@
 /* card */
 
 .category-luxury-card {
-  width: 340px;
-  height: 340px;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 1 / 1;
 
   display: flex;
   align-items: center;

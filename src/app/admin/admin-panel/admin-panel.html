@@ -9,40 +9,56 @@
 <div class="user-panel">
 
   <!-- Admin navbar -->
-  <div class="admin-navbar">
+  <nav class="admin-navbar navbar navbar-expand-lg">
+    <div class="container-fluid px-0">
 
-    <div class="admin-left">
-      <span class="brand" (click)="goToDashboard()">Fotova Admin</span>
+      <span class="brand navbar-brand" (click)="goToDashboard()">Fotova Admin</span>
+
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#adminNavContent"
+              aria-controls="adminNavContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="adminNavContent">
+
+        <div class="admin-nav me-auto">
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#adminNavContent"
+             [class.active]="activeComponent() === 'clients'" (click)="manageClients()">
+            {{ i18n.getTranslation('CLIENTS') }}
+          </a>
+
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#adminNavContent"
+             [class.active]="activeComponent() === 'products'" (click)="manageProducts()">
+            {{ i18n.getTranslation('PRODUCTS') }}
+          </a>
+
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#adminNavContent"
+             [class.active]="activeComponent() === 'categories'" (click)="manageCategories()">
+            {{ i18n.getTranslation('CATEGORIES') }}
+          </a>
+
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#adminNavContent"
+             [class.active]="activeComponent() === 'orders'" (click)="manageOrders()">
+            {{ i18n.getTranslation('ORDERS') }}
+          </a>
+
+          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#adminNavContent"
+             [class.active]="activeComponent() === 'statics'" (click)="manageStatics()">
+            {{ i18n.getTranslation('STATISTICS') }}
+          </a>
+        </div>
+
+        <div class="admin-right">
+          <a class="logout" (click)="logout()">
+            {{ i18n.getTranslation('LOGOUT') }}
+          </a>
+        </div>
+
+      </div>
     </div>
-
-    <div class="admin-nav">
-      <a class="nav-item" [class.active]="activeComponent() === 'clients'" (click)="manageClients()">
-        {{ i18n.getTranslation('CLIENTS') }}
-      </a>
-
-      <a class="nav-item" [class.active]="activeComponent() === 'products'" (click)="manageProducts()">
-        {{ i18n.getTranslation('PRODUCTS') }}
-      </a>
-
-      <a class="nav-item" [class.active]="activeComponent() === 'categories'" (click)="manageCategories()">
-        {{ i18n.getTranslation('CATEGORIES') }}
-      </a>
-
-      <a class="nav-item" [class.active]="activeComponent() === 'orders'" (click)="manageOrders()">
-        {{ i18n.getTranslation('ORDERS') }}
-      </a>
-      <a class="nav-item" [class.active]="activeComponent() === 'statics'" (click)="manageStatics()">
-        {{ i18n.getTranslation('STATISTICS') }}
-      </a>
-    </div>
-
-    <div class="admin-right">
-      <a class="logout" (click)="logout()">
-        {{ i18n.getTranslation('LOGOUT') }}
-      </a>
-    </div>
-
-  </div>
+  </nav>
 
 
   <!-- Main content -->

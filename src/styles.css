@@ -1,5 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* ── Responsive guard-rails ────────────────────────── */
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+img {
+  max-width: 100%;
+}
+
 /* ── Admin Order Detail ────────────────────────────── */
 
 .order-detail-section {

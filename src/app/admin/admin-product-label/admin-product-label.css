@@ -147,3 +147,29 @@ textarea.mat-input-field {
   justify-content: center;
   padding: 3rem;
 }
+
+/* Header empilé sur petit écran (évite le débordement des boutons) */
+@media (max-width: 575.98px) {
+  .admin-label-container {
+    padding: 1.25rem;
+  }
+
+  .label-card {
+    padding: 1.5rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .header-actions .btn-login-primary,
+  .header-actions .btn-login-secondary {
+    flex: 1 1 0;
+  }
+}

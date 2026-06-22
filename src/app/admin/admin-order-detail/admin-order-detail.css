@@ -4,3 +4,8 @@
   border-width: 0.3rem;
   color: #2a2626;
 }
+
+/* Table scrollable horizontalement sur petit écran */
+.order-table-wrapper {
+  overflow-x: auto;
+}

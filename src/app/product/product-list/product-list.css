@@ -5,3 +5,18 @@
   border-width: 0.3rem;
   color: #2a2626;
 }
+
+/* PRODUCT CARD */
+.product-card-inner {
+  display: block;
+  width: 100%;
+  max-width: 350px;
+}
+
+.product-list-img {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto 1rem;
+}

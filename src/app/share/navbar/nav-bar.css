@@ -169,6 +169,21 @@
     right: auto;
   }
 
+  /* le titre centré en absolu chevauche logo/hamburger sur petit écran */
+  .navbar-title {
+    display: none;
+  }
+
+  /* Tous les éléments du menu déroulé alignés à gauche */
+  #navbarSupportedContent {
+    align-items: flex-start;
+  }
+
+  #navbarSupportedContent > * {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 5px !important;
+  }
 }
 
 /* Divider style */

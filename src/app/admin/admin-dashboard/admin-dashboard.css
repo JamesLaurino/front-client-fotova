@@ -86,9 +86,19 @@
 
 /* ORDERS TABLE */
 
+/* Permet le scroll horizontal du tableau sur petit écran */
+.orders-table-wrapper {
+  overflow-x: auto;
+}
+
 .orders-table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+  white-space: nowrap;
 }
 
 .orders-table th {
@@ -165,4 +175,30 @@
   text-transform: uppercase;
   letter-spacing: 0.8px;
   opacity: 0.6;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .kpi-grid,
+  .quick-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  .kpi-card,
+  .quick-card {
+    padding: 1.1rem;
+  }
+
+  .kpi-value {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .kpi-grid,
+  .quick-grid {
+    grid-template-columns: 1fr;
+  }
 }
