@@ -29,6 +29,11 @@ a {
   .admin-navbar {
     min-height: 70px;
   }
+
+  /* espace entre le brand "Fotova Admin" et les tabs */
+  .admin-nav {
+    margin-left: 2.5rem;
+  }
 }
 
 /* brand */
