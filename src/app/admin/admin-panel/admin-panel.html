@@ -12,46 +12,46 @@
   <nav class="admin-navbar navbar navbar-expand-lg">
     <div class="container-fluid px-0">
 
-      <span class="brand navbar-brand" (click)="goToDashboard()">Fotova Admin</span>
+      <span class="brand navbar-brand" (click)="goToDashboard(); closeMenu()">Fotova Admin</span>
 
       <button class="navbar-toggler" type="button"
-              data-bs-toggle="collapse" data-bs-target="#adminNavContent"
-              aria-controls="adminNavContent" aria-expanded="false"
+              (click)="menuOpen.set(!menuOpen())"
+              aria-controls="adminNavContent" [attr.aria-expanded]="menuOpen()"
               aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="adminNavContent">
+      <div class="collapse navbar-collapse" id="adminNavContent" [class.show]="menuOpen()">
 
         <div class="admin-nav me-auto">
-          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#adminNavContent"
-             [class.active]="activeComponent() === 'clients'" (click)="manageClients()">
+          <a class="nav-item"
+             [class.active]="activeComponent() === 'clients'" (click)="manageClients(); closeMenu()">
             {{ i18n.getTranslation('CLIENTS') }}
           </a>
 
-          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#adminNavContent"
-             [class.active]="activeComponent() === 'products'" (click)="manageProducts()">
+          <a class="nav-item"
+             [class.active]="activeComponent() === 'products'" (click)="manageProducts(); closeMenu()">
             {{ i18n.getTranslation('PRODUCTS') }}
           </a>
 
-          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#adminNavContent"
-             [class.active]="activeComponent() === 'categories'" (click)="manageCategories()">
+          <a class="nav-item"
+             [class.active]="activeComponent() === 'categories'" (click)="manageCategories(); closeMenu()">
             {{ i18n.getTranslation('CATEGORIES') }}
           </a>
 
-          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#adminNavContent"
-             [class.active]="activeComponent() === 'orders'" (click)="manageOrders()">
+          <a class="nav-item"
+             [class.active]="activeComponent() === 'orders'" (click)="manageOrders(); closeMenu()">
             {{ i18n.getTranslation('ORDERS') }}
           </a>
 
-          <a class="nav-item" data-bs-toggle="collapse" data-bs-target="#adminNavContent"
-             [class.active]="activeComponent() === 'statics'" (click)="manageStatics()">
+          <a class="nav-item"
+             [class.active]="activeComponent() === 'statics'" (click)="manageStatics(); closeMenu()">
             {{ i18n.getTranslation('STATISTICS') }}
           </a>
         </div>
 
         <div class="admin-right">
-          <a class="logout" (click)="logout()">
+          <a class="logout" (click)="logout(); closeMenu()">
             {{ i18n.getTranslation('LOGOUT') }}
           </a>
         </div>

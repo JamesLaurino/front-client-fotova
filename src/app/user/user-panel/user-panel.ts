@@ -32,7 +32,12 @@ export class UserPanel {
   readonly #router = inject(Router);
   readonly #loginService = inject(LoginService);
   activeComponent= signal("");
+  menuOpen = signal(false);
   readonly i18n = inject(I18nService);
+
+  closeMenu() {
+    this.menuOpen.set(false);
+  }
 
   user = rxResource({
     stream: () => {

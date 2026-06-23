@@ -38,8 +38,13 @@ export class AdminPanel implements OnInit{
   readonly #router = inject(Router);
   readonly #orderService = inject(OrderService);
   activeComponent= signal("");
+  menuOpen = signal(false);
 
   constructor(private route: ActivatedRoute) {}
+
+  closeMenu() {
+    this.menuOpen.set(false);
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {

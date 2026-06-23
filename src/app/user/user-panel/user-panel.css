@@ -99,11 +99,6 @@ a {
   transition: all 0.2s ease;
 }
 
-.nav-item.active {
-  background: #343030;
-  color: white;
-}
-
 .nav-item:hover {
   background: #f1f1f1;
   color: #000;
@@ -123,6 +118,11 @@ a {
 
 .nav-item:hover::after {
   width: 100%;
+}
+
+.nav-item.active {
+  background: #343030;
+  color: white;
 }
 
 /* logout */
