@@ -1,4 +1,4 @@
-import {Component, EventEmitter, inject, input, InputSignal, Output} from '@angular/core';
+import {Component, EventEmitter, inject, input, InputSignal, Output, signal} from '@angular/core';
 import {ClientComment} from '../../model/client/client-comment';
 import {DatePipe} from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -6,6 +6,7 @@ import {UserService} from '../../service/user/user-service';
 import {CommentClientResponseApi} from '../../model/comment/comment-client-response-api';
 import {ToasterService} from '../../service/toaster/toasterService';
 import {CommentService} from '../../service/comment/commentService';
+import {CommentUpdate} from '../../model/comment/comment-update';
 import {I18nService} from '../../service/i18n/i18nService';
 
 @Component({
@@ -27,6 +28,8 @@ export class UserComment {
 
   @Output() commentsUpdated = new EventEmitter<void>();
 
+  readonly editingId = signal<number | null>(null);
+
   readonly form = new FormGroup({
     header: new FormControl("",
       [
@@ -46,6 +49,80 @@ export class UserComment {
 
   get body(): FormControl {
     return this.form.get('body') as FormControl;
+  }
+
+  readonly editForm = new FormGroup({
+    header: new FormControl("",
+      [
+        Validators.required
+      ]
+    ),
+    body: new FormControl("",
+      [
+        Validators.required
+      ]
+    )
+  });
+
+  get editHeader(): FormControl {
+    return this.editForm.get('header') as FormControl;
+  }
+
+  get editBody(): FormControl {
+    return this.editForm.get('body') as FormControl;
+  }
+
+  startEdit(comment: ClientComment) {
+    this.editingId.set(comment.id);
+    this.editForm.setValue({
+      header: comment.header,
+      body: comment.body
+    });
+  }
+
+  cancelEdit() {
+    this.editingId.set(null);
+    this.editForm.reset();
+  }
+
+  updateComment(comment: ClientComment) {
+    const commentUpdate: CommentUpdate = {
+      id: comment.id,
+      header: String(this.editForm.value.header),
+      body: String(this.editForm.value.body),
+      createAt: comment.createAt,
+      updateAt: new Date().toISOString(),
+    }
+
+    this.commentService.updateCommentById(comment.id, commentUpdate).subscribe({
+      next: (response: CommentClientResponseApi) => {
+        if (response.responseCode === 200) {
+          this.cancelEdit();
+          this.commentsUpdated.emit();
+          this.toasterService.show({
+            toastTitle: this.i18n.getTranslation("SUCCESS"),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
+            toastImageUrl: '/fotova/check.jpg',
+            toastMessage: this.i18n.getTranslation("COMMENT_UPDATED_SUCCESS"),
+          })
+        } else {
+          this.toasterService.show({
+            toastTitle: this.i18n.getTranslation("ERROR"),
+            toastTime: this.i18n.getTranslation("JUST_NOW"),
+            toastImageUrl: '/fotova/error.png',
+            toastMessage: this.i18n.getTranslation("COMMENT_UPDATED_ERROR"),
+          })
+        }
+      },
+      error: (error: any) => {
+        this.toasterService.show({
+          toastTitle: this.i18n.getTranslation("ERROR"),
+          toastTime: this.i18n.getTranslation("JUST_NOW"),
+          toastImageUrl: '/fotova/error.png',
+          toastMessage: this.i18n.getTranslation("PROCESS_ERROR"),
+        })
+      }
+    });
   }
 
   onSubmit() {

@@ -55,16 +55,46 @@
       @for (comment of userCommentsInput(); track comment) {
         <div class="card mb-4 shadow-sm border-0 rounded-3">
           <div class="card-body">
-            <h5 class="card-title">
-              {{ i18n.getTranslation('TITLE') }} : {{ comment.header }}
-            </h5>
-            <p class="card-text">Contenu : {{ comment.body }}</p>
-            <p class="text-muted mb-0" style="font-size: 0.875rem;">
-              {{ i18n.getTranslation('CREATED_ON') }} : <span class="fw-semibold">{{ comment.createAt | date:'dd/mm/yyyy' }}</span>
-            </p>
-            <div class="mt-3">
-              <button (click)="deleteComment(comment.id)" class="btn btn-dark me-3">{{ i18n.getTranslation('DELETE') }}</button>
-            </div>
+            @if (editingId() === comment.id) {
+              <form [formGroup]="editForm" (ngSubmit)="updateComment(comment)">
+                <div class="form-floating mb-3">
+                  <input formControlName="header" type="text" class="form-control" id="edit-header-{{ comment.id }}" placeholder="Titre du commentaire">
+                  <label for="edit-header-{{ comment.id }}">{{ i18n.getTranslation('COMMENT_TITLE') }}</label>
+                </div>
+                @if(editHeader.hasError('required') && editHeader.dirty) {
+                  <div class="text-danger">
+                    {{ i18n.getTranslation('PLEASE_ENTER_TITLE') }}
+                  </div>
+                }
+
+                <div class="form-floating mb-3">
+                  <textarea formControlName="body" class="form-control" id="edit-body-{{ comment.id }}" placeholder="Contenu du commentaire" rows="4" style="height: 100px;"></textarea>
+                  <label for="edit-body-{{ comment.id }}">{{ i18n.getTranslation('COMMENT_CONTENT') }}</label>
+                </div>
+                @if(editBody.hasError('required') && editBody.dirty) {
+                  <div class="text-danger">
+                    {{ i18n.getTranslation('PLEASE_ENTER_CONTENT') }}
+                  </div>
+                }
+
+                <div class="mt-3">
+                  <button type="submit" [disabled]="editForm.invalid" class="btn btn-login-primary me-3">{{ i18n.getTranslation('SAVE') }}</button>
+                  <button type="button" (click)="cancelEdit()" class="btn btn-dark">{{ i18n.getTranslation('CANCEL') }}</button>
+                </div>
+              </form>
+            } @else {
+              <h5 class="card-title">
+                {{ i18n.getTranslation('TITLE') }} : {{ comment.header }}
+              </h5>
+              <p class="card-text">Contenu : {{ comment.body }}</p>
+              <p class="text-muted mb-0" style="font-size: 0.875rem;">
+                {{ i18n.getTranslation('CREATED_ON') }} : <span class="fw-semibold">{{ comment.createAt | date:'dd/mm/yyyy' }}</span>
+              </p>
+              <div class="mt-3">
+                <button (click)="startEdit(comment)" class="btn btn-login-primary me-3">{{ i18n.getTranslation('EDIT') }}</button>
+                <button (click)="deleteComment(comment.id)" class="btn btn-dark me-3">{{ i18n.getTranslation('DELETE') }}</button>
+              </div>
+            }
           </div>
         </div>
       }
