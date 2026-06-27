@@ -1,3 +1,5 @@
 interface FileApiResponse {
-  filelist:string[];
+  responseCode: number;
+  responseMessage: string;
+  data: string;
 }

@@ -263,9 +263,9 @@ export class AdminProductCreate {
     formData.append('file', box.file!, fileName);
 
     return this.#fileService.uploadFile(formData).pipe(
-      concatMap(() => index === 0
-        ? this.#productService.updateProduct({ ...this.productWithoutImage(), url: fileName })
-        : this.#fileService.linkImageToProduct(productId, fileName))
+      concatMap(response => index === 0
+        ? this.#productService.updateProduct({ ...this.productWithoutImage(), url: response.data })
+        : this.#fileService.linkImageToProduct(productId, response.data))
     );
   }
 

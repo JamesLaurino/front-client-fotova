@@ -177,12 +177,13 @@ export class AdminProductUpdate {
     formData.append('file', box.file, box.file.name);
 
     this.fileService.uploadFile(formData).pipe(
-      switchMap(() => {
+      switchMap((response) => {
+        const storedName = response.data;
         if (index === 0) {
-          const updatedProduct: ProductModel = { ...currentProduct, url: box.file!.name };
+          const updatedProduct: ProductModel = { ...currentProduct, url: storedName };
           return this.productService.updateProduct(updatedProduct);
         } else {
-          return this.fileService.linkImageToProduct(currentProduct.id, box.file!.name);
+          return this.fileService.linkImageToProduct(currentProduct.id, storedName);
         }
       }),
       finalize(() => {
