@@ -138,7 +138,7 @@
                      (dragleave)="onDragLeave($event, i)">
 
                   @if (box.file) {
-                    <button type="button" class="btn btn-sm btn-danger rounded-circle shadow position-absolute top-0 end-0 m-2" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .7rem;" (click)="removeFileBox(i)">
+                    <button type="button" class="btn btn-sm btn-danger rounded-circle shadow position-absolute top-0 end-0 m-2" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .7rem;" [disabled]="box.uploading" (click)="removeFileBox(i)">
                       <i class="bi bi-x-lg"></i>
                     </button>
                   }
@@ -155,12 +155,12 @@
                       <i class="bi bi-file-earmark-image text-primary" style="font-size: 3rem;"></i>
                       <p class="fw-bold small mt-2 text-truncate">{{ box.file?.name }}</p>
                       <p class="text-muted small">{{ (box.file?.size! / 1024).toFixed(1) }} Ko</p>
-                      <button class="btn btn-primary btn-sm mt-2 mb-2" (click)="uploadFile(i)" [disabled]="box.uploading">
-                        @if(box.uploading) {
+                      @if (box.uploading) {
+                        <p class="text-muted small mt-2 mb-0">
                           <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-                        }
-                        {{ box.uploading ? i18n.getTranslation("UPLOADING") : i18n.getTranslation("UPLOAD") }}
-                      </button>
+                          {{ i18n.getTranslation("UPLOADING") }}
+                        </p>
+                      }
                     </div>
                   }
                 </div>

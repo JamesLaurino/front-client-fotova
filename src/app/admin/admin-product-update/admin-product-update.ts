@@ -127,9 +127,10 @@ export class AdminProductUpdate {
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
       const file = files[0];
+      this.fileBoxes[index].isDragging = false;
       if (!this.validateFile(file)) return;
       this.fileBoxes[index].file = file;
-      this.fileBoxes[index].isDragging = false;
+      this.uploadFile(index);
     }
   }
 
@@ -139,6 +140,7 @@ export class AdminProductUpdate {
       const file = input.files[0];
       if (!this.validateFile(file)) return;
       this.fileBoxes[index].file = file;
+      this.uploadFile(index);
     }
   }
 
@@ -167,7 +169,7 @@ export class AdminProductUpdate {
   uploadFile(index: number) {
     const box = this.fileBoxes[index];
     const currentProduct = this.product();
-    if (!box.file || !currentProduct) return;
+    if (!box.file || box.uploading || !currentProduct) return;
 
     box.uploading = true;
 
